@@ -1,7 +1,7 @@
 <x-layout>
   <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\accounts.css') }}">
   
-  
+
         <p class="accounts" >My Accounts</p>
         <hr size='7' class="main-line">
         <p class="opt">Select an account to see more</p>
@@ -42,7 +42,7 @@
   <canvas id="myChart1"></canvas>
 </div>
     </div>
-   
+ 
       <p class="accounts">Operations record</p>
       <hr class="main-line">
       <!-- tabel container start  -->
@@ -58,15 +58,17 @@
             <thead>
               <tr>
                 <th>Transaction id</th>
-                <th>Amount</th>
+                <th>Amount(XAF)</th>
                 <th>Date</th>
-                <th>Description</th>
-                <th>Status</th>
+                <th  class="show">Description</th>
+                <th  class="show">Status</th>
+                {{-- <th  class="show">Action</th> --}}
+               
              
               </tr>
             </thead>
             <tbody>
-              @unless(Count($transactions) == 1)
+              @unless(Count($transactions) !== 0)
               {{"no Transaction record available"}}
              
               @endunless
@@ -74,11 +76,13 @@
       
     
        <tr>
-        <td data-label = "S.no">{{$transaction->id}}</td>
+        <td data-label = "S.no">RIB 01001 0107365671{{$transaction->id}}</td>
         <td data-label = "Name">{{$transaction->amount}}</td>
-        <td data-label = "Age">{{$transaction->date}}</td>
-        <td data-label = "Country">{{$transaction->description}}</td>
-        <td data-label = "tel">{{$transaction->status}}</td>
+        <td data-label = "Age">{{$transaction->created_at}}</td>
+        <td class="show">{{$transaction->description}}</td>
+        <td  class="show">{{$transaction->status}}</td>
+        {{-- <td class="show"></td> --}}
+        
       
       
       </tr>
@@ -92,6 +96,7 @@
         <!-- real table section end -->
 
           <!-- message icon  -->
-          <x-message>
-          </x-message>
+          {{-- <x-message>
+          </x-message> --}}
+          
         </x-layout>

@@ -41,4 +41,7 @@
 
 
    </div>
+   @if ($loan->status == 'pending')
+       <x-loan-actions :loan="$loan"/>
+   @endif
   </div>

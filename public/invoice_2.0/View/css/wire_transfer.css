@@ -193,7 +193,7 @@ nav{
     
     z-index:8;
 }
-a{
+nav ul li a{
    
     position:relative;
     color:#3f3f3f88;
@@ -514,7 +514,7 @@ a{
     color:#ffff;
     border:none;
     width:5.5rem;
-    border-radius:18px;
+    border-radius:5px;
     height:34px;
     font-size:14px;
     font-weight:600;
@@ -552,7 +552,7 @@ a{
     top:-18px;
     left:0;
     color:#2D89EF;
-    font-size:13px;
+    font-size:11px;
 }
 /* form end  */
 .bold-info{
@@ -564,6 +564,20 @@ a{
     color:#2B5797;
     font-weight:bold;
     font-size:25px;
+}
+.pending-box{
+    background-color:#fff;
+    max-width:700px;
+    /* min-height:80px;  */
+    padding:20px;
+   
+    border-radius:10px;
+    margin-top:10px;
+    box-shadow:rgba(149,157,165,0.2)0px 8px 24px;
+}
+#pending{
+    background-color: rgba(255, 255, 255, 0.164);
+    color:#3f3f3f6b;
 }
 /* media query for table  */
 @media(max-width:700px){

@@ -1,4 +1,11 @@
+
 <x-app-layout>
+    <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\loader.css') }}">
+<div class="loader_bg">
+        <div class="loader"></div>
+    </div>
+    {{-- <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\profile.css') }}"> --}}
+
     {{-- <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Profile') }}
@@ -42,4 +49,12 @@
             @endif
         </div>
     </div>
+  
 </x-app-layout>
+<script src="{{ asset('invoice_2.0\View\assets\jquery\jquery-3.6.0.min.js') }}"></script>
+
+<script >
+    setTimeout(function(){
+  $('.loader_bg').fadeToggle();
+ }, 1500);8
+  </script>

@@ -1,27 +1,49 @@
 <x-layout>
-    
-  <link rel="stylesheet" href="invoice_2.0\View\css\transfer.css">
+
+
+  <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\accounts.css') }}">
+  <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\transfer.css') }}">
+  <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\loans.css') }}">
+
+
     <p class="accounts" >Money transfer </p>
         <hr size='7' class="main-line">
         <p class="opt">Select an account to see more</p>
         <!-- accoutn section for dekstop start -->
-        <x-account-container>
-        </x-account-container>
-        <!-- accoutn section for dekstop end -->
-<x-account-slider>
-</x-account-slider>
-       <!-- account slider end  -->
-
+        <div class="account-container">
+          @foreach ($accounts as $account)
+     
+            <x-account-container-trans :account="$account"/>
+       
+       
+          @endforeach
+        </div>
+         
+          <!-- accoutn section for dekstop end -->
+  
+            {{-- account slider  --}}
+            <div class="account-slider swiper">
+              <div class="account-content">
+                  <div class="account-wrapper swiper-wrapper ">
+                    @foreach ($accounts as $account)
+          <x-account-slider-trans :account="$account"/>
+            @endforeach
+          </div>
+        </div>
+  <div class="swiper-button-next " style="font-size:8px;"></div>
+  <div class="swiper-button-prev direction"></div>
+  <div class="swiper-pagination direction"></div>
+  </div>
+         {{-- <!-- account slider end  --> --}}
+    
     
     <!-- main end  -->
     <div class="actions">
-          <button class="action" id="toggle"><i class="fa fa-paper-plane"></i>Make transfer</button>
-          <button class="action"><i class="fa fa-user"> </i>Add beneficiary</button>
+          <button  class="action" id="modal-btn"><i class="fa fa-paper-plane"></i>Make transfer</button>
+          {{-- <button class="action"><i class="fa fa-user"> </i>Add beneficiary</button> --}}
       </div>
 <!-- modal section start  -->
-<!-- <div class="modal">
-  hlfjkhnv.bjkfkbnjk;fklcvnjfhyj
-</div> -->
+<x-new-transfer />
 <!-- modal section end  -->
     <p class="accounts">Transfer history</p>
       <hr class="main-line">
@@ -30,7 +52,7 @@
 <div class="flex-history-benef">
 <div class="table-container">
         <!-- filter section start  -->
-        <div class="table-filter">
+        {{-- <div class="table-filter">
             <!-- search start  -->
 
             <div class="filter-line">
@@ -71,112 +93,61 @@
             </div>
           </div>
 <!-- hide end  -->
-        </div>
+        </div> --}}
         <!-- filter section end -->
 
         <!-- real table section start -->
-        <div class="account-table">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>S.no</th>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Country</th>
-          <th class="move">tel</th>
-          <th class="move">Email</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td data-label = "S.no">1</td>
-          <td data-label = "Name">marc</td>
-          <td data-label = "Age">18</td>
-          <td data-label = "Country" >cameroon</td>
-          <td data-label = "tel" class="move">674159544</td>
-          <td data-label = "Email" class="move">jeanpoutcheu@gmail.com</td>
+        <div class="table-container">
+          <!-- filter section start  -->
+      <x-filter-transfer :account="$account"/>
+      
+          <!-- filter section end -->
+  
+          <!-- real table section start -->
+          <div class="account-table">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Transaction id</th>
+                  <th>Amount</th>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>Status</th>
+               
+                </tr>
+              </thead>
+              <tbody>
+                @unless(Count($transactions) == 1)
+                {{"no Transaction record available"}}
+               
+                @endunless
+         @foreach ($transactions as $transaction)
+        
+      
+         <tr>
+          <td data-label = "S.no">{{$transaction->id}}</td>
+          <td data-label = "Name">{{$transaction->amount}}</td>
+          <td data-label = "Age">{{$transaction->date}}</td>
+          <td data-label = "Country">{{$transaction->description}}</td>
+          <td data-label = "tel">{{$transaction->status}}</td>
+        
         
         </tr>
-        <tr>
-        <td data-label = "S.no">1</td>
-          <td data-label = "Name">marc</td>
-          <td data-label = "Age">18</td>
-          <td data-label = "Country"
-          >cameroon</td>
-          <td data-label = "tel" class="move">674159544</td>
-          <td data-label = "Email" class="move">jeanpoutcheu@gmail.com</td>
-        </tr>
-        <tr>
-        <td data-label = "S.no">1</td>
-          <td data-label = "Name">marc</td>
-          <td data-label = "Age">18</td>
-          <td data-label = "Country" >cameroon</td>
-          <td data-label = "tel" class="move">674159544</td>
-          <td data-label = "Email" class="move">jeanpoutcheu@gmail.com</td>
-        </tr>
-      </tbody>
-    </table>
-        </div>
-        <!-- real table section end -->
-      </div>
-      <!-- buttons  -->
-      
-
-      </div>
+        @endforeach
+  
+         
+        </tbody>
+      </table>
+          </div>
       <!-- beneficiary section  -->
-      <div class="beneficiary">
-          <p class="accounts">Declared benficiary</p>
-          <hr class="main-line">
-          <p class="opt">My accounts</p>
-
-          <!-- card begin  -->
-          <div class="card-benef">
-            <span class="user"><i class="fa fa-user"></i></span>
-
-            <div class="benef-info">
-              <span class="alias">Account1</span>
-              <span class="acc-no">RIB 01001 0107365671066</span>
-            </div>
-
-            <span class="plane"><i class="fa fa-paper-plane"></i></span>
-            <span class="trash"><i class="fa fa-trash"></i></span>
-          </div>
-
-          <div class="card-benef">
-            <span class="user"><i class="fa fa-user"></i></span>
-
-            <div class="benef-info">
-              <span class="alias">Account1</span>
-              <span class="acc-no">RIB 01001 0107365671066</span>
-            </div>
-
-            <span class="plane"><i class="fa fa-paper-plane"></i></span>
-            <span class="trash"><i class="fa fa-trash"></i></span>
-          </div>
-      </div>
+    
 
 
    <!-- message icon  -->
      
-  <span class="message-trigger"><i class="fa fa-message"></i></span>
 
-   <div class="message-box">
-    <div class="message-actions">
-            <span><i class="fa fa-trash"></i></span>
-            <span class="move-box">Cancel</span>
-    </div>
-   <div class="message">i am so sorry about what  happened</div>
-   <div class="message-1">o tell me what happened</div>
-   <div class="message">Your android cable is bad</div>
-   <div class="message-1">My charger is bad?</div>
-   <hr>
-  <div class="below">
+
   
-  <span class="message-icon"><i class="fa fa-message"></i></span>
-    <input type="text" class="message-input">
-    <span><i class="fa fa-paper-plane"></i></span>
-  </div>
-  </div>
       <x-message>
       </x-message>
 </x-layout>

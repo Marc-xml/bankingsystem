@@ -238,7 +238,7 @@ nav{
   
     z-index:8;
 }
-a{
+nav ul li a{
     position:relative;
     color:#3f3f3f88;
     font-size:16px;

@@ -1,0 +1,29 @@
+.box{
+    background-color: #fff;
+    box-shadow:rgba(149,157,165,0.2)0px 8px 24px;
+    max-width:600px;
+    border-radius:10px;
+    padding:20px;
+    transform: translate(50%,50%);
+
+
+}
+.box p span{
+    text-decoration: underline;
+    cursor:pointer; 
+}
+.box p{
+    padding:20px 0 20px 0;
+}
+.confirm{
+    outline:none;
+    background:#2D89EF;
+    color:#ffff;
+    border:none;
+    border-radius:5px;
+    font-size:14px;
+    font-weight:500;
+    cursor:pointer;
+    padding:10px;
+  
+}

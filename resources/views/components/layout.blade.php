@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('invoice_2.0\View\assets\fontawesome-free-6.1.1-web\css\fontawesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('invoice_2.0\View\assets\swiper.css') }}">
     <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\bills.css') }}">
+    <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\accounts.css') }}">
 
 </head>
 <body>
@@ -23,12 +24,14 @@
       <span class="logo">INVOICE</span>
           <div class="icons">
            <span>{{Auth::user()->name}}</span>
-          <span><a href="{{url('/profile')}}"><i class="fa fa-user {{ '/profile' == request()->path() ? 'active' : ''}}"></i></a></span>
+          <span style="color:grey"><a href="{{url('/user/profile')}}" style="color:grey"><i class="fa fa-user {{ 'user/profile' == request()->path() ? 'active' : ''}}"></i></a></span>
           <span><i class="fa fa-bell"></i></span>
-          <span><i class="fa fa-globe"></i></span>
+          {{-- <span><i class="fa fa-globe"></i></span> --}}
           <span><a href="/logout">Logout</a></span>
           </div>
       </div>
+  <x-flash-message />
+
      
       <input type="checkbox" name="" id="open">
       <label for="open" class="sidebarIcon">
@@ -38,7 +41,7 @@
       </label>
 
       <!-- mobile screen sidebar  -->
-      {{-- <div id="sidebarMenu">
+      <div id="sidebarMenu">
           <ul class="menu">
           <li><a href="accounts.php"> <i class="fa fa-user-circle side-icon"></i>Accounts</a></li>
           <hr class="line">
@@ -57,7 +60,7 @@
               <span>Invoice 2023</span>
               <span><i class="fa fa-user side-icon"></i></span>
           </div>
-      </div> --}}
+      </div>
       <!-- desktop screen sidebar  -->
       <nav>
           <ul>
@@ -69,7 +72,7 @@
               </li>
   
               <li>
-                  <a href="/transactions"><i class="fa fa-exchange fac{{ 'transactions' == request()->path() ? 'active' : ''}}"></i>
+                  <a href="/transactions"><i class="fa fa-exchange fac{{ '/transactions' == request()->path() ? 'active' : ''}}"></i>
                   <span class="nav-item"></span>
                 </a>
               </li>
@@ -96,19 +99,45 @@
 
               
               <li>
-                <a href=""><i class="fa fa-gear fac {{'wire' == request()->path() ? 'active' : ''}}"></i></a>
+                <a href="/bill"><i class="fa fa-gear fac {{'bill' == request()->path() ? 'active' : ''}}"></i></a>
                 <span class="nav-item"></span>
             </li>
           </ul>
       </nav>
   
       <div class="main">
-       
+        <x-flash-message />
   
     {{$slot}}
-    <x-message>
-    </x-message>
-      </div> 
+   
+   
+  <span class="message-trigger"><i class="fa fa-message"></i></span>
+
+  <div class="message-box">
+   <div class="message-actions">
+           <span><i class="fa fa-trash"></i></span>
+           <span class="move-box">Cancel</span>
+   </div>
+<div class="message">
+   
+   @foreach ($messages as $message)
+       {{$message->content}}
+   @endforeach
+</div>
+
+ <hr>
+  <div class="below">
+  
+  <span class="message-icon"><i class="fa fa-message"></i></span>
+   <form action="/send-message" method="post">
+    @csrf
+        <input type="text" class="message-input" name="content">
+       <span ><i class="fa fa-paper-plane" type="submit"></i></span>
+        <span> <input type="submit" value="SEND"></span>
+   </form>
+ 
+  </div> 
+      </div>  
       <script src="{{ asset('invoice_2.0\View\assets\jquery\jquery-3.6.0.min.js') }}"></script>
       <script src="{{ asset('invoice_2.0\View\assets\swiper.js') }}"></script>
       <script src="{{ asset('invoice_2.0\View\assets\script.js') }}"></script>

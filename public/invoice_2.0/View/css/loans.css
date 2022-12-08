@@ -557,8 +557,8 @@ border-radius:10px;
 }
 /* modal strt  */
 :root {
-    --modal-duration: 1s;
-    --modal-color: #2B5797;
+    --modal-duration: 0.5s;
+    --modal-color: #2D89EF;
   }
   
   .cont {
@@ -570,6 +570,8 @@ border-radius:10px;
     height: 100vh;
     align-items: center;
     justify-content: center;
+    border-radius:10px;
+
   }
   
   .button {
@@ -595,6 +597,8 @@ border-radius:10px;
     width: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.5);
+ 
+
   }
   
   .modal-content {
@@ -655,11 +659,96 @@ border-radius:10px;
     }
   }
   
+  /* loan for section  */
+  form .text_field{
+    position:relative;
+    /* border-bottom:2px solid #707070; */
+    margin:30px 15px;
+}
+  .text_field{
+    position:relative;
+    margin:15px 15px;
+}
+.text_field input,select{
+    
+   padding:10px 0;
+   font-size:16px;
+   color:#707070;
+   border:none;
+   outline:none;
+   background: none;
+   border-bottom:1px solid #707070;
+   min-width:20rem;
+}
+.row{
+    display: flex;
+    flex-wrap: wrap;
+}
+.text_field label{
+    position:absolute;
+   
+    padding:10px 0;
+    font-size:16px;
+  
+    top:-18px;
+    left:0;
+    color:#2D89EF;
+    font-size:15px;
+    pointer-events: none;
+    transition: .5s;
+ }
+ /* .text_field input:focus ~ input,
+ .text_field input:valid ~input{
+    top:-18px;
+    left:0;
+    color:#2D89EF;
+    font-size:12px;
+    border-bottom:1px solid #3876ac
+}  */
+
+
+.bottom{
+    display: flex;
+    justify-content:center;
+}
+.review-form{
+    background-color: #fff;
+    box-shadow:rgba(149,157,165,0.2)0px 8px 24px;
+    max-width: 750px;
+    border-radius:10px;
+    padding:10px;    
+    
+
+    
+}
+.review-info{
+    color:#3F3F3F;
+    font-size:14px;
+    padding-top:7px;
+    padding-bottom  :7px;
+}
+
+.text_field img{
+width:6rem;
+
+
+}
+@media(max-width:700px){
+    .text_field input{
+        width:auto;
+    }
+}
 /* media query for table  */
 @media(max-width:775px){
     /* main  */
     .main{
         padding:2% 4% 2% 5%;
+    }
+    .modal-content{
+        width:90%;
+    }
+    .text_field input{
+        min-width: 16rem;
     }
     .loan-arrow{
         display:block;
@@ -689,6 +778,9 @@ border-radius:10px;
     .account-card-dekstop{
             max-width:250px;
             
+    }
+    .modal-content{
+        width:90%;
     }
   
     

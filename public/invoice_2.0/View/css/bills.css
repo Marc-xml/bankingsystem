@@ -518,10 +518,25 @@ a{
     color:#ffff;
     border:none;
     width:5.5rem;
-    border-radius:18px;
+    border-radius:5px;
     height:34px;
     font-size:14px;
     font-weight:600;
+    cursor:pointer;
+}
+.addbutton{
+    outline:none;
+    background:#2D89EF;
+    color:#ffff;
+    border:none;
+    width:5.5rem;
+    border-radius:5px;
+    height:34px;
+    font-size:14px;
+ 
+    font-weight:600;
+    float:right;
+    cursor:pointer;
 }
 .signup_link{
     text-align:center;
@@ -539,7 +554,7 @@ a{
    outline:none;
    background: none;
    border-bottom:1px solid #707070;
-   width:20rem;
+   width:500px;
 
 }
 .text_field label{

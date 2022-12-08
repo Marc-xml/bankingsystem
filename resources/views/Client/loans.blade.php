@@ -10,7 +10,7 @@
        <button class="loan-button" id="modal-btn">Apply for a loan <span><i class="fa fa-plus"></i></span></button>
       <a href="/loan-calculator"><button class="loan-button">Loan simulator <span><i class="fa fa-dollar"></i></span></button></a>
   </div>
-  
+  <x-flash-message />
 {{"Result:".count($loans)}}
 
 
@@ -43,7 +43,8 @@
       @endforeach
       
         <x-newloan />
-      
+        <p class="account">Loan history</p>
+        <hr class="main-line">
       <div class="filter">
         <x-loan-filter :owner="$loan"/>
       </div>

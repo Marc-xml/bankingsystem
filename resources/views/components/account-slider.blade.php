@@ -1,6 +1,7 @@
-
-            <div class="account-card swiper-slide"  >
+            <div class="account-card swiper-slide {{ 'account/'.$account->id == request()->path() ? 'active-account' : ''}}  "  >
                 <!-- uper section of card start  -->
+<a href="/account/{{$id = $account->id}}">
+
                 <div class="upper-card">
         
                 <span>
@@ -41,6 +42,7 @@
                  <span class="option-content"><i class="fa fa-clipboard"></i>Personalise  account Alias</span>
                  <span class="option-content"><i class="fa fa-gauge"></i>Manage my gauge</span>
                 </div>
+</a>
+
                </div>
         <!-- account wrapper end  -->
-
