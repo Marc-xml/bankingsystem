@@ -1,0 +1,40 @@
+h3{
+    padding:20px;
+    color:#2B5797;
+    font-weight:700px;
+    font-size:40px;
+}
+.main{
+    padding:20px;
+    color:#3f3f3fde;
+ 
+}
+.top-stat{
+    float:right;
+    font-weight:600;
+    font-size:20px;
+    color:rgba(0, 0, 0, 0.692);
+    
+}
+.account-details{
+margin-top:60px;
+}
+.client-info{
+    margin-top:60px;
+    
+}
+.top-head{
+    font-weight:600;
+    font-size:20px;
+    color:rgba(0, 0, 0, 0.692);
+    margin-top:40px;
+
+}
+.table{
+    width:100%;
+}
+.table td,.table th{
+    padding:12px 10px;
+    text-align:center;
+ 
+}

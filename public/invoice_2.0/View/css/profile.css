@@ -1,0 +1,243 @@
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+html,body{
+    overflow:scroll;
+    height:100%;
+  
+}
+body{
+   font-family:'Segoe UI';
+    background-color:#E6E6FF;
+    color:#2B5797;
+    padding:0;
+    margin:0;
+    font-family:'Segoe UI';
+}
+/* preloader start */
+.loader_bg{
+    position: fixed;
+    z-index: 999999;
+    background: #fff;
+    width: 100%;
+    height: 100%;
+}
+.loader{
+    border: 0 soild transparent;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: calc(50vh - 75px);
+    left: calc(50vw - 75px);
+}
+.loader:before, .loader:after{
+    content: '';
+    border: 1em solid #2D89EF;
+    border-radius: 50%;
+    width: inherit;
+    height: inherit;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: loader 2.5s linear infinite;
+    opacity: 0;
+}
+.loader:before{
+    animation-delay: .5s;
+}
+@keyframes loader{
+    0%{
+        transform: scale(0);
+        opacity: 0;
+    }
+    50%{
+        opacity: 1;
+    }
+    100%{
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+/* preloader end  */
+/* header  */
+.header{
+    background-color: #fff;
+    width:100%;
+    min-height:70px;
+    box-shadow:rgba(149,157,165,0.2)0px 8px 24px;
+    padding:10px;
+   
+}
+.profile{
+    color:#2D89EF;
+    font-size:20px;
+    font-weight:700;
+    margin:80px ;
+
+}
+.profile-line{
+    width:96%;
+margin-top:30px;
+margin-left:2%;
+margin-right:2%;
+text-align: center;
+    background-color:#70707081;
+    opacity:0.5
+}
+.info{
+    color:#707070;
+    padding-left:80px;
+    padding-top:10px; 
+    font-size: 18px;;
+}
+.center{
+   
+    background:#fff;
+   padding:30px;
+   border-radius: 10px;
+   box-shadow:rgba(149,157,165,0.2)0px 8px 24px; 
+}
+.center form{
+   
+    box-sizing:border-box;
+    
+}
+label{
+    color:#707070;
+}
+form .text_field{
+    position:relative;
+    /* border-bottom:2px solid #707070; */
+    margin:10px 0;
+}
+.pass{
+    text-align:center;
+}
+a{
+    text-decoration:none;
+    color:#707070;
+}
+.submit_button{
+
+    padding-top:25px;
+    padding-bottom:20px;
+    text-align: end;
+}
+.submit_button1{
+    padding-top:25px;
+    padding-bottom:20px;
+    text-align: start;
+}
+.submit_button input{
+    outline:none;
+    background:#2D89EF;
+    color:#ffff;
+    border:none;
+    width:5.5rem;
+    border-radius:5px;
+    height:34px;
+    font-size:14px;
+    font-weight:600;
+    
+}
+button{
+    outline:none;
+    background:#2D89EF;
+    color:#ffff;
+    border:none;
+    width:auto;
+    border-radius:5px;
+    height:34px;
+    font-size:14px;
+    font-weight:600;
+    padding:5px;
+}
+.button1{
+    outline:none;
+    background:#ef442d;
+    color:#ffff;
+    border:none;
+    width:auto;
+    border-radius:5px;
+    height:34px;
+    font-size:14px;
+    font-weight:600;
+    padding:5px;
+    box-shadow:rgba(149,157,165,0.2)0px 8px 24px; 
+}
+.signup_link{
+    text-align:center;
+    padding-bottom:20px;
+}
+/* .text_field{
+    position:relative;
+    left:100px;
+} */
+.text_field input{
+    
+   padding:10px 0;
+   font-size:16px;
+   color:#707070;
+   border:none;
+   outline:none;
+   background: none;
+   border-bottom:1px solid #707070;
+   width:25rem;
+   
+
+}
+main{
+    margin:20px;
+}
+.profile-info{
+    display:flex;
+    justify-content: space-around;
+    margin-top:30px;
+}
+.text_field label{
+    position:absolute;
+    top:0;
+    left:0;
+    padding:10px 0;
+    font-size:16px;
+    color:#707070;
+    pointer-events: none;
+    transition: .5s;
+}
+.center .text_field input:focus ~ label,
+.center .text_field input:valid ~ label{
+    top:-18px;
+    left:0;
+    color:#2D89EF;
+    font-size:13px;
+    
+}
+/* form end  */
+/* .content p{
+    margin-left:150px;
+    margin-right:150px;
+} */
+.content ,.content1{
+    max-width: 400px;
+    background:#fff;
+   padding:30px;
+   border-radius: 10px;
+   box-shadow:rgba(149,157,165,0.2)0px 8px 24px; 
+  
+
+}
+.content1{
+    max-width:500px;
+}
+@media(max-width:730px){
+   .profile-info{
+    displaY:flex;
+    flex-direction:column;
+   }
+   .text-field input{
+    max-width:25rem;
+   }
+}

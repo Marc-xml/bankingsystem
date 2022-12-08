@@ -1,0 +1,116 @@
+/* .main{
+
+} */
+.box{
+    max-width:40rem;
+    background-color: #fff;
+    min-height:10rem;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:rgba(149,157,165,0.2)0px 8px 24px;
+}
+.row{
+    display: flex;
+    justify-content: space-between;
+    margin-top:30px;
+}
+.icon{
+ background-color:#2D89EF;
+ padding:10px;
+ border-radius:10px;
+ color:white
+
+}
+.desc{
+    margin-left:10px;
+}
+input{
+    border:none;
+    outline:none;
+    border-bottom: 1px solid #2D89EF;
+    
+}
+.send{
+    background-color: none;
+    border:1px solid #2D89EF;
+    width:100%;
+    color:#2D89EF;
+    padding:13px;
+    border-radius: 5px;
+    margin:30px auto  10px auto;
+    cursor:pointer;
+    font-size:16px;
+
+}
+.send:hover{
+background-color: #2D89EF;
+color:white;
+transition: 0.5s ease-in-out;
+}
+.cube{
+    width:12rem;
+    height:8rem;
+    background-color: #2D89EF;
+    border-radius: 10px;
+    color:#fff;
+    text-align: center;
+    cursor: pointer;
+    
+}
+.cube:hover{
+    transform: translateY(20px);
+    transition:0.7s ease-in-out;
+}
+.cube1:hover{
+    transform: translateY(20px);
+    transition:0.7s ease-in-out;
+}
+.cube2:hover{
+    transform: translateY(20px);
+    transition:0.7s ease-in-out;
+}
+.cub:hover::after{
+    transform: translateY(-20px);
+    transition:0.7s ease-in-out;
+
+}
+.cube1{
+    width:12rem;
+    height:8rem;
+    background-color: #2D89EF;
+    border-radius: 10px;
+    margin: auto 10px;
+    color:#fff;
+    text-align: center;
+    cursor: pointer;
+
+}
+.cube2{
+    width:12rem;
+    height:8rem;
+    background-color:#2D89EF;
+    border-radius: 10px;
+    color:#fff;
+    text-align: center;
+    cursor: pointer;
+    /* margin: auto 10px; */
+}
+.line{
+    display: flex;
+}
+#paymentresult,#interestresult,#totalresult{
+font-size:27px;
+margin-top:25px;
+font-weight:700 ;
+}
+@media (max-width:660px){
+   .cube,.cube1,.cube2{
+    width:100%;
+    margin:10px;
+   }
+   .line{
+    display:flex;
+    flex-direction: column;
+   }
+}
+
