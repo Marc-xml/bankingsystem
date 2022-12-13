@@ -118,12 +118,18 @@
            <span><i class="fa fa-trash"></i></span>
            <span class="move-box">Cancel</span>
    </div>
-<div class="message">
-   
-   @foreach ($messages as $message)
-       {{$message->content}}
-   @endforeach
-</div>
+
+   @php
+       $messages = session()->get('mss');
+   @endphp
+
+     @foreach ($messages as $message)
+     <div class="message">
+         {{$message->content}}
+        </div>
+     @endforeach
+
+
 
  <hr>
   <div class="below">

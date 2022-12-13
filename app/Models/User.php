@@ -23,6 +23,11 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var string[]
      */
+    // get accounts of users 
+    public function accounts(){
+
+        return $this->hasMany(account::class, 'owner_id');
+    }
     protected $fillable = [
         'name',
         'email',

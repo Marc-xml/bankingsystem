@@ -11,6 +11,7 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Stmt\Return_;
 
 class accountController extends Controller
 {
@@ -41,8 +42,31 @@ public function show(Request $request){
     ->orwhere('receiver_account','=',"$id")
    ->get();
    $messages = DB::table('messages')->get();
-    return view('client.accounts',compact('accounts'),compact('transactions'),compact('messages'));
+   $request->session()->put('mss',$messages);
+    return view('client.accounts',compact('accounts','transactions'));
 }
+// public function show(Request $request)
+// {
+//     $user = auth()->user(); // or $request->user();
+
+//     /* Get Account */
+//     $accounts = Account::where('owner_id', $user->id)->get();
+//     // When a relation is properly present in the model: $accounts = $user->accounts;
+
+//     // Get Account IDs as Array...
+//     $accountIds = $accounts->pluck('id')->toArray();
+//     $id = $accountIds[0];
+//     $request->session()->put('acc',$id);
+//     $transactions  = Transaction::whereIn('sender_account', $accountIds)->orWhereIn('receiver_account', $accountIds)->get();
+//     $messages = DB::table('messages')->get();
+
+//    Return view('client.accounts', [
+//         'transactions' => $transactions,
+//         'messages' => $messages,
+//         'accounts' => $accounts,
+//     ]);
+// }
+
 
 public function choose(Request $request ,$id){
     $user = auth()->user()->id;
@@ -56,7 +80,7 @@ public function choose(Request $request ,$id){
    ->get();
 
    $messages = DB::table('messages')->get();
-    
+
     return view('client.accounts',compact('accounts'),compact('transactions'),$id,compact('messages'));
 }
 public function filtertrans(Request $request,$id){

@@ -60,6 +60,9 @@ Route::get('/bill',function(){
 Route::get('/confirm',function(){
     return view('client.confirm');
 });
+Route::get('/checkbook',function(){
+    return view('client.chechreq');
+});
 //choose account in accounts
  Route::get('/account/{id}',[accountController::class,'choose'])->middleware('auth','verified');
  //choose account in transactions
