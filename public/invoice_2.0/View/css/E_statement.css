@@ -1,12 +1,17 @@
+*{
+    font-family: 'Segoe UI';
+}
 h3{
     padding:20px;
-    color:#2B5797;
+    color:#2D89EF;
     font-weight:700px;
-    font-size:40px;
+    font-size:35px;
+    text-align: center;
 }
 .main{
     padding:20px;
     color:#3f3f3fde;
+    margin: 0 20%;
  
 }
 .top-stat{

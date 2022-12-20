@@ -111,28 +111,31 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        {{-- {{$transfers}} --}}
+       
          @foreach ($transfers as $transfer)
+         <tr>
              <td>{{$transfer->id}}</td>
-             <td>{{$transfer->Beneficiary}}</td>
+             <td>{{$transfer->beneficiary}}</td>
              <td>{{$transfer->account_number}}</td>
              <td>{{$transfer->bank_name}}</td>
              <td>{{$transfer->bic_code}}</td>
              <td>{{$transfer->clearing_code}}</td>
              <td>{{$transfer->amount}}</td>
+             <td>{{$transfer->status}}</td>
              <td>{{$transfer->account_concerned}}</td>
+            </tr>
          @endforeach
          @unless (count($transfers) !== 0)
              {{"No recent transfers"}}
          @endunless
         
-        </tr>
+
     
       </tbody>
     </table>
         </div>
         <!-- real table section end -->
       </div>
-<x-message>
-</x-message>
+
 </x-layout>

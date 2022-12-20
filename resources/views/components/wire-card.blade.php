@@ -11,22 +11,22 @@
 
     <div class="loan-desc">
       <span class="title">Amount(XAF)</span>
-      <span>---</span>
+      <span>{{$transfer->amount}}</span>
     </div>
 
     <div class="loan-desc">
       <span class="title">Date </span>
-      <span>----</span>
+      <span>{{$transfer->created_at}}</span>
     </div>
 
     <div class="loan-desc">
       <span class="title">Beneficiary</span>
-      <span>---</span>
+      <span>{{$transfer->beneficiary}}</span>
     </div>
 
     <div class="loan-desc">
       <span class="title">account number</span>
-      <span>-----</span>
+      <span>{{$transfer->account_concerned}}</span>
     </div>
 
     <div class="loan-desc">

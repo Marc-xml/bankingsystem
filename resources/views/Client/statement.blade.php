@@ -7,22 +7,22 @@
     <title>E_statement</title>
     <link rel="stylesheet" href="invoice_2.0\View\css\E_statement.css">
 </head>
-<body style="font-family:'Poppins'">
+<body >
     <h3>INVOICE</h3>
     <div class="main">
         <p class="top-stat">STATEMENT OF ACCOUNT</p>
 <!-- account details  -->
         <p class="account-details">
-   <P>ACCOUNT NUMBER:XXXXXXXXX</P>
-    <P>STATEMENT DATE:MMYYYDD</P>
-    <P>PEROD COVERED:MMYYDD to MMYYDD</P>
+   <P>ACCOUNT NUMBER:<span style="color:#2D89EF"> RIB 6986 52{{session()->get('acc')}}</span></P>
+    <P>STATEMENT DATE: {{Date('d/m/y')}}</P>
+    <P>PEROD COVERED: Monthly</P>
         </p>
 
         <!-- client info  -->
         <div class="client-info">
-            <p>DAVID SMITH</p>
-            <p>11439 makepe streets</p>
-            <p>Douala Cameroon</p>
+            <p>{{auth()->user()->name}}</p>
+            <p>Douala  {{auth()->user()->address}}</9p>
+            <p>{{auth()->user()->email}}</p>
         </div>
 
         <p class="top-head">ACCOUNT SUMMARY</p>

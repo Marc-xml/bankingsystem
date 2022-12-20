@@ -1,13 +1,15 @@
 <?php
 
-use App\Http\Controllers\accountController;
-use App\Http\Controllers\billController;
-use App\Http\Controllers\loanCotroller;
-use App\Http\Controllers\messageController;
-use App\Http\Controllers\transactionController;
+use App\Models\Cheque;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\loanCotroller;
+use App\Http\Controllers\billController;
+use App\Http\Controllers\cheqController;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\wireController;
+use App\Http\Controllers\accountController;
+use App\Http\Controllers\messageController;
+use App\Http\Controllers\transactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,9 +62,13 @@ Route::get('/bill',function(){
 Route::get('/confirm',function(){
     return view('client.confirm');
 });
+// cheques 
 Route::get('/checkbook',function(){
-    return view('client.chechreq');
+    $account = session()->get('acc');
+     $cheques = Cheque::Latest()->where('account_number','=',"$account")->get();
+    return view('client.chechreq',compact('cheques'));
 });
+Route::post('/req-check',[cheqController::class,'new_cheq']);
 //choose account in accounts
  Route::get('/account/{id}',[accountController::class,'choose'])->middleware('auth','verified');
  //choose account in transactions

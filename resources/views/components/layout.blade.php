@@ -78,7 +78,7 @@
               </li>
   
               <li>
-                  <a href="/check"><i class="fa fa-book fac {{'check' == request()->path() ? 'active' : ''}}"></i></a>
+                  <a href="/checkbook"><i class="fa fa-book fac {{'checkbook' == request()->path() ? 'active' : ''}}"></i></a>
                   <span class="nav-item"></span>
               </li>
   
