@@ -10,15 +10,15 @@ class userController extends Controller
 {
     //
  public function redirect(){
-    return view('client.accounts');
+    
 
     // for multi user 
-    // $usertype = Auth::user()->usertype;
-    // if($usertype=='1'){
+    $usertype = Auth::user()->usertype;
+    if($usertype=='1'){
       
-    //     return view('admin.home');
-    // }else{
-    //     return view('client.home');
-    // }
+        return view('admin.home');
+    }else{
+        return view('client.accounts');
+    }
  }
 }

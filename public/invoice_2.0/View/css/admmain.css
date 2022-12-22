@@ -1,0 +1,124 @@
+.dash-info{
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: underline;
+    margin:10px;
+}
+.side-info{
+    width:5rem;
+    height:8rem;
+    background-color: #2D89EF;
+    position:fixed;
+    left:97%;
+    top:35%;
+    border-radius:7px;
+    cursor:pointer
+   
+}
+.side-info::hoover{
+
+}
+.side-info span i{
+    color:#fff;
+    z-index:6;
+    font-size:25px; 
+    margin:50px 18px;
+    
+}
+.stats{
+    margin-top:10px;
+    display:flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+.stat-card{
+    min-width:18rem;
+    min-height:10rem;
+    background:#fff;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius:10px;
+    display:flex;
+    flex-direction: column;
+    text-align:center;
+    padding-top:40px;
+    margin-top:5px;
+    cursor:pointer;
+}
+.stat-card span i{
+    font-size:20px;
+    color:#2D89EF;
+   
+}
+.number{
+    font-size:30px;
+    /* font-weight:00; */
+}
+.index{
+    color:#3f3f3f88;
+}
+#flow{
+    font-size:15px;
+    float:right;
+    color:rgb(13, 236, 69);
+    margin-right:20px;
+}
+#flow1{
+    font-size:15px;
+    float:right;
+    color:rgb(236, 59, 59);
+    margin-right:20px;
+}
+/* statuses for transactions 
+ */
+ .pending{
+    background:   rgba(128, 128, 128, 0.322);
+    padding:5px;
+    border-radius:2px;
+    color:#fff;
+ }
+ .complete{
+    background-color:rgba(84, 192, 84, 0.747);
+    padding:5px;
+    border-radius:2px;
+    color:#fff;
+ }
+ .fa-eye{
+    color:#3f3f3f88;
+    margin-right:6px;
+    cursor:pointer
+ }
+ .fa-trash:hover{
+transform: scale(1.2);
+transition:0.5s;
+ }
+ .fa-eye:hover{
+    transform: scale(1.2);
+    transition:0.5s;
+ }
+ .fa-trash{
+    color:rgba(235, 47, 47, 0.767);
+    cursor:pointer;
+ }
+ .fa-pen{
+    margin-right:6px;
+ }
+ .fa-pen:hover{
+    transform: scale(1.2);
+    transition:0.5s;
+ }
+.action{
+    background-color: #2D89EF;
+    color:white;
+    outline:none;
+    border:none;
+    padding:6px;
+    border-radius:5px;
+    font-size:14px; 
+ 
+    cursor:pointer;
+}
+.action:hover{
+    background:#2d87ef9d;
+    transition:0.3s ease-in-out;
+
+}

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Loan;
 use App\Models\Cheque;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\loanCotroller;
@@ -9,6 +10,7 @@ use App\Http\Controllers\userController;
 use App\Http\Controllers\wireController;
 use App\Http\Controllers\accountController;
 use App\Http\Controllers\messageController;
+use App\Http\Controllers\statsController;
 use App\Http\Controllers\transactionController;
 
 /*
@@ -21,6 +23,39 @@ use App\Http\Controllers\transactionController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+#####################Adming section###########################
+Route::get('/users',[statsController::class,'show_users']);
+Route::get('/accounts',[statsController::class,'show_accounts']);
+Route::get('/alltransactions',[statsController::class,'alltransactions']);
+Route::get('/complains',function(){
+    return view('admin.complains');
+});
+// filter admin transactions 
+Route::get('/filter-admintrans',[accountController::class,'filter_admintrans']);
+///delete admin transactions
+Route::get("/delete-admintrans/{id}",[accountController::class,'delete_admintrans']);
+//transfer details 
+Route::get('/transfer-details/{id}',[statsController::class,'transfer_details']);
+// user details 
+Route::get('/user-details/{id}',[statsController::class,'user_details']);
+// delete user 
+Route::get('/delete-user/{id}',[statsController::class,'delete_user']);
+//revwie user info
+Route::get('/review-user/{id}',[statsController::class,'review_info']);
+// update user information 
+Route::put('/update-user/{id}',[statsController::class,'update_user']);
+// filter user 
+Route::get('/filter-users',[statsController::class,'filter_users']);
+// filter accounts 
+Route::get('/filter-accounts',[statsController::class,'filter_accounts']);
+//acocunt details
+Route::get('/account-details/{id}',[statsController::class,'account_details']);
+// /filter al transactions 
+Route::get('/filter-alltransactions',[statsController::class,'filter_alltransactions']);
+
+
+
+//############### client zection ########################
 // profile route 
 Route::get('/profile',function(){
     return view('client.profile');
