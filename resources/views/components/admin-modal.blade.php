@@ -6,13 +6,18 @@
         <span class="close">&times;</span>
         <h2>Transfer funds</h2>
       </div>
-<form action="/new-transfer" method="post" enctype="multipart/form-data">
+<form action="/new-admintransfer" method="post" enctype="multipart/form-data">
   @csrf
   <div class="modal-body">
 <div class="center" style="text-align: center">
     <div class="text_field">
         <input type="text" required name="receiver">
         <label for="">Receiver account</label>
+        
+    </div>
+    <div class="text_field">
+        <input type="text" required name="sender">
+        <label for="">Sender account</label>
         
     </div>
 

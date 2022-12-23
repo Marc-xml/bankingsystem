@@ -103,7 +103,12 @@
                   <a href="/complains"><i class="fa fa-triangle-exclamation fac {{'complains' == request()->path() ? 'active' : ''}}"></i></a>
                   <span class="nav-item"></span>
               </li>
-  
+              
+              <li>
+                <a href="/admin-loans"><i class="fa fa-dollar fac {{'admin-loans' == request()->path() ? 'active' : ''}}"></i></a>
+                <span class="nav-item"></span>
+            </li>
+
               <li>
                   <a href="/wire"><i class="fa fa-blog fac {{'wire' == request()->path() ? 'active' : ''}}"></i></a>
                   <span class="nav-item"></span>
@@ -114,6 +119,8 @@
                 <a href="/bill"><i class="fa fa-right-from-bracket fac {{'bill' == request()->path() ? 'active' : ''}}"></i></a>
                 <span class="nav-item"></span>
             </li>
+
+            
           </ul>
       </nav>
   

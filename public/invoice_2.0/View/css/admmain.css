@@ -81,7 +81,20 @@
     padding:5px;
     border-radius:2px;
     color:#fff;
+    outline:none;
+    border:none;
+    cursor:pointer
  }
+ .denied{
+    background-color:rgba(245, 65, 65, 0.87);
+    padding:5px;
+    border-radius:2px;
+    color:#fff;
+    outline:none;
+    border:none;
+    cursor:pointer;
+ }
+ 
  .fa-eye{
     color:#3f3f3f88;
     margin-right:6px;

@@ -29,7 +29,7 @@ public function send_message(Request $request){
 }
 public function show(Request $request){
     $usertype = auth()->user()->usertype;
-    if($usertype=='1'){
+    if($usertype=='1' || $usertype=='2'){
         // admin section 
         // count accounts 
       $countAccount = count(Account::all());

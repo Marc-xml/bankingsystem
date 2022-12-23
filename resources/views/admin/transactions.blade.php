@@ -1,4 +1,5 @@
 <x-admin-layout>
+  <x-flash-message/>
     <p class="accounts" >All transcations</p>
     <hr size='7' class="main-line">
     <br>

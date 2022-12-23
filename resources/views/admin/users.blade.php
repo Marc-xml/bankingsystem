@@ -3,6 +3,11 @@
     <p class="accounts" >All users</p>
     <hr size='7' class="main-line">
     <br>
+    <button class="action" style="margin-bottom:20px;" id="modal-btn">Create new user <span><i class="fa fa-plus"></i></span></button>
+    <br>
+    <x-user-modal>
+    </x-user-modal>
+
     <x-user-filter>
     </x-user-filter>
     <div class="account-table">
@@ -14,6 +19,7 @@
               <th>Email</th>
               <th>Phone number </th>
               <th>Address</th>
+              <th>status</th>
               
               <th class="show">Date registered</th>
               <th class="show">Action</th>
@@ -33,7 +39,13 @@
       <td data-label = "Age">{{$user->email}}</td>
       <td class="show">{{$user->Phone}}</td>
       <td  class="show">{{$user->address}}</td>
-
+     @if ($user->usertype == '0')
+      <td  class="show"><span class="pending">{{"Client"}}</span></td>
+     @elseif($user->usertype == '1')
+      <td  class="show"><span class="complete">{{"Admin"}}</span></td>
+     @else
+     <td  class="show"><span class="super">{{"Super Admin"}}</span></td>
+     @endif
       <td  class="show">{{$user->created_at}}</td>
       <td  class="show">
         <span><a href="/user-details/{{$id = $user->id}}"><i class="fa fa-eye"></i></a></span>

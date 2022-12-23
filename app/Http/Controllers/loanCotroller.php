@@ -119,4 +119,32 @@ class loanCotroller extends Controller
     return view('client.loans',compact('loans'));
     }
     
+    // admin section 
+    public function new_loan(){
+        $loans = Loan::all();
+        return view('admin.loans',compact('loans'));
+    }
+    // oan details 
+    public function loan_details($id){
+        $loan = Loan::find($id);
+        return view("admin.loan_details",compact('loan'));
+    }
+    public function grant_loan($id){
+        $loan = Loan::find($id);
+        $loan->status = "granted";
+        $loan->update();
+        return back()->with("message","Loan has been granted to user");
+    }
+
+    public function revoke_loan($id){
+        $loan = Loan::find($id);
+        $loan->status = "denied";
+        $loan->update();
+        return back()->with("message","Loan request has been revoked");
+    }
+    public function delete_adloan($id){
+        $loan = Loan::find($id);
+        $loan->delete();
+        return back()->with("message","loan succesfully deleted");
+    }
 }

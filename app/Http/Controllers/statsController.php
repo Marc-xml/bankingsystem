@@ -164,6 +164,82 @@ class statsController extends Controller
         return view('admin.transactions',compact('alltransactions'));
         
     }
+    // new transfer 
+    public function new_transfer(Request $request){
+        $transfer = new Transaction;
+        $transfer->sender_account = $request->sender;
+        $transfer->receiver_account = $request->receiver;
+        $transfer->amount = $request->amount;
+        $transfer->description = "transfer";
+        $transfer->status = 'complete';
+        
+        //now check if balance is enough
+        $id = $request->sender;
+        $pending = Transaction::all()->where('status','=','pending');
+        $transactions = Transaction::all()->where('sender_account','=',"$id")->union($pending);
+        $account = Account::find($id);
+        if($account->balance < $request->amount){
+            return back()->with("message","Account balance is not sufficient");
+        } 
+        // no sending to your current account
+        if($request->receiver == $id){
+            return back()->with("message","Invalid transaction");
+        }
+        // check if there is a pending transaction
+        // if(count($transactions) !== 0){
+        //     return back()->with("message","There is already a pending account, either complete it or cancel it in the recent transaction table ");
+        // }
+        //now transfer process
+        // for receiver 
+    
+        $account_receiver = Account::find($request->receiver);
+        $receiver_balance = $account_receiver->balance;
+        $new_balance_receiver =$request->amount +  $receiver_balance;
+         $account_receiver->balance = $new_balance_receiver;
+        
+         try{
+            $account_receiver->save();
+         }catch(\Throwable $e){
+            return back()->with("message","an error occured");
+         }
+        //for sender
+            
+            $sender_balance = $account->balance;
+            $new_balance_sender = $sender_balance - $request->amount;
+            $account->balance = $new_balance_sender;
+            try{
+                $account->save();
+             }catch(\Throwable $e){
+                return back()->with("message","an error occured");
+             }
+         
+
+            try{
+            $transfer->save();
+
+        }catch(\Throwable $e){
+            return redirect('/alltransactions')->with("message","transaction failed");
+        }
+        return redirect('/alltransactions')->with("message","transaction succesfull");
+    }
+    public function new_user(Request $request){
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->usertype = $request->usertype;
+        $user->Phone = $request->phone;
+        $user->address = $request->address;
+        $user->password = $request->password;
+        // $user->save();
+        try{
+            $user->save();
+            return back()->with("message","New user created successfully");
+        }catch(\Throwable $e){
+            return back()->with("message","Error occured please try again");
+
+        }
+    }
+
 
 
 }

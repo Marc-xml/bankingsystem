@@ -25,7 +25,13 @@
         <div class="client-info">
    <P>Phone: <span style="color:#2D89EF">{{$user->Phone}}</span></P>
    <P>address: <span style="color:#2D89EF">{{$user->address}}</span></P>
-            
+    <p>status:     @if ($user->usertype == '0')
+        <span class="pending">{{"Client"}}</span>
+       @elseif($user->usertype == '1')
+        <span class="complete"><i class="fa fa-medal    "></i>{{"Admin"}}</span>
+       @else
+       <span class="super">{{"Super Admin"}}</span>
+       @endif</p>
             <p>Action: <button class="action">Print user info</button>
                  <a href="/review-user/{{$id = $user->id}}"><button style="background:rgba(77, 153, 77, 0.781)" class="action">Edit user info</button></a>
                  <a href="/delete-user/{{$id= $user->id}}"><button style="background:rgba(240, 52, 28, 0.781)" class="action">delete user </button></a>

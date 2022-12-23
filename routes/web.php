@@ -12,6 +12,7 @@ use App\Http\Controllers\accountController;
 use App\Http\Controllers\messageController;
 use App\Http\Controllers\statsController;
 use App\Http\Controllers\transactionController;
+use Illuminate\Foundation\Bootstrap\LoadConfiguration;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +53,21 @@ Route::get('/filter-accounts',[statsController::class,'filter_accounts']);
 Route::get('/account-details/{id}',[statsController::class,'account_details']);
 // /filter al transactions 
 Route::get('/filter-alltransactions',[statsController::class,'filter_alltransactions']);
+// new admin transfer 
+Route::post('/new-admintransfer',[statsController::class,'new_transfer']);
+//Create new user
+Route::post('/new-user',[statsController::class,'new_user']);
+Route::get('admin-loans',[loanCotroller::class,'new_loan']);
+//loan details
+Route::get('/loan-details/{id}',[loanCotroller::class,'loan_details']);
+//grant loan 
+Route::get('/grant/{id}',[loanCotroller::class,'grant_loan']);
+//revoke laon
+Route::get('/revoke/{id}',[loanCotroller::class,'revoke_loan']);
+//delete loan
+Route::get('/delete-adloan/{id}',[loanCotroller::class,'delete_adloan']);
+
+
 
 
 
