@@ -1,16 +1,21 @@
 <?php
 
 use App\Models\Loan;
+use App\Models\News;
 use App\Models\Cheque;
+use App\Models\Insight;
+use App\Models\Welcome;
+use App\Models\Complain;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\loanCotroller;
 use App\Http\Controllers\billController;
 use App\Http\Controllers\cheqController;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\wireController;
+use App\Http\Controllers\statsController;
 use App\Http\Controllers\accountController;
 use App\Http\Controllers\messageController;
-use App\Http\Controllers\statsController;
+use App\Http\Controllers\complainController;
 use App\Http\Controllers\transactionController;
 use Illuminate\Foundation\Bootstrap\LoadConfiguration;
 
@@ -24,13 +29,51 @@ use Illuminate\Foundation\Bootstrap\LoadConfiguration;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+//###################HOME SECITON#############################
+
+
+
 #####################Adming section###########################
+//Route to  home page
+Route::get('/home-page',function(){
+    $welcome =Welcome::find(1);
+    // $welcome = compact('welcome');
+    session()->put('welcome',$welcome);
+    $insights = Insight::all();
+    $news = News::all();
+    return view('home.home',compact('insights'),compact('news'));
+});
+Route::get('/home-section',[statsController::class,'show_home']);
+//update welcome message
+Route::put('/add-message/{id}',[statsController::class,'edit_message']);
+// create news
+Route::get('/news',function(){
+    return view('home.add_news');
+});
+// change news 
+Route::put('/change-news/{id}',[statsController::class,'change_news']);
+// edit news 
+Route::get('/edit-news/{id}',[statsController::class,'edit_news']);
+// Add news 
+Route::post('/add-news',[statsController::class,'add_news']);
+// Delete news 
+Route::get('/delete-news/{id}',[statsController::class,'delete_news']);
+//insight form
+Route::get('/insight-form',function(){
+    return view("home.add_insight");
+});
+    //Add insight
+Route::post('/add-insight',[statsController::class,'add_insight']);
+// delete insight 
+Route::get('/delete-insight/{id}',[statsController::class,'delete_insight']);
+// edit insight 
+Route::get('/edit-insight/{id}',[statsController::class,'edit_insight']);
+//change insight
+Route::put('/change-insight/{id}',[statsController::class,'change_insight']);
 Route::get('/users',[statsController::class,'show_users']);
 Route::get('/accounts',[statsController::class,'show_accounts']);
 Route::get('/alltransactions',[statsController::class,'alltransactions']);
-Route::get('/complains',function(){
-    return view('admin.complains');
-});
 // filter admin transactions 
 Route::get('/filter-admintrans',[accountController::class,'filter_admintrans']);
 ///delete admin transactions
@@ -66,8 +109,14 @@ Route::get('/grant/{id}',[loanCotroller::class,'grant_loan']);
 Route::get('/revoke/{id}',[loanCotroller::class,'revoke_loan']);
 //delete loan
 Route::get('/delete-adloan/{id}',[loanCotroller::class,'delete_adloan']);
-
-
+// show user complains
+Route::get('/complains',[complainController::class,'all_complains']);
+//complaine details
+Route::get('/complain-detail/{id}',[complainController::class,'complain_detail']);
+//reply to complain 
+Route::put('/reply-complain/{id}',[complainController::class,'reply_complain']);
+//delte complain
+Route::get("delete-complain/{id}",[complainController::class,'delete_complain']);
 
 
 
@@ -135,6 +184,14 @@ Route::post('/req-check',[cheqController::class,'new_cheq']);
 Route::get('/test',function(){
     return view('welcome');
 });
+//complain
+Route::get('/complain',function(){
+    $user = auth()->user()->id;
+    $complains = Complain::latest()->where("complainer","=",$user)->get();
+    return view('client.complain',compact('complains'));
+});
+//new complain
+Route::post('/new-complain',[complainController::class,'new_complain']);
 // dont touch anyhting below here 
 
 Route::middleware([

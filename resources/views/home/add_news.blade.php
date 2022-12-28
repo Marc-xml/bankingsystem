@@ -2,50 +2,43 @@
     <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\loans.css') }}">
     <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\accounts.css') }}">
     <x-flash-message/>
-    <p class="account">Review user information</p>
+    <p class="account">Add news</p>
     <hr class="main-line">
     <br>
  
     <div class="review-form">
       
-        <form action="/update-user/{{$id = $user->id}}"  method="POST"  enctype="multipart/form-data">
+        <form action="/add-news"  method="POST"  enctype="multipart/form-data">
             @csrf
-            @method('PUT')
+           
            
               <div class="row">
               <div class="text_field" >
-                <input type="text" required name="name" value="{{$user->name}}" />
-                <label for="">Full name</label>
+                <input type="text" required name="title" value="" />
+                <label for="">Title</label>
                 
             </div>
             <div class="text_field" >
-                <input type="email" required name="email" value="{{$user->email}}" />
-                <label for="">Email</label>
+                <input type="text" required name="content" value="" />
+                <label for="">Content</label>
                 
             </div>
             <div class="text_field">
-                <input type="text" required name="address" value="{{$user->address}}" />
-                <label for="">address</label>
+                <input type="file" required name="image" value="" />
+                <label for="">Image</label>
                 
             </div>
           </div>
-           <div class="row">
-            <div class="text_field">
-              <input type="text" required name="phone" value="{{$user->Phone}}" />
-              <label for="">phone number</label>
-              @error('account')
-        <p style="color:red">{{$message}}</p>
-        @enderror
-          </div>
-        </form>
-           </div>
+        
+          
+        
+          
           
          
           
            
           
-       
-       
+        
           <div class="bottom">
        
           </div>
@@ -56,9 +49,8 @@
           <div class="bottom">
           {{-- <span style="color:#707070;font-size:13px">NB:Make sure every document submited here is authentic and can be verified,violation of these might lead to serious sanctions</span> --}}
           </div>
-          
+        </form>
            
-          </form>
                 
     </div>
 </x-admin-layout>

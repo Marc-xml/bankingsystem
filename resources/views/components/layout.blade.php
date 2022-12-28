@@ -99,7 +99,7 @@
 
               
               <li>
-                <a href="/bill"><i class="fa fa-gear fac {{'bill' == request()->path() ? 'active' : ''}}"></i></a>
+                <a href="/complain"><i class="fa fa-triangle-exclamation fac {{'complain' == request()->path() ? 'active' : ''}}"></i></a>
                 <span class="nav-item"></span>
             </li>
           </ul>

@@ -774,6 +774,32 @@ width:6rem;
     }
     /* media queries  */
 }
+/* send and reply box 
+ */
+
+ .replies{
+    max-width: 47rem;
+ }
+ .send{
+    background-color: #fff;
+    border-radius:5px;
+    padding:10px;
+    box-shadow:rgba(149,157,165,0.2)0px 8px 24px;
+    max-width: 20rem;
+   margin-top:10px;
+
+ }
+ .reply{
+    background-color: #2D89EF;
+    color:#fff;
+    border-radius:5px;
+    padding:10px;
+    box-shadow:rgba(149,157,165,0.2)0px 8px 24px;
+   margin-left:auto;
+   margin-top:10px;
+    max-width: 20rem;
+ }
+
 @media (max-width:1250px){
     .account-card-dekstop{
             max-width:250px;

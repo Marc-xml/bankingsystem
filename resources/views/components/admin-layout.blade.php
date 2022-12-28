@@ -16,9 +16,13 @@
     <link rel="stylesheet" href="{{ asset('invoice_2.0\View\assets\fontawesome-free-6.2.1-web\css\fontawesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('invoice_2.0\View\assets\swiper.css') }}">
     <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\bills.css') }}">
+    <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\home.css') }}">
     <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\accounts.css') }}">
     <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\admmain.css') }}">
+    <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\transfer.css') }}">
+    <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\edit_home.css') }}">
     <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\loans.css') }}">
+
 
 
 </head>
@@ -110,7 +114,7 @@
             </li>
 
               <li>
-                  <a href="/wire"><i class="fa fa-blog fac {{'wire' == request()->path() ? 'active' : ''}}"></i></a>
+                  <a href="/home-section"><i class="fa fa-blog fac {{'wire' == request()->path() ? 'active' : ''}}"></i></a>
                   <span class="nav-item"></span>
               </li>
 
@@ -126,7 +130,9 @@
   
       <div class="main">
         <div class="side-info">
-            <span><i class="fa fa-blog" ></i></span>
+         <a href="/home-section">
+          <span><i class="fa fa-blog" ></i></span>
+         </a>
         </div>
   
     {{$slot}}
