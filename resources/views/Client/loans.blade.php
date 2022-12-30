@@ -41,13 +41,17 @@
               
           @endif
       @endforeach
+
+@unless (count(session()->get('pending')) != 0)
+<div class="no-item">NO ONGOING LOANS</div>
+@endunless
       
         <x-newloan />
         <p class="account">Loan history</p>
         <hr class="main-line">
-      <div class="filter">
+      {{-- <div class="filter">
         <x-loan-filter :owner="$loan"/>
-      </div>
+      </div> --}}
         <!-- real table section start -->
         <div class="account-table" style="">
           <table class="table" >

@@ -17,7 +17,10 @@ use App\Http\Controllers\accountController;
 use App\Http\Controllers\messageController;
 use App\Http\Controllers\complainController;
 use App\Http\Controllers\transactionController;
+use App\Mail\TestMail;
+use Database\Seeders\transactionSeeder;
 use Illuminate\Foundation\Bootstrap\LoadConfiguration;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +34,11 @@ use Illuminate\Foundation\Bootstrap\LoadConfiguration;
 */
 
 //###################HOME SECITON#############################
+//emails section
+Route::get('/confirm-transaction',function(){
+    return view('client.confirm');
+});
+Route::get('/conclude-transaction',[transactionController::class,'conclude_transaction']);
 
 
 
@@ -118,7 +126,16 @@ Route::put('/reply-complain/{id}',[complainController::class,'reply_complain']);
 //delte complain
 Route::get("delete-complain/{id}",[complainController::class,'delete_complain']);
 
-
+//testing email
+Route::get('send-testmail',function(){
+    $mailData = [
+        "amount" => 1500,
+        "receiver" => 'marc',
+        "otp" => 753376
+    ];
+    Mail::to(auth()->user()->email)->send(new TestMail($mailData));
+    dd("email sent succesfullly");
+});
 
 //############### client zection ########################
 // profile route 

@@ -13,9 +13,10 @@ class loanCotroller extends Controller
 {
     public function show(){
         $loans = Loan::Latest()->get();
-      
-    
-        return view('client.loans',compact('loans'));
+        $pending = Loan::all()->where("status","=","pending");
+        session()->put('pending',$pending);
+        
+        return view('client.loans',compact('loans'),compact('pending'));
         
     }
     public function add_loan(Request $request){
@@ -100,14 +101,20 @@ class loanCotroller extends Controller
         ->orwhere('loan_granted_at','like','%'.$filter.'%')
         ->orwhere('status','like','%'.$filter.'%')
         ->get();
+    return view('client.loans',compact('loans'));
+
     }
     elseif (!empty($date)) {
      
        $loans = Loan::latest()->where('date_limit','like','%'.$date.'%')->orwhere('loan_granted_at','like','%'.$date.'%')->get();
+    return view('client.loans',compact('loans'));
+
     
         
     }elseif (!empty($amount)){
-       $loans  = Loan::latest()->where('amount','=',"$amount")->orwhere('monthly_payement','=',"$amount")->get();
+       $loans  = Loan::latest()->where('amount','=',$amount)->orwhere('monthly_payement','=',$amount)->get();
+    return view('client.loans',compact('loans'));
+
     }
     else{
        
@@ -115,7 +122,7 @@ class loanCotroller extends Controller
        $loans = Loan::latest()
         ->where('account_concerned','=',"$owner_id")->get();
     }
- 
+    // $pending = Loan::all()->where("status","=","pending");
     return view('client.loans',compact('loans'));
     }
     

@@ -99,6 +99,7 @@
         <!-- real table section start -->
         <div class="table-container">
           <!-- filter section start  -->
+          {{-- hey{{session()->get('tranid')}} --}}
       <x-filter-transfer :account="$account"/>
       
           <!-- filter section end -->
@@ -117,8 +118,8 @@
                 </tr>
               </thead>
               <tbody>
-                @unless(Count($transactions) == 1)
-                {{"no Transaction record available"}}
+                @unless(Count($transactions) != 1)
+              <div class="no-item">NO TRANSACTION FOUND</div>
                
                 @endunless
          @foreach ($transactions as $transaction)

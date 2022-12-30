@@ -31,7 +31,7 @@
         <div class="loader"></div>
     </div>
     <div class="header">
-      <span class="logo">INVOICE <span style="color:grey">ADMIN</span></span>
+      <span class="logo" style="font-size:15px">INVOICE <span style="color:grey">ADMIN</span></span>
     
           <div class="icons">
          

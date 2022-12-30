@@ -733,6 +733,15 @@ width:6rem;
 
 
 }
+.no-item{
+    text-align:center;
+    width:100%;
+    background-color: #2b569718;
+    font-size:19px;
+    margin:10px;
+    font-weight: 600;
+    padding:20px;
+}
 @media(max-width:700px){
     .text_field input{
         width:auto;

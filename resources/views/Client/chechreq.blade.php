@@ -92,5 +92,8 @@
         @foreach ($cheques as $cheque)
         <x-cheq-card :cheque="$cheque"/>
         @endforeach
+        @unless (count($cheques) != 0)
+            {{"No request"}}
+        @endunless
         
 </x-layout>
