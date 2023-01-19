@@ -11,6 +11,7 @@
     <div class="loader_bg">
         <div class="loader"></div>
     </div>
+    <x-flash-message />
    <div class="center">
     <h1>INVOICE INC</h1>
     <x-jet-validation-errors class="errors" />

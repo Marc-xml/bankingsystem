@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Account;
-use App\Models\Loan;
+use App\Mail\laonGranted;
+use App\Mail\loanDenied;
 use Error;
+use App\Models\Loan;
+use App\Models\Account;
+use App\Mail\verifyLoan;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Mail;
 use function PHPUnit\Framework\isEmpty;
 
 class loanCotroller extends Controller
@@ -14,7 +18,9 @@ class loanCotroller extends Controller
     public function show(){
         $loans = Loan::Latest()->get();
         $pending = Loan::all()->where("status","=","pending");
+        $complete = Loan::all()->where("status","=","complete");
         session()->put('pending',$pending);
+        session()->put('complete',$complete);
         
         return view('client.loans',compact('loans'),compact('pending'));
         
@@ -34,19 +40,20 @@ class loanCotroller extends Controller
             $loan->income_proof = $request->file('income')->store('docs', 'public');
             $loan->address_proof = $request->file('addressproof')->store('docs', 'public');
             $loan->purpose = $request->purpose;
+            $loan->email = auth()->user()->email;
             $loan->amount = $request->loan_amount;
             $loan->monthly_payement = $request->permonth;
             $loan->date_limit = $request->time;
             $loan->status = "pending";
             // $loan->loan_granted_at = date("y-m-d");
-    
+      session()->put('loan_account',$request->account);
             $loan->save();
-            return redirect('/loans')->with("message","Loan form submitted");
+            return redirect('/verify-loans')->with("message","Loan form submitted Please check your emails for the verification code");
             
             
         }else{
 
-            return redirect('/loans')->with("message","You already have an ongoing or pending loan");
+            return redirect('/loans')->with("message","You already have a pending loan cancel it and try again");
 
         }
     
@@ -137,21 +144,103 @@ class loanCotroller extends Controller
         return view("admin.loan_details",compact('loan'));
     }
     public function grant_loan($id){
+        session()->put("loan_id",$id);
         $loan = Loan::find($id);
+        $account_id = $loan->account_concerned;
+        $amount = $loan->amount;
+        $account = Account::find($account_id);
+        $new_balance = $account->balance + $amount;
+        $account->balance = $new_balance;
         $loan->status = "granted";
         $loan->update();
+        $account->update();
+        Mail::to($loan->email)->send(new laonGranted);
+
+    
+
         return back()->with("message","Loan has been granted to user");
     }
-
+     protected function schedule(Schedule $schedule){
+        $schedule->call(function (){
+            $id = session()->get("loan_id");
+            $loan = Loan::find($id);
+            $account_id = $loan->account_concerned;
+            $amount = $loan->amount;
+            $amount_payed = 0;
+            $account = Account::find($account_id);
+          while($amount != $amount_payed){
+            if($account->balance > $loan->monthly_payement){
+                $pay = $account->balance - $loan->monthly_payement;
+                $account->balance = $pay;
+                $amount_payed += $pay;
+                $loan->amount_payed = $amount_payed;
+                try{
+                    $loan->update();
+                    $account->update();
+                return redirect('/loans')->with("message","Monthly loan payement succesfull");
+                    
+                }catch(\throwable $e){
+                    return redirect('/loans')->with("message","An error occured when trying to get loan monthly payement");
+                }
+            }else{
+                return redirect('/loans')->with("message","Balance not enoug");
+            }
+          }
+        })->monthly();
+     }
     public function revoke_loan($id){
         $loan = Loan::find($id);
         $loan->status = "denied";
         $loan->update();
+        Mail::to($loan->email)->send(new loanDenied);
         return back()->with("message","Loan request has been revoked");
     }
     public function delete_adloan($id){
         $loan = Loan::find($id);
         $loan->delete();
         return back()->with("message","loan succesfully deleted");
+    }
+    public function verify_loan(){
+        function generate_otp($n){
+            $gen = "1357902468";
+            $res = "";
+            for ($i = 1; $i <= $n; $i++)
+         {
+            $res .= substr($gen, (rand()%(strlen($gen))), 1);
+         }
+            return $res;
+         }
+         $otp = generate_otp(6);
+         session()->put('otp',$otp);    
+
+         try{
+         Mail::to(auth()->user()->email)->send(new verifyLoan());
+         }catch(\Throwable $e){
+            return back("check your internet connection");
+         }
+         return view("client.confirm_loan")->with("message","Please check your emails for the verification code ");
+    }
+    public function confirm_loan(Request $request){
+        $otp = session()->get('otp');
+        if($otp == $request->otp){
+            $account = session()->get('loan_account');
+            $loans = Loan::where("account_concerned","=",$account)->where(function($query){
+                $query->where("status","=","pending");
+            })->get();
+            $loanIds = $loans->pluck('id')->toArray();
+            $loanId = $loanIds[0];
+            $loan = Loan::find($loanId);
+            $loan->status = "complete";
+                try{
+            $loan->save();
+
+                }catch(\Throwable $e){
+                    return back()->with("message","an error occured");
+                }
+                return redirect('/loans')->with("message","Loan verification complete");
+        }else{
+            return back()->with("message","Incorrect otp code");
+        }
+
     }
 }

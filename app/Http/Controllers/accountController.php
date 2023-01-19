@@ -29,6 +29,9 @@ public function send_message(Request $request){
 }
 public function show(Request $request){
     $usertype = auth()->user()->usertype;
+    if(auth()->user()->restricted == "yes"){
+        return back()->with("message","Your account has been suspended");
+    }
     if($usertype=='1' || $usertype=='2'){
         // admin section 
         // count accounts 

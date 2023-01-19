@@ -59,7 +59,7 @@
 
       
     </div>
- @if($loan->status == "pending")
+ @if($loan->status == "complete")
  <div style="float:right">
     <p>Action:
      <a href="/grant/{{$id = $loan->id}}">

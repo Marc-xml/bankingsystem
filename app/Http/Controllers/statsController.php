@@ -359,4 +359,12 @@ public function change_insight(Request $request,$id){
         return back()->with("message","An error occured please try again");
 }
 }
+
+    public function restrict_access($id){
+        $user = User::find($id);
+        $user->restricted = "yes";
+        $user->update();
+
+        return back()->with("message","User restrcited");
+    }
 }

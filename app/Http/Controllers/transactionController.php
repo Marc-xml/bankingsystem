@@ -106,8 +106,7 @@ class transactionController extends Controller
         session()->put('amount',$request->amount);
         session()->put('receiver',$request->receiver);
         // generate otp 
-        function generate_otp($n)
-{
+        function generate_otp($n){
    $gen = "1357902468";
    $res = "";
    for ($i = 1; $i <= $n; $i++)

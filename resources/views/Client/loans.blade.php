@@ -18,10 +18,12 @@
         {{-- @unless(count($loans) == 1)
         {{"YOu currently have no ongoing laons"}}
         @endunless --}}
-      
+        @unless (count(session()->get('complete')) != 0)
+        <div class="no-item">NO  UNGRANTED LOAN FOUND</div>
+        @endunless
 
         @foreach ($loans as $loan)
-        @if ($loan->status == 'uncompleted')
+        @if ($loan->status == 'complete')
         <x-loan-card :loan="$loan" />
        
             
@@ -38,12 +40,12 @@
           @if ($loan->status == 'pending')
          
           <x-loan-card :loan="$loan" id="pending" />
-              
+          
           @endif
       @endforeach
 
 @unless (count(session()->get('pending')) != 0)
-<div class="no-item">NO ONGOING LOANS</div>
+<div class="no-item">NO UNVERIFIED LOANS</div>
 @endunless
       
         <x-newloan />

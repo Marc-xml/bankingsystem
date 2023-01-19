@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Mail\reply_complain;
 use App\Models\Complain;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class complainController extends Controller
 {
@@ -37,6 +38,8 @@ class complainController extends Controller
         $complain = complain::find($id);
         $complain->status = "solved";
         $complain->reply = $request->reply;
+        session()->put("complain_reply",$complain);
+        Mail::to($complain->email)->send(new reply_complain);
         $complain->update();
         return back()->with("message","reply was sent");
     }
