@@ -3,6 +3,22 @@
     margin:0;
     padding:0;
 }
+.notify-box{
+    color:#fff;
+    background-color: #2D89EF;
+    padding:20px;
+    text-align:center;
+   
+   /* position  :absolute; */
+   border-bottom-right-radius: 10px;
+   border-bottom-left-radius: 10px;
+   /* font-size:17px; */
+   /* font-weight: 600; */
+   /* top:0;
+   left:40%;
+    z-index:30 */
+
+}
 html,body{
     overflow:scroll;
     height:100%;
@@ -86,6 +102,12 @@ padding-top:15px;
 color:#3F3f3f88;
 
 
+}
+.hidden-name{
+    background: #fff;
+    padding:6px;
+    font-weight:600;
+    border-radius:5px;
 }
 .icons span{
    padding-left :40px;

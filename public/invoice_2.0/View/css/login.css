@@ -8,7 +8,7 @@ body{
 }
 .nav{
     display:flex;
-    width:100%;
+    width:98%;
 
 
 
@@ -69,7 +69,18 @@ body{
     background-color:#2D89EF;
     padding:10px;
     color:#fff;
-    border-radius: 5px;;
+    border-radius: 5px;
+    cursor:pointer;
+}
+.button:hover{
+ background-color: #255996;
+ transform: scale(1.1);
+ transition: 0.3s;
+}
+.button::after{
+    background-color:#2D89EF;
+    transform: scale(1);
+    transition: 0.5s;
 }
 .home{
  color:#2D89EF;
@@ -84,7 +95,7 @@ body{
     position:absolute;
     top:50%;
     left:50%;
-    transform:translate(-50%,-50%);
+    transform:translate(-55%,-50%);
     background:transparent;
     max-width:600px;
     border-radius:10px;
@@ -142,6 +153,12 @@ h2{
     font-size:15px;
     font-weight:600;
     padding:9px;
+    cursor:pointer;
+}
+.submit_button input:hover{
+    background-color: #255996;
+    transform: scale(1.1);
+    transition: 0.5s;
 }
 .signup_link{
     text-align:center;

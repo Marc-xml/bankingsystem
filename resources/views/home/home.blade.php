@@ -19,9 +19,9 @@
         {{-- top navbar  --}}
         <nav class="top-nav">
             <div class="nav-items">
-                {{-- <div style="margin-right:auto;color:#fff;padding:10px;font-size:15px;font-weight:700;">INVOICE</div> --}}
+                <div style="margin-right:auto;color:#fff;padding:10px;font-size:15px;font-weight:700;">INVOICE <i class="fa fa-feather"></i></div>
 
-                <div><a href="">My online banking</a></div>
+                <div><a href="{{url('/login')}}">My online banking</a></div>
               
             </div>
 @php

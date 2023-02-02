@@ -193,7 +193,10 @@ Route::post('/req-check',[cheqController::class,'new_cheq']);
 //choose account in accounts
  Route::get('/account/{id}',[accountController::class,'choose'])->middleware('auth','verified');
  //choose account in transactions
- Route::get('/accounts/{id}',[transactionController::class,'choose'])->middleware('auth','verified');
+ Route::get('/transactions/{id}',[transactionController::class,'choose'])->middleware('auth','verified');
+ //modify account alias
+ Route::get('/account/alias/{id}',[accountController::class,'display_account'])->middleware('auth','verified');
+ Route::put('/change-alias/{id}',[accountController::class,'change_alias'])->middleware('auth','verified');
  //filter in accounts
  Route::get('/filter/{id}',[accountController::class,'filtertrans'])->middleware('auth','verified');
  //filter in transactions

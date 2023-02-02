@@ -143,7 +143,7 @@ session()->put('otp',$otp);
             Mail::to(auth()->user()->email)->send(new verifyTransaction());
 
         }catch(Throwable $e){
-            return redirect('/transactions')->with("message","transaction failed");
+            return redirect('/transactions')->with("message","transaction failed,check your internet connection");
         }
         return redirect('/confirm-transaction')->with("message","transaction initiated");
     }

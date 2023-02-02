@@ -1,8 +1,8 @@
 <div>
-    <a href="/account/{{$id = $account->id}}">
+    <a href="/transactions/{{$id = $account->id}}">
     
 
-        <div class="account-card-dekstop swiper-slide   {{ 'account/'.$account->id == request()->path() ? 'active-account' : ''}} "  >
+        <div class="account-card-dekstop swiper-slide   {{ 'transactions/'.$account->id == request()->path() ? 'active-account' : ''}} {{ 'transactions' == request()->path() ? 'active-account' : ''}}"  >
             <!-- uper section of card start  -->
             <div class="upper-card">
     
@@ -17,7 +17,7 @@
              <span class="agency">PRINCIPAL AGENCY</span>
              </div>
             </div>
-            <hr class="card-line" >
+            <hr class="card-line">
             <!-- uper section of card end  -->
             <!-- lower section of card start  -->
             <div class="lower-card">

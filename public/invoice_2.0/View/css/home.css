@@ -83,7 +83,7 @@
 .banner-image{
 background-size: cover; 
 object-fit: cover; 
-height:700px;
+height:500px;
 width:100%;
 backdrop-filter:blur;
 color:#fff;

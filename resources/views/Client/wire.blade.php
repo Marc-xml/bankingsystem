@@ -2,7 +2,7 @@
  
   <link rel="stylesheet" href="invoice_2.0\View\css\accounts.css">
   <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\loans.css') }}">
- <link rel="stylesheet" href="invoice_2.0\View\css\wire_transfer.css">
+ {{-- <link rel="stylesheet" href="invoice_2.0\View\css\wire_transfer.css"> --}}
 
 
   <div class="bill-info">
@@ -22,7 +22,7 @@
 
     <form method="POST" action="/wire-transfer">
       @csrf
-        <div class="text_field">
+        <div class="text_field" style="width:20px;">
             <input type="text" required name="beneficiary">
             <label for="">Beneficiary name</label>
             

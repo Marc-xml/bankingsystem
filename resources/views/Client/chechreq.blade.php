@@ -5,7 +5,7 @@
         <p class="account">Chechbook request</p>
         <hr class="main-line">
 
-        <div class="review-form">
+        <div class="review-form" style="margin-left:auto;margin-right:auto">
      
             <form action="/req-check"  method="POST"  enctype="multipart/form-data">
                 @csrf
@@ -88,12 +88,12 @@
     
         <p class="account">Requested checkbooks</p>
         <hr class="main-line">
-  
+       <div style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between">
         @foreach ($cheques as $cheque)
         <x-cheq-card :cheque="$cheque"/>
         @endforeach
         @unless (count($cheques) != 0)
             {{"No request"}}
         @endunless
-        
+      </div>
 </x-layout>

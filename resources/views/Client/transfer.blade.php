@@ -1,9 +1,11 @@
 <x-layout>
 
 
-  <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\accounts.css') }}">
+  {{-- <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\accounts.css') }}"> --}}
   <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\transfer.css') }}">
   <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\loans.css') }}">
+  <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\accounts.css') }}">
+
 
 
     <p class="accounts" >Money transfer </p>
@@ -12,11 +14,17 @@
         <!-- accoutn section for dekstop start -->
         <div class="account-container">
           @foreach ($accounts as $account)
-     
-            <x-account-container-trans :account="$account"/>
-       
-       
-          @endforeach
+          @php
+          $first_id = $account->first()
+          @endphp
+      @endforeach     
+     @foreach ($accounts as $account)
+     @if ($account->id == $first_id->id)
+     <x-active-account-container-trans :account="$account"/>
+     @else
+     <x-account-container-trans :account="$account"/>
+     @endif
+     @endforeach
         </div>
          
           <!-- accoutn section for dekstop end -->
@@ -118,7 +126,7 @@
                 </tr>
               </thead>
               <tbody>
-                @unless(Count($transactions) != 1)
+                @unless(Count($transactions) != 0)
               <div class="no-item">NO TRANSACTION FOUND</div>
                
                 @endunless

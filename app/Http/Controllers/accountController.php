@@ -67,10 +67,41 @@ public function show(Request $request){
     $transactions = Transaction::latest()
      ->where('sender_account','=',$id)
     ->orwhere('receiver_account','=',$id)
-   ->get();
+   ->take(5)->get();
    $messages = DB::table('messages')->get();
+   $thisyeartransaction = Transaction::query()
+   ->whereYear('created_at', 2023)
+   ->selectRaw('month(created_at) as month')
+   ->selectRaw('count(*) as count')
+   ->groupBy('month')
+   ->orderBY('month')
+   ->pluck('count','month')
+   ->values()
+   ->toArray();
+   $debits = Transaction::query()
+   ->whereYear('created_at',2023)
+   ->selectRaw('month(created_at) as month')
+   ->selectRaw('sum(amount) as amount')
+   ->where('sender_account',$id)
+   ->groupBy('month')
+   ->orderBy('month')
+   ->pluck('amount','month')
+   ->values()
+   ->toArray();
+
+   $credits = Transaction::query()
+   ->whereYear('created_at',2023)
+   ->selectRaw('month(created_at) as month')
+   ->selectRaw('sum(amount) as amount')
+   ->where('receiver_account',$id)
+   ->groupBy('month')
+   ->orderBy('month')
+   ->pluck('amount','month')
+   ->values()
+   ->toArray();
+   
    $request->session()->put('mss',$messages);
-    return view('client.accounts',compact('accounts','transactions'));
+    return view('client.accounts',compact('accounts','transactions','thisyeartransaction','debits','credits'));
     }
    
 }
@@ -95,8 +126,16 @@ public function show(Request $request){
 //         'accounts' => $accounts,
 //     ]);
 // }
-
-
+public function display_account($id){
+    $account = Account::find($id);
+    return view('client.account-alias',compact('account'));
+}
+public function change_alias(Request $request,$id){
+    $account = Account::find($id);
+    $account->alias = $request->alias;
+    $account->update();
+    return view('client.accounts')->with("message","Account alias changed");
+}
 public function choose(Request $request ,$id){
     $user = auth()->user()->id;
     $accounts = Account::all()
@@ -106,17 +145,59 @@ public function choose(Request $request ,$id){
     $transactions = Transaction::latest()
     ->where('sender_account','=',"$id")
     ->orwhere('receiver_account','=',"$id")
+    ->take(5)
    ->get();
 
    $messages = DB::table('messages')->get();
+   $thisyeartransaction = Transaction::query()
+   ->whereYear('created_at', 2023)
+   ->selectRaw('month(created_at) as month')
+   ->selectRaw('count(*) as count')
+   ->groupBy('month')
+   ->orderBY('month')
+   ->pluck('count','month')
+   ->values()
+   ->toArray();
+   $request->session()->put('thisyeartransaction',$thisyeartransaction);
+   
+   $debits = Transaction::query()
+   ->whereYear('created_at',2023)
+   ->selectRaw('month(created_at) as month')
+   ->selectRaw('sum(amount) as amount')
+   ->where('sender_account',$id)
+   ->groupBy('month')
+   ->orderBy('month')
+   ->pluck('amount','month')
+   ->values()
+   ->toArray();
+   $request->session()->put('debits',$debits);
 
-    return view('client.accounts',compact('accounts'),compact('transactions'),$id,compact('messages'));
+   $credits = Transaction::query()
+   ->whereYear('created_at',2023)
+   ->selectRaw('month(created_at) as month')
+   ->selectRaw('sum(amount) as amount')
+   ->where('receiver_account',$id)
+   ->groupBy('month')
+   ->orderBy('month')
+   ->pluck('amount','month')
+   ->values()
+   ->toArray();
+   $request->session()->put('credits',$credits);
+   
+   $request->session()->put('mss',$messages);
+    return view('client.accounts',compact('accounts','transactions','thisyeartransaction','debits','credits','id','messages'));
+    
+   
+    // return view('client.accounts',compact('accounts'),compact('transactions'),$id,compact('messages'));
 }
 public function filtertrans(Request $request,$id){
         $filter = $request->query('search');
         $date = $request->query('date');
         $amount = $request->query('amount');
         $user = auth()->user()->id;
+        $thisyeartransaction = session()->get('thisyeartransaction');
+        $debits = session()->get('debits');
+        $credits = session()->get('credits');
         if(!empty($filter)){
             $accounts = Account::all()
             ->where('owner_id','=',"$user");
@@ -148,7 +229,7 @@ public function filtertrans(Request $request,$id){
            ->get();
         }
      
-        return view('client.accounts',compact('accounts'),compact('transactions'));
+        return view('client.accounts',compact('accounts'),compact('transactions','debits','credits','thisyeartransaction'));
         
 }
 // filter admin transactions 

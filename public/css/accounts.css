@@ -317,7 +317,8 @@ a{
 .card-line{
     margin:10px; 
     color:#E4E4E4; /*change color of the lines*/
-    width:320px;
+    max-width:320px;
+    
 
 }
 .agency{
@@ -462,7 +463,7 @@ max-width:7rem;
     background-color:#fff;
     margin-top:10px;
     width:100%;
-    height:400px;
+    height:700px;
 }
 .table{
     width:100%;

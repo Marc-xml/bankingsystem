@@ -12,13 +12,15 @@
     <div class="loader_bg">
         <div class="loader"></div>
     </div>
+   
 <div class="nav">
 <p class="logo">INVOICE</p>
 <div class="end">
-<span class="home">Home</span>
+<span class="home"><a href="{{url('/home-page')}}">Home</a></span>
 <a href="{{route('login')}}"><button class="button">Sign in</button></a>
 </div>
 </div>
+<br>
    <div class="center">
     <h1>REGISTER</h1>
     <h2>FIll in the informations below correctly</h2>
@@ -75,7 +77,7 @@
     @endif
 
         
-    <div class="submit_button">
+    <div class="submit_button ">
     <input type="submit" value="{{ __('Register') }}">
     </div>
         <div class="signup_link">

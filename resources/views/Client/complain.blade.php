@@ -4,7 +4,7 @@
     <p class="account">We are here to assist you</p>
     <hr class="main-line">
  <div class="review-info"  >Please fill the form below to file your complain</div>
-    <div class="review-form"    >
+    <div class="review-form"   style="margin-left:auto;margin-right:auto;" >
     
             
 
@@ -55,7 +55,7 @@
     <p class="account">Replies</p>
     <hr class="main-line">
   
-    <div class="replies">
+    <div class="replies" style="margin-left:auto;margin-right:auto">
         @foreach ($complains as $complain)
         <div class="send">{{$complain->content}}</div>
          @if ($complain->reply == null)

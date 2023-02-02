@@ -62,10 +62,10 @@
                 <th>Loan id</th>
                 <th>Amount(XAF)</th>
                 <th>Date granted</th>
-                <th>Date limit</th>
-                <th>monthly payement(XAF)</th>
-                <th>Loan type</th>
-                <th>Date completed</th>
+                <th class="show">Date limit</th>
+                <th class="show">monthly payement(XAF)</th>
+                <th class="show">Loan type</th>
+                {{-- <th class="show">Date completed</th> --}}
                 <th>Status</th>
              
               </tr>
@@ -82,15 +82,15 @@
         <td data-label = "S.no">{{$loan->id}}</td>
         <td data-label = "Name">{{$loan->amount}}</td>
         <td data-label = "Age">{{$loan->loan_granted_at}}</td>
-        <td data-label = "Country">{{$loan->date_limit}}</td>
+        <td class="show">{{$loan->date_limit}}</td>
 
-        <td data-label = "tel">{{$loan->monthly_payement}}</td>
-        <td data-label = "Country">SRT</td> 
-     @if ($loan->status == "denied")
+        <td class="show">{{$loan->monthly_payement}}</td>
+        <td class="show">SRT</td> 
+     {{-- @if ($loan->status == "denied")
      <td data-label = "Country">--- --- ---</td>
      @else
      <td data-label = "Country">23-45-554</td>
-     @endif 
+     @endif  --}}
         @if ($loan->status == "denied")
         <td data-label = "tel" style="color:red   "><span style="margin-right:5px;"><i class="fa fa-warning x-cancel"></i></span>{{$loan->status}}</td>
         @elseif($loan->status == "pending")
