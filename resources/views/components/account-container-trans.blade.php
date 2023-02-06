@@ -2,7 +2,7 @@
     <a href="/transactions/{{$id = $account->id}}">
     
 
-        <div class="account-card-dekstop swiper-slide   {{ 'transactions/'.$account->id == request()->path() ? 'active-account' : ''}}"  >
+        <div class="account-card-dekstop swiper-slide   {{ 'transactions/'.$account->id == request()->path() ? 'active-account' : ''}}"   >
             <!-- uper section of card start  -->
             <div class="upper-card">
     

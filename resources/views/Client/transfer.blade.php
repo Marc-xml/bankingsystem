@@ -10,6 +10,7 @@
 
     <p class="accounts" >Money transfer </p>
         <hr size='7' class="main-line">
+        <x-current-account />
         <p class="opt">Select an account to see more</p>
         <!-- accoutn section for dekstop start -->
         <div class="account-container">

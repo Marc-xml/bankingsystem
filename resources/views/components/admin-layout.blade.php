@@ -36,7 +36,7 @@
           <div class="icons">
          
           <span style="color:grey"><a href="{{url('/user/profile')}}" style="color:grey"><i class="fa fa-user {{ 'user/profile' == request()->path() ? 'active' : ''}}"></i></a></span>
-          <span><i class="fa fa-message"></i></span>
+          <span><a href="/admin/messages"><i class="fa fa-message"></i></a></span>
           {{-- <span><i class="fa fa-globe"></i></span> --}}
           <span><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a></span>
           </div>

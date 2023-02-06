@@ -1,6 +1,6 @@
 <x-layout>
   <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\accounts.css') }}">
-  
+  <x-current-account />
  
         <p class="accounts" >My Accounts</p>
         <hr size='7' class="main-line">

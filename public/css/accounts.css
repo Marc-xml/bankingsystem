@@ -399,6 +399,14 @@ a{
     padding:10px;
     margin-left:40px;
 }
+.statement_field{
+background:#2d87ef25;
+outline:none;
+border:none;
+padding:7px;
+border-radius:5px;
+max-width:7rem;
+}
 .filter-content input{
 background:#2d87ef25;
 outline:none;
@@ -408,6 +416,16 @@ border-radius:5px;
 max-width:7rem;
 
 
+}
+.statement_button{
+    padding:2px;
+    border:none;
+    background: #2D89EF;
+    color:#fff;
+    height:3rem;
+    padding:10px;
+    border-radius: 40px;
+    width:7rem;
 }
 .filter-button{
     padding:2px;
@@ -591,6 +609,7 @@ text-decoration: underline;
     padding:5px;
     margin:15px 6px 15px auto;  
     font-size:13px; 
+    box-shadow:2px 2px 2px 2px #2d87ef2d;
 }
 /* media query for table  */
 @media(max-width:700px){

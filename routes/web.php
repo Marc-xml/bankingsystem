@@ -129,7 +129,12 @@ Route::get('/complain-detail/{id}',[complainController::class,'complain_detail']
 Route::put('/reply-complain/{id}',[complainController::class,'reply_complain'])->middleware('auth','verified');
 //delte complain
 Route::get("delete-complain/{id}",[complainController::class,'delete_complain'])->middleware('auth','verified');
-
+//get all messgaes
+Route::get("admin/messages",[messageController::class,'admin_messages'])->middleware("auth","verified");
+Route::get("/filter-messages",[messageController::class,'filter_messages'])->middleware('auth',"verified");
+Route::get("/reply-message/{id}",[messageController::class,'reply_message'])->middleware('auth',"verified");
+Route::put("/send_reply/{id}",[messageController::class,'send_reply'])->middleware("auth","verified");
+Route::get("/delete_message/{id}",[messageController::class,'delete_message'])->middleware("auth","verified");
 //testing email
 Route::get('send-testmail',function(){
     $mailData = [
@@ -147,6 +152,10 @@ Route::get('/profile',function(){
     return view('client.profile');
 })->middleware('auth','verified');
 //bills
+//e-statement
+Route::get("/statement/month",[transactionController::class,'monthly_transact']);
+Route::get("/statement/precise",[transactionController::class,'precise_transact']);
+Route::get("/statement/range",[transactionController::class,'range_transact']);
 Route::post('/add-bill',[billController::class,'add_bill'])->middleware('auth','verified');
 Route::post('/bill-sched',[billController::class,'auto_bill'])->middleware('auth','verified');
 //wire transfer
@@ -174,9 +183,8 @@ Route::get('/transactions',[transactionController::class,'show']
 )->middleware('auth','verified');
 Route::get('/wire',[wireController::class,'show'])->middleware('auth','verified');
 Route::get('/loans',[loanCotroller::class,'show'])->middleware('auth','verified');
-Route::get('/statement',function(){
-    return view('client.statement');
-})->middleware('auth','verified');
+Route::get('/statement',[transactionController::class,'report']
+)->middleware('auth','verified');
 Route::get('/bill',function(){
     return view('client.bill');
 })->middleware('auth','verified');

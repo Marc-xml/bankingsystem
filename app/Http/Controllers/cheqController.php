@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cheque;
+use App\Models\Message;
 use Illuminate\Http\Request;
 
 class cheqController extends Controller
@@ -33,6 +34,9 @@ class cheqController extends Controller
             }
 
         
+   $messages = Message::all()->
+   where("sender","=",auth()->user()->id);
+   $request->session()->put("mss",$messages);
         return view('client.chechreq',compact('cheques'))->with('message','Checbook request submitted succesfully');
     }
 }

@@ -68,7 +68,8 @@ public function show(Request $request){
      ->where('sender_account','=',$id)
     ->orwhere('receiver_account','=',$id)
    ->take(5)->get();
-   $messages = DB::table('messages')->get();
+   $messages = DB::table('messages')
+   ->where("sender","=",auth()->user()->id)->get();
    $thisyeartransaction = Transaction::query()
    ->whereYear('created_at', 2023)
    ->selectRaw('month(created_at) as month')
@@ -148,7 +149,8 @@ public function choose(Request $request ,$id){
     ->take(5)
    ->get();
 
-   $messages = DB::table('messages')->get();
+   $messages = DB::table('messages')->
+   where("sender","=",auth()->user()->id)->get();
    $thisyeartransaction = Transaction::query()
    ->whereYear('created_at', 2023)
    ->selectRaw('month(created_at) as month')

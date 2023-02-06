@@ -27,6 +27,7 @@ class complainController extends Controller
     // all complains 
     public function all_complains(){
         $complains = Complain::all();
+        
         return view('admin.complains',compact("complains"));
     }
     public function complain_detail($id){

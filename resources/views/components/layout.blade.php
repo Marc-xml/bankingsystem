@@ -130,7 +130,7 @@
    
   <span class="message-trigger"><i class="fa fa-message"></i></span>
 
-  <div class="message-box" style="background: #fff;">
+  <div class="message-box" style="background: #fff;z-index:50;">
    <div class="message-actions">
            <span><i class="fa fa-trash"></i></span>
            <span class="move-box">Cancel</span>
@@ -142,8 +142,13 @@
 
      {{-- <div style="height:20rem;overflow;scroll;"> --}}
         @foreach ($messages as $message)
-     <div class="message">
+     <div class="message" style="box-shadow:2px 2px 2px 2px #2d87ef2d;">
          {{$message->content}}
+        {{-- <span style="font-size:10px;">sender:{{auth()->user()->name}} at {{$message->created_at}}</span> --}}
+        </div>
+        
+        <div class="message-1" style="box-shadow:2px 2px 2px 2px #2d87ef2d;padding:10px;">
+            {{$message->reply}}
         </div>
      @endforeach
     
@@ -179,7 +184,10 @@
       <script >
         setTimeout(function(){
       $('.loader_bg').fadeToggle();
-     }, 1500);8
+     }, 1500);
+      setTimeout(function(){
+        $('#notif').fadeToggle();
+      },4000);
       </script>
     @stack('scripts')
     </body>

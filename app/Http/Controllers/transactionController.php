@@ -7,6 +7,7 @@ use App\Models\Account;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Mail\verifyTransaction;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -54,42 +55,44 @@ class transactionController extends Controller
         return view('client.transfer',compact('accounts'),compact('transactions'),$id);
     }
     public function filtertrans(Request $request,$id){
-            $filter = $request->query('search');
-            $date = $request->query('date');
-            $amount = $request->query('amount');
-            $user = auth()->user()->id;
-            if(!empty($filter)){
-                $accounts = Account::all()
-                ->where('owner_id','=',"$user");
-                $transactions =  Transaction::latest()
-                ->where('id','like','%'.$filter.'%')
-                ->orwhere('sender_account','like','%'.$filter.'%')
-                ->orwhere('receiver_account','like','%'.$filter.'%')
-                ->orwhere('amount','like','%'.$filter.'%')
-                ->orwhere('created_at','like','%'.$filter.'%')
-                ->orwhere('status','like','%'.$filter.'%')
-                ->get();
-            }
-            elseif (!empty($date)) {
-                $accounts = Account::all()->where('owner_id','=',"$user");
-                $transactions = Transaction::latest()->where('created_at','like','%'.$date.'%')->get();
+        $filter = $request->query('search');
+        $date = $request->query('date');
+        $amount = $request->query('amount');
+        $user = auth()->user()->id;
+        $thisyeartransaction = session()->get('thisyeartransaction');
+        $debits = session()->get('debits');
+        $credits = session()->get('credits');
+        if(!empty($filter)){
+            $accounts = Account::all()
+            ->where('owner_id','=',"$user");
+            $transactions =  Transaction::latest()
+            ->where('id','like','%'.$filter.'%')
+            ->orwhere('sender_account','like','%'.$filter.'%')
+            ->orwhere('receiver_account','like','%'.$filter.'%')
+            ->orwhere('amount','like','%'.$filter.'%')
+            ->orwhere('created_at','like','%'.$filter.'%')
+            ->orwhere('status','like','%'.$filter.'%')
+            ->get();
+        }
+        elseif (!empty($date)){
+            $accounts = Account::all()->where('owner_id','=',"$user");
+            $transactions = Transaction::latest()->where('created_at','like','%'.$date.'%')->get();
+
             
-                
-            }elseif (!empty($amount)){
-                $accounts = Account::all()->where('owner_id','=',"$user");
-                $transactions  = Transaction::latest()->where('amount','=',"$amount")->get();
-            }
-            else{
-               
-                $accounts = Account::all()
-                ->where('owner_id','=',"$user");
-                $transactions = Transaction::latest()
-                ->where('sender_account','=',"$id")
-                ->orwhere('receiver_account','=',"$id")
-               ->get();
-            }
-         
-            return view('client.transfer',compact('accounts'),compact('transactions'));
+        }elseif (!empty($amount)){
+            $accounts = Account::all()->where('owner_id','=',"$user");
+            $transactions  = Transaction::latest()->where('amount','=',"$amount")->get();
+        }
+        else{
+           
+            $accounts = Account::all()
+            ->where('owner_id','=',"$user");
+            $transactions = Transaction::latest()
+            ->where('sender_account','=',"$id")
+            ->orwhere('receiver_account','=',"$id")
+           ->get();
+        }
+            return view('client.transfer',compact('accounts'),compact('transactions','debits','credits'));
             
     }
 
@@ -122,8 +125,11 @@ session()->put('otp',$otp);
 
         //now check if balance is enough
         $id = session()->get('acc');
-        $pending = Transaction::all()->where('status','=','pending');
-        $transactions = Transaction::all()->where('sender_account','=',"$id")->union($pending);
+        // $pending = Transaction::all()->where('status','=','pending');
+        $transactions = Transaction::all()->where('sender_account','=',$id)
+        ->where(function($query){
+            $query->where("status","=","pending");
+        });
         $account = Account::find($id);
         session()->put('account',$account);
         if($account->balance < $request->amount){
@@ -134,9 +140,9 @@ session()->put('otp',$otp);
             return back()->with("message","Invalid transaction");
         }
         // check if there is a pending transaction
-        // if(count($transactions) !== 0){
-        //     return back()->with("message","There is already a pending account, either complete it or cancel it in the recent transaction table ");
-        // }
+        if(count($transactions) >= 1){
+            return back()->with("message","There is already a pending account, either complete it or cancel it in the recent transaction table ");
+        }
       
             try{
             $transfer->save();
@@ -210,5 +216,137 @@ session()->put('otp',$otp);
         }else{
             return back()->with("message","incorrect otp try again");
         }
+    }
+    public function report(){
+        $date=date("m");
+        $id = session()->get('acc');
+
+        $transactions=Transaction::whereRaw("month(created_at) =?",[$date])->get();
+        $debit = Transaction::whereRaw("month(created_at)=?",[$date])->where(
+            function($query,){
+                $query->where("sender_account","=",session()->get('acc'));
+            }
+        )->sum("amount");
+        
+        $credit = Transaction::whereRaw("month(created_at)=?",[$date])->where(
+            function ($query,){
+                $query->where("receiver_account","=",session()->get('acc'));
+            }
+        )->sum("amount");
+        $total = Transaction::whereRaw("month(created_at)=?",$date)->sum("amount");
+        return view("client.statement",compact("total","transactions","debit","credit","date"));
+
+    }
+    public function monthly_transact(Request $request){
+        $date = $request->month;
+        $id = session()->get('acc');
+
+        $transactions=Transaction::whereRaw("month(created_at) =?",[$date])->get();
+        $debit = Transaction::whereRaw("month(created_at)=?",[$date])->where(
+            function($query){
+                $query->where("sender_account","=",session()->get('acc'));
+            }
+        )->sum("amount");
+        
+        $credit = Transaction::whereRaw("month(created_at)=?",[$date])->where(
+            function ($query,){
+                $query->where("receiver_account","=",session()->get('acc'));
+            }
+        )->sum("amount");
+        $total = Transaction::whereRaw("month(created_at)=?",$date)->sum("amount");
+        return view("client.statement",compact("total","transactions","debit","credit","date"));
+
+           
+    }
+    public function precise_transact(Request $request){
+        $month = $request->month;
+        $year = $request->year;
+        $date = $request->date;
+        $request->session()->put("year",$year);
+        $request->session()->put("date",$date);
+      $year_query = Transaction::whereRaw("year(created_at)=?",[$year]);
+      $transactions = Transaction::whereRaw("month(created_at)=?",[$month])
+      ->where(function($query){
+        $query->whereRaw("year(created_at)=?",session()->get("year"));
+    })->where(function($query){
+        $query->whereRaw("day(created_at)=?",session()->get("date"));
+    })->get();
+        -
+        
+      
+        $debit =Transaction::whereRaw("month(created_at)=?",[$month])
+        // ->union($year_query)
+        ->where(function($query){
+            $query->where("sender_account","=",session()->get("acc"));
+        })
+        ->where(function($query){
+            $query->whereRaw("year(created_at)=?",session()->get("year"));
+        })->where(function($query){
+            $query->whereRaw("day(created_at)=?",session()->get("date"));
+        })
+        ->sum("amount");
+
+        $credit = Transaction::whereRaw("month(created_at)=?",[$month])
+        // ->union($year_query)
+        ->where(function($query){
+            $query->where("receiver_account","=",session()->get("acc"));
+        })
+        ->where(function($query){
+            $query->whereRaw("year(created_at)=?",session()->get("year"));
+        })
+        ->where(function($query){
+            $query->whereRaw("day(created_at)=?",session()->get("date"));
+        })
+        
+        ->sum("amount");
+
+        $total = Transaction::whereRaw("month(created_at)=?",[$month])
+        ->where(function($query){
+            $query->whereRaw("year(created_at)=?",session()->get("year"));
+            
+        })
+        ->where(function($query){
+            $query->whereRaw("day(created_at)=?",session()->get("date"));
+        })
+        
+        
+        // ->union($year_query)
+        ->sum("amount");
+    
+        return view("client.statement",compact("total","transactions","debit","credit","date","year","month"));
+
+    }
+    public function range_transact(Request $request){
+        $from = $request->from;
+        $to = $request->to;
+        $year = $request->year;
+        $request->session()->put("year",$year);
+// dd($from,$to,$year);
+        $transactions = Transaction::whereBetween(DB::raw("month(created_at)"),[$from,$to])
+        ->where( function($query){
+            $query->whereRaw("year(created_at)=?",session()->get("year"));
+        })->get();
+        // dd($transactions);
+        $debit =  Transaction::whereBetween(DB::raw("month(created_at)"),[$from,$to])
+        ->where( function($query){
+            $query->whereRaw("year(created_at)=?",session()->get("year"));
+        })
+        ->where( function($query){
+            $query->where("sender_account","=",session()->get("acc"));
+        })
+        ->sum("amount");
+        $credit =  Transaction::whereBetween(DB::raw("month(created_at)"),[$from,$to])
+        ->where( function($query){
+            $query->whereRaw("year(created_at)=?",session()->get("year"));
+        })
+        ->where( function($query){
+            $query->where("receiver_account","=",session()->get("acc"));
+        })
+        ->sum("amount");
+        $total =  Transaction::whereBetween(DB::raw("month(created_at)"),[$from,$to])
+        ->where( function($query){
+            $query->whereRaw("year(created_at)=?",session()->get("year"));
+        })->sum("amount");
+        return view("client.statement",compact("total","transactions","debit","credit"));
     }
 }
