@@ -2,25 +2,27 @@
 
 use App\Models\Loan;
 use App\Models\News;
+use App\Mail\TestMail;
 use App\Models\Cheque;
 use App\Models\Insight;
 use App\Models\Welcome;
 use App\Models\Complain;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\loanCotroller;
+use Database\Seeders\transactionSeeder;
 use App\Http\Controllers\billController;
 use App\Http\Controllers\cheqController;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\wireController;
 use App\Http\Controllers\statsController;
+use App\Http\Controllers\tellerController;
 use App\Http\Controllers\accountController;
 use App\Http\Controllers\messageController;
 use App\Http\Controllers\complainController;
 use App\Http\Controllers\transactionController;
-use App\Mail\TestMail;
-use Database\Seeders\transactionSeeder;
 use Illuminate\Foundation\Bootstrap\LoadConfiguration;
-use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +35,7 @@ use Illuminate\Support\Facades\Mail;
 |
 */
 
-//###################HOME SECITON#############################
+//###################HOME SECTION#############################
 //emails section
 Route::get('/confirm-transaction',function(){
     return view('client.confirm');
@@ -44,7 +46,11 @@ Route::get('/confirm-loan',[loanCotroller::class,'confirm_loan'])->middleware('a
 Route::get('/email-user/{id}',[userController::class,'contact_user'])->middleware('auth','verified');
 Route::post('/send_email',[userController::class,'send_email'])->middleware('auth','verified');
 
-#####################Adming section###########################
+// ########################TELLER SECTION#######################
+Route::get('/teller/users',[tellerController::class,'all_users'])->middleware('auth','verified');
+Route::get('/teller/transactions',[tellerController::class,'all_transactions'])->middleware('auth','verified');
+Route::get('/teller/loans',[tellerController::class,'all_loans'])->middleware('auth','verified');
+#####################Admin section###########################
 //Route to  home page
 Route::get('/home-page',function(){
     $welcome =Welcome::find(1);
@@ -131,7 +137,9 @@ Route::put('/reply-complain/{id}',[complainController::class,'reply_complain'])-
 Route::get("delete-complain/{id}",[complainController::class,'delete_complain'])->middleware('auth','verified');
 //get all messgaes
 Route::get("admin/messages",[messageController::class,'admin_messages'])->middleware("auth","verified");
+Route::get("/get-message",[messageController::class,'get_message'])->middleware("auth","verified");
 Route::get("/filter-messages",[messageController::class,'filter_messages'])->middleware('auth',"verified");
+Route::get("/filter-adminloans",[loanCotroller::class,'filteradloan'])->middleware('auth',"verified");
 Route::get("/reply-message/{id}",[messageController::class,'reply_message'])->middleware('auth',"verified");
 Route::put("/send_reply/{id}",[messageController::class,'send_reply'])->middleware("auth","verified");
 Route::get("/delete_message/{id}",[messageController::class,'delete_message'])->middleware("auth","verified");
@@ -194,10 +202,12 @@ Route::get('/confirm',function(){
 // cheques 
 Route::get('/checkbook',function(){
     $account = session()->get('acc');
+    $messages = DB::table('messages')
+   ->where("sender","=",auth()->user()->id)->get();
      $cheques = Cheque::Latest()->where('account_number','=',"$account")->get();
     return view('client.chechreq',compact('cheques'));
 })->middleware('auth','verified');
-Route::post('/req-check',[cheqController::class,'new_cheq']);
+Route::post('/req-check',[cheqController::class,'new_cheq'])->middleware("auth","verified");
 //choose account in accounts
  Route::get('/account/{id}',[accountController::class,'choose'])->middleware('auth','verified');
  //choose account in transactions

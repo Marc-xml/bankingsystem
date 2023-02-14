@@ -4,10 +4,12 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Loan;
 use App\Models\User;
-use App\Models\Account;
 
+use App\Models\Account;
 use App\Models\Message;
+use App\Models\Complain;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\Return_;
@@ -32,7 +34,7 @@ public function show(Request $request){
     if(auth()->user()->restricted == "yes"){
         return back()->with("message","Your account has been suspended");
     }
-    if($usertype=='1' || $usertype=='2'){
+    if($usertype=='1'){
         // admin section 
         // count accounts 
       $countAccount = count(Account::all());
@@ -43,6 +45,9 @@ public function show(Request $request){
     //   count transactions 
     $countTransactions = count(Transaction::all());
     session()->put("countTransactions",$countTransactions);
+     //   count complains 
+     $countComplain = count(Complain::all());
+     session()->put("countComplain",$countComplain);
 
     // get all transactions 
     $adminTransactions = Transaction::all();
@@ -50,7 +55,31 @@ public function show(Request $request){
 
         // filter transactions 
 
-    }else{
+    }
+    else if($usertype == 2){
+        //count accounts
+        $countAccount = count(Account::all());
+        session()->put("countAcc",$countAccount);
+    //    count users 
+        $countUsers = count(User::all());
+        session()->put("countUsers",$countUsers);
+        // count loans 
+        $countLoan = count(Loan::all());
+        session()->put("countLoan",$countLoan);
+           //   count transactions 
+    $countTransactions = count(Transaction::all());
+    session()->put("countTransactions",$countTransactions);
+        //count users
+    $countUsers = count(User::all());
+    session()->put("countUsers",$countUsers);
+        // get all transactions 
+        $adminTransactions = Transaction::all();
+       $accounts = Account::all();
+
+    return view("teller.accounts",compact("accounts"));
+
+    }
+    else{
         // client section 
         $user =auth()->user()->id;
     $accounts = Account::all()
@@ -102,6 +131,9 @@ public function show(Request $request){
    ->toArray();
    
    $request->session()->put('mss',$messages);
+   $request->session()->put("thisyeartransaction",$thisyeartransaction);
+   $request->session()->put("debits",$debits);
+   $request->session()->put("credits",$credits);
     return view('client.accounts',compact('accounts','transactions','thisyeartransaction','debits','credits'));
     }
    
@@ -135,7 +167,8 @@ public function change_alias(Request $request,$id){
     $account = Account::find($id);
     $account->alias = $request->alias;
     $account->update();
-    return view('client.accounts')->with("message","Account alias changed");
+   
+return back()->with("message","Account alias changed");
 }
 public function choose(Request $request ,$id){
     $user = auth()->user()->id;
@@ -231,7 +264,7 @@ public function filtertrans(Request $request,$id){
            ->get();
         }
      
-        return view('client.accounts',compact('accounts'),compact('transactions','debits','credits','thisyeartransaction'));
+        return view("client.accounts",compact('accounts'),compact('transactions','debits','credits','thisyeartransaction'));
         
 }
 // filter admin transactions 
@@ -267,7 +300,7 @@ public function filter_admintrans(Request $request){
  
     }
  
-    return view('admin.main',compact('adminTransactions'));
+    return back()->with(compact('adminTransactions'));
     
 }
 public function logout(Request $request) {

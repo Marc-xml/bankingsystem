@@ -1,7 +1,7 @@
 <x-layout>
   <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\accounts.css') }}">
   <x-current-account />
- 
+
         <p class="accounts" >My Accounts</p>
         <hr size='7' class="main-line">
         <p class="opt">Select an account to see more</p>
@@ -179,7 +179,12 @@ const labels = [
     
        <tr>
         <td data-label = "S.no">RIB 01001 0107365671{{$transaction->id}}</td>
-        <td data-label = "Name">{{$transaction->amount}}</td>
+      @if ($transaction->sender_account==session()->get('acc'))
+        <td data-label = "Name" style="color:red">-{{$transaction->amount}}</td>
+        @else
+        <td data-label = "Name" style="color:green">+{{$transaction->amount}}</td>
+
+      @endif
         <td data-label = "Age">{{$transaction->created_at}}</td>
         <td class="show">{{$transaction->description}}</td>
         <td  class="show">{{$transaction->status}}</td>
@@ -204,5 +209,49 @@ const labels = [
           <!-- message icon  -->
           {{-- <x-message>
           </x-message> --}}
+          
+  <span class="message-trigger"><i class="fa fa-message"></i></span>
+
+  <div class="message-box" style="background: #fff;z-index:50;height: 500px;">
+   <div class="message-actions">
+           <span><i class="fa fa-trash"></i></span>
+           <span class="move-box">Cancel</span>
+   </div>
+
+   @php
+       $messages = session()->get('mss');
+   @endphp
+
+     {{-- <div style="height:20rem;overflow;scroll;"> --}}
+ <div style="height:400px;overflow:scroll">
+  @foreach ($messages as $message)
+  <div class="message" style="box-shadow:2px 2px 2px 2px #2d87ef2d;z-index:50">
+      {{$message->content}}
+     {{-- <span style="font-size:10px;">sender:{{auth()->user()->name}} at {{$message->created_at->Carbon::format('H:i:s')}}</span> --}}
+     </div>
+     
+     <div class="message-1" style="box-shadow:2px 2px 2px 2px #2d87ef2d;padding:10px;">
+         {{$message->reply}}
+     </div>
+  @endforeach
+ 
+
+ </div>
+    
+
+
+
+ <hr>
+  <div class="below">
+  
+  <span class="message-icon"><i class="fa fa-message"></i></span>
+   <form action="/send-message" method="post">
+    @csrf
+        <input type="text" class="message-input" name="content" required>
+       <button type="submit" style="color:inherit;background:transparent;border:none"><i class="fa fa-paper-plane" ></i><button>
+        {{-- <span> type="submit"</span> --}}
+   </form>
+ 
+  </div> 
           
         </x-layout>

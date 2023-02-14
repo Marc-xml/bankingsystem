@@ -17,7 +17,7 @@
   
       <div class="filter-content filter-off">
         <span><i class="fa fa-dollar"></i>By amount</span>
-        <input type="text" class="filter-box" placeholder="amount" name="amount">
+        <input type="number" class="filter-box" placeholder="amount" name="amount">
       </div>
       
   

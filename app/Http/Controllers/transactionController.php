@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Throwable;
+use Carbon\Carbon;
 use App\Models\Account;
+use App\Models\Message;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Mail\verifyTransaction;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -34,6 +35,7 @@ class transactionController extends Controller
 
     //    $transactionsids = $transactions->pluck('id')->toArray();
     //    $tranId = $transactionsids['0'];
+    
        session()->put('tranid',$transactions);
         return view('client.transfer',compact('accounts'),compact('transactions'));
     }
@@ -138,6 +140,9 @@ session()->put('otp',$otp);
         // no sending to your current account
         if($request->receiver == $id){
             return back()->with("message","Invalid transaction");
+        }
+        if($request->amount<1000){
+            return back()->with("message","Amount transfered  must be atleast 1000XAF");
         }
         // check if there is a pending transaction
         if(count($transactions) >= 1){
@@ -261,8 +266,11 @@ session()->put('otp',$otp);
     public function precise_transact(Request $request){
         $month = $request->month;
         $year = $request->year;
-        $date = $request->date;
-        $request->session()->put("year",$year);
+        $date = $request->date; 
+        if($date >=30){
+            return back()->with("message","Date must be less than 30");
+        }
+      $request->session()->put("year",$year);
         $request->session()->put("date",$date);
       $year_query = Transaction::whereRaw("year(created_at)=?",[$year]);
       $transactions = Transaction::whereRaw("month(created_at)=?",[$month])
@@ -347,6 +355,6 @@ session()->put('otp',$otp);
         ->where( function($query){
             $query->whereRaw("year(created_at)=?",session()->get("year"));
         })->sum("amount");
-        return view("client.statement",compact("total","transactions","debit","credit"));
+        return view("client.statement",compact("total","transactions","debit","credit","from","to","year"));
     }
 }

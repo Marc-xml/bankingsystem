@@ -11,7 +11,9 @@
    <P style="margin:5px 0">ACCOUNT NUMBER:<span style="color:#2D89EF"> RIB 6986 52{{session()->get('acc')}}</span></P>
     <P style="margin:5px 0">PRESENT DATE: {{Date('d/m/y')}}</P>
     <P style="margin:5px 0">MONTH COVERED: <form action="/statement/month" method="GET">
-{{-- {{$date}} --}}
+@isset($date)
+    Result for:{{$date}}th month
+@endisset
       <select name="month" id="" required style="background:#2d87ef25;
       outline:none;
       margin:20px 0px;
@@ -43,11 +45,13 @@
     </form></P>
    
   <div style="text-align:center;margin-bottom:10px;font-weight:600">    CHOOSE PARTICULAR DAY:(@isset($date,$month,$year)
-      {{$date}}-{{$month}}-{{$year}}
+      Result for:{{$date}}-{{$month}}-{{$year}}
   @endisset)</div>
     <x-statement_filter />
 
-    <br><div style="text-align:center;margin-bottom:10px;font-weight:600">SELECT PERIOD</div>
+    <br><div style="text-align:center;margin-bottom:10px;font-weight:600">SELECT PERIOD:(@isset($from,$to,$year)
+        Result From:{{$from}}th month To{{$to}}th month in the year{{$year}}
+    @endisset)</div>
     <div class="table-filter">
          
       {{-- <form action="/account/{{$id=$accounts->id}}" method="GET"> --}}
@@ -103,7 +107,7 @@
     
         <div class="filter-content filter-off">
           <span>Year</span>
-          <input type="text" class="filter-box" reuired placeholder="Enter year" name="year">
+          <input type="number" class="filter-box" reuired placeholder="Enter year" name="year">
         </div>
         
         

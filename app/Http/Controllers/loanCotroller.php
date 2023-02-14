@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\laonGranted;
-use App\Mail\loanDenied;
 use Error;
 use App\Models\Loan;
 use App\Models\Account;
+use App\Models\Message;
+use App\Mail\loanDenied;
 use App\Mail\verifyLoan;
-use Illuminate\Console\Scheduling\Schedule;
+use App\Mail\laonGranted;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use function PHPUnit\Framework\isEmpty;
+use Illuminate\Console\Scheduling\Schedule;
 
 class loanCotroller extends Controller
 {
@@ -21,14 +22,14 @@ class loanCotroller extends Controller
         $complete = Loan::all()->where("status","=","complete");
         session()->put('pending',$pending);
         session()->put('complete',$complete);
-        
+       
         return view('client.loans',compact('loans'),compact('pending'));
         
     }
     public function add_loan(Request $request){
         $user = auth()->user()->name;
         $applier = $request->name;
-        $check = Loan::all()->where('name','=','applier');
+        $check = Loan::all()->where('name','=',$applier);
         if(count($check) == 0){
             $loan = new Loan;
             $loan->name = $request->name;
@@ -46,6 +47,9 @@ class loanCotroller extends Controller
             $loan->date_limit = $request->time;
             $loan->status = "pending";
             // $loan->loan_granted_at = date("y-m-d");
+            if($request->account != session()->get("acc")){
+                return back()->with("message","Enter your current active account");
+            }
       session()->put('loan_account',$request->account);
             $loan->save();
             return redirect('/verify-loans')->with("message","Loan form submitted Please check your emails for the verification code");
@@ -93,11 +97,52 @@ class loanCotroller extends Controller
         $loan->delete();
         return redirect('/loans')->with('message','Loan request succesfully withdrawed');
     }
-    public function filterloan(Request $request , $owner_id){
+    public function filteradloan(Request $request ){
+        $filter = $request->query('search');
+        $date = $request->query('date');
+        $amount = $request->query('amount');
+        $user = auth()->user()->id;
+        
+  
+        if(!empty($filter)){
+     
+          $loans =  Loan::latest()
+          ->where('id','like','%'.$filter.'%')
+          ->orwhere('account_concerned','like','%'.$filter.'%')
+          ->orwhere('date_limit','like','%'.$filter.'%')
+          ->orwhere('loan_granted_at','like','%'.$filter.'%')
+          ->orwhere('status','like','%'.$filter.'%')
+          ->get();
+      return view('admin.loans',compact('loans'));
+  
+      }
+      elseif (!empty($date)) {
+       
+         $loans = Loan::latest()->where('date_limit','like','%'.$date.'%')->orwhere('loan_granted_at','like','%'.$date.'%')->get();
+      return view('admin.loans',compact('loans'));
+  
+      
+          
+      }elseif (!empty($amount)){
+         $loans  = Loan::latest()->where('amount','=',$amount)->orwhere('monthly_payement','=',$amount)->get();
+      return view('admin.loans',compact('loans'));
+  
+      }
+      else{
+         
+          
+         $loans = Loan::latest();
+          
+      }
+      // $pending = Loan::all()->where("status","=","pending");
+      return view('admin.loans',compact('loans'));
+      }
+    public function filterloan(Request $request,$owner_id ){
       $filter = $request->query('search');
       $date = $request->query('date');
       $amount = $request->query('amount');
       $user = auth()->user()->id;
+      
 
       if(!empty($filter)){
    
@@ -216,7 +261,7 @@ class loanCotroller extends Controller
          try{
          Mail::to(auth()->user()->email)->send(new verifyLoan());
          }catch(\Throwable $e){
-            return back("check your internet connection");
+            return back()->with("message","check your internet connection");
          }
          return view("client.confirm_loan")->with("message","Please check your emails for the verification code ");
     }

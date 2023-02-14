@@ -11,9 +11,13 @@
             </span>
              <div class="inner-upper-card">
              <span>
-               <span class="alias">{{$account->alias}}</span> <span class="type">{{$account->account_type}}</span>
+                @if ($account->account_type == "SAVING")
+                <span class="alias">{{$account->alias}}</span> <span class="type">{{$account->account_type}}</span>
+                @elseif($account->account_type == "CURRENT")
+                <span class="alias">{{$account->alias}}</span> <span class="type" style="color:#fff;background-color:rgba(113, 201, 113, 0.459)">{{$account->account_type}}</span>
+                @endif
              </span>
-             <span class=" acc-no">{{$account->account_type}}</span>
+             <span class=" acc-no">{{$account->id}}</span>
              <span class="agency">PRINCIPAL AGENCY</span>
              </div>
             </div>

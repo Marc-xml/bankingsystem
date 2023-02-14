@@ -44,7 +44,7 @@
                <div class="row">
             
               <div class="text_field">
-                <input type="text"  name="add1"  />
+                <input type="text"  name="add1" required />
                 <label for="">Street address line 1</label>
               </div>
               <div class="text_field">

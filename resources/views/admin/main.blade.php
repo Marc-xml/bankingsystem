@@ -51,6 +51,100 @@
       <canvas id="myChart1"></canvas>
     </div>
         </div>
+        @push('scripts')
+    
+        <script src="{{ asset('invoice_2.0\View\assets\package\dist\chart.js') }}"></script>
+        <script src="{{ asset('invoice_2.0\View\assets\package\dist\chart.min.js') }}"></script>
+            <script>
+               // graph section 
+    
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels:[
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+      ],
+            datasets: [{
+                label: 'Number of transactions',
+                data:[200,700,500,405],
+                backgroundColor: [
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    ''
+                ],
+                borderColor: [
+                    '#2D89EF',
+                    '#2D89EF',
+                    '#2D89EF',
+                    '#2D89EF',
+                   '#2D89EF',
+                    '#2D89EF'
+                ],
+                borderWidth: 0.5
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    
+        //  second graph 
+        
+    const labels = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+      ];
+    
+      const data = {
+        labels: labels,
+        datasets: [{
+          label: 'Debits ',
+          backgroundColor: '#2D89EF',
+          borderColor: '#2D89EF',
+          data:[300,500,200,344,700],
+        
+        },
+        {
+        label: 'credits',
+          backgroundColor: 'lightgrey',
+          borderColor: 'lightgrey',
+          data:[100,500,456,576],
+        
+        }
+      ]
+      };
+    
+      const config = {
+        type: 'bar',
+        data: data,
+        options: {indexAxis: 'y'}
+      };
+    
+    
+      const myChart1 = new Chart(
+        document.getElementById('myChart1'),
+        config
+      );
+    
+            </script>
+        @endpush
 <br>
 <p class="accounts" >Ongoing transactions</p>
     <hr size='7' class="main-line">

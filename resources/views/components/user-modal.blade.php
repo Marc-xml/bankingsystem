@@ -25,7 +25,7 @@
         <select name="usertype" id="">
             <option value="0">Client user</option>
             <option value="1">Admin user</option>
-            <option value="2">Super admin user</option>
+            <option value="2">New Teller</option>
         </select>
     </div>
 

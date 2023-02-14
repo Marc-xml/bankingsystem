@@ -122,7 +122,7 @@
                   <th>Amount</th>
                   <th>Date</th>
                   <th>Description</th>
-                  <th>Status</th>
+                  <th class="show">Status</th>
                
                 </tr>
               </thead>
@@ -136,10 +136,15 @@
       
          <tr>
           <td data-label = "S.no">{{$transaction->id}}</td>
-          <td data-label = "Name">{{$transaction->amount}}</td>
+          @if ($transaction->sender_account==session()->get('acc'))
+        <td data-label = "Name" style="color:red">-{{$transaction->amount}}</td>
+        @else
+        <td data-label = "Name" style="color:green">+{{$transaction->amount}}</td>
+
+      @endif
           <td data-label = "Age">{{$transaction->date}}</td>
           <td data-label = "Country">{{$transaction->description}}</td>
-          <td data-label = "tel">{{$transaction->status}}</td>
+          <td data-label = "tel" class="show">{{$transaction->status}}</td>
         
         
         </tr>
@@ -158,6 +163,5 @@
 
 
   
-      <x-message>
-      </x-message>
+    
 </x-layout>

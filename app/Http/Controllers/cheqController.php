@@ -10,9 +10,15 @@ class cheqController extends Controller
 {
     //
     public function new_cheq(Request $request){
+        $messages = Message::all()->
+        where("sender","=",auth()->user()->id);
+        $request->session()->put("mss",$messages);
         // all chequest 
         $account = session()->get('acc');
         $cheques = Cheque::Latest()->where('account_number','=',"$account")->get();
+        if(count($cheques) >= 3){
+            return back()->with('message',"you have attained your maximum number cheques you can request");
+        }
         $cheq = new Cheque;
         $cheq->date = $request->date;
         $cheq->pages = $request->leaves;
@@ -29,14 +35,14 @@ class cheqController extends Controller
         
             try{
                 $cheq->save();
+        return view('client.chechreq',compact('cheques'))->with('message','Checbook request submitted');
+
             }catch(\Throwable $e){
-                return back()->with('message','An erro occured please try again');
+                return back()->with('message','An error occured please try again');
             }
 
         
-   $messages = Message::all()->
-   where("sender","=",auth()->user()->id);
-   $request->session()->put("mss",$messages);
-        return view('client.chechreq',compact('cheques'))->with('message','Checbook request submitted succesfully');
+  
+        // return view('client.chechreq',compact('cheques'))->with('message','Checbook request submitted succesfully');
     }
 }

@@ -1,0 +1,168 @@
+.navigation{
+    position:fixed;
+    left:30%;
+    top:10%;
+    display:flex;
+    flex-direction:row ;
+    justify-content: space-around;
+    width:40rem;
+    background-color: #fff;
+    border-radius: 30px;
+    box-shadow:2px 2px 2px 2px #2d87ef2d;
+
+    
+}
+.navigation div {
+    width:25%;
+    padding:10px;
+    text-align: center;
+    font-size: 21px;
+    /* border-left: 1px solid #2B5797; */
+    /* border-right: 2px solid #2B5797; */
+}
+a{
+    text-decoration: none;
+    color:inherit;
+}
+.stat{
+    color:#2B5797;
+    font-weight: 600;
+  
+}
+.active{
+    background-color:  #2B5797;
+    color:#fff;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+.active-1{
+    background-color:  #2B5797;
+    color:#fff;
+
+}
+.active-2{
+    background-color:  #2B5797;
+    color:#fff;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+#active-tab{
+    color:#fff; 
+}
+/* media query for table  */
+@media(max-width:470px){
+    /* main  */
+    .navigation{
+        width:15rem;
+        left:9%;
+       }
+       .navigation div{
+        padding:10px;
+   
+       }
+  
+    /* table start  */
+    /* .table thead{
+        display:none;
+    }
+    .table,.table tbody,.table tr,.table td{
+        display:block;
+        width:100%
+    }
+    .table tr{
+        margin-bottom:15px;
+    }
+    .table td{
+        text-align:right;
+        padding-left:50%;
+        position:relative;
+    }
+    .table td::before{
+        content:attr(data-label);
+        position:absolute;
+        left:0;
+        width:50%;
+        padding-left:15px;
+        font-size:15px;
+        font-weight:bold;
+        text-align:left;
+    } */
+    /* table end  */
+   .move{
+    display:none;
+   }
+    .beneficiary{
+    position: absolute;
+    top:50px;
+    }
+    /* media queries  */
+}
+    @media (max-width:910px){
+        .table-filter{
+            display:flex;
+            flex-direction:column;
+            min-height:50px;
+            
+        }
+        .table-filter{
+            padding:3px;
+        }
+        .filter-result{
+       margin-left:50px; 
+        }
+       
+      
+    }
+@media (max-width:1250px){
+    .account-card-dekstop{
+            max-width:250px;
+            
+    }
+  @media(max-width:1526px){
+    .graph-container{
+        display:none;
+    }
+    
+  }
+  @media(max-width:631px){
+    .show{
+        display:none;
+    }
+  }
+
+    nav{
+        display:none;
+    }
+    .sidebarIcon{
+        display: block;
+    }
+    #sidebarMenu{
+        display:block;
+    }
+   
+    .main{
+        padding:2% 4% 2% 3%;
+    }
+    
+}   
+
+@media(max-width:850px){
+   .navigation{
+    width:20rem;
+   }
+}
+@media(min-width:1850px){
+    .table-container{
+padding-left:60px;
+    }
+}
+@media(max-width:320px){
+    .navigation{
+        width:15rem;
+        left:15%;
+       }
+       .navigation div{
+        padding:10px;
+   
+       }
+}

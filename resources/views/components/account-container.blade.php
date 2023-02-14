@@ -11,9 +11,13 @@
             </span>
              <div class="inner-upper-card">
              <span>
-               <span class="alias">{{$account->alias}}</span> <span class="type">{{$account->account_type}}</span>
+              @if ($account->account_type == "SAVING")
+              <span class="alias">{{$account->alias}}</span> <span class="type">{{$account->account_type}}</span>
+              @elseif($account->account_type == "CURRENT")
+              <span class="alias">{{$account->alias}}</span> <span class="type" style="color:#fff;background-color:rgba(113, 201, 113, 0.459)">{{$account->account_type}}</span>
+              @endif
              </span>
-             <span class=" acc-no">{{$account->account_type}}</span>
+             <span class=" acc-no">{{$account->id}}</span>
              <span class="agency">PRINCIPAL AGENCY</span>
              </div>
             </div>
@@ -38,11 +42,11 @@
                    </div>
             </div>
             <!-- lower section of card end  -->
-            <!-- modal start  --></a>
+            {{-- <!-- modal start  --> --}}
+            <a href="/account/alias/{{$id = $account->id}}">
             <div class="options" id="show{{$account->id}}" style="z-index:30;">
-                <a href="/account/alias/{{$id = $account->id}}"><span class="option-content"><i class="fa fa-clipboard"></i>Personalise  account Alias</span></a>
-                {{-- <a href=""><span class="option-content"><i class="fa fa-gauge"></i>Manage my gauge</span></a> --}}
-             <a href="/account/{{$id = $account->id}}">
+              <span class="option-content"><i class="fa fa-clipboard"></i>Personalise  account Alias</span></a>
+             
             </div>
            </div>
         </a>

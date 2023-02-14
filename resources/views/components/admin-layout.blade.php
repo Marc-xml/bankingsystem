@@ -157,6 +157,10 @@
         setTimeout(function(){
       $('.loader_bg').fadeToggle();
      }, 1500);8
+     setTimeout(function(){
+        $('#notif').fadeToggle();
+      },4000);
       </script>
+       @stack('scripts')
     </body>
     </html>

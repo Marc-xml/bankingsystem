@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class messageController extends Controller
 {
@@ -20,6 +21,9 @@ class messageController extends Controller
 
     }
     public function send_message(Request $request){
+        $messages = Message::all()->where("sender","=",auth()->user()->id);
+   
+  $request->session()->put("mss",$messages);
         $user = auth()->user()->id;
         $message = new Message;
         $message->content = $request->content;

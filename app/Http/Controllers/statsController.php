@@ -9,6 +9,7 @@ use App\Models\Insight;
 use App\Models\Welcome;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class statsController extends Controller
 {
@@ -44,6 +45,7 @@ class statsController extends Controller
         $user->email = $request->email;
         $user->address = $request->address;
         $user->phone = $request->phone;
+        // $user->password = Hash::make($request->password);
 
         try{
             $user->update();
@@ -84,7 +86,7 @@ class statsController extends Controller
      
         }
      
-        return back()->with(compact('users'));
+        return view('admin.users',compact('users'));
         
     }
     // show acounts 
@@ -232,7 +234,7 @@ class statsController extends Controller
         $user->usertype = $request->usertype;
         $user->Phone = $request->phone;
         $user->address = $request->address;
-        $user->password = $request->password;
+        $user->password =  Hash::make($request->password);
         // $user->save();
         try{
             $user->save();

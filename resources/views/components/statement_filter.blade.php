@@ -29,12 +29,12 @@
   
       <div class="filter-content filter-off">
         <span><i class="fa fa-calendar"></i>year</span>
-        <input type="text" class="filter-box" placeholder="search" name="year" required>
+        <input type="number" class="filter-box" placeholder="search" name="year" required>
       </div>
   
       <div class="filter-content filter-off">
         <span><i class="fa fa-dollar"></i>Date</span>
-        <input type="text" class="filter-box" placeholder="Enter date" name="date" required>
+        <input type="number" class="filter-box" placeholder="Enter date" name="date" required>
       </div>
       
   

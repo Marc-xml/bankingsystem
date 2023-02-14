@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Wire;
+use App\Models\Message;
 use Illuminate\Http\Request;
 
 class wireController extends Controller
@@ -50,6 +51,7 @@ class wireController extends Controller
     public function show(){
         $account = session()->get('acc');
         $transfers = Wire::Latest()->get();
+      
         return view('client.wire',compact('transfers'));
     }
     
