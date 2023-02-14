@@ -84,7 +84,7 @@ class statsController extends Controller
      
         }
      
-        return view('admin.users',compact('users'));
+        return back()->with(compact('users'));
         
     }
     // show acounts 
