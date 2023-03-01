@@ -32,6 +32,8 @@ class messageController extends Controller
         $message->status = "unanswered";
         $message->reply = "Thank you for messaging us, you will soon receive a response from us";
         $message->save();
+        
+        $messages = Message::all()->where("sender","=",auth()->user()->id);
 
          return back()->with('message','Message sent');
     }
@@ -96,5 +98,23 @@ class messageController extends Controller
          }catch(\Throwable $e){
              return back()->with("message","Message not deleted please try again");
          }
+    }
+    public function delete_all(){
+        $user = auth()->user()->id;
+        $messages=Message::where("sender","=",$user)->get();
+      
+        if(count($messages) <=0){
+            return back()->with("message","No message available");
+        }
+        try{
+           foreach($messages as $message){
+            $message->delete();
+      
+
+           }
+           return back()->with("message","All messages delete");
+        }catch(\Throwable $e){
+            return back()->with("message","An error occured");
+        }
     }
 }

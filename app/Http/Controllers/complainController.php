@@ -39,7 +39,7 @@ class complainController extends Controller
         $complain = complain::find($id);
         $complain->status = "solved";
         $complain->reply = $request->reply;
-        session()->put("complain_reply",$complain);
+        session()->put("complain_reply",$request->reply);
         Mail::to($complain->email)->send(new reply_complain);
         $complain->update();
         return back()->with("message","reply was sent");

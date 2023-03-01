@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Loan;
 use App\Models\News;
 use App\Models\User;
 use App\Models\Account;
@@ -133,6 +134,47 @@ class statsController extends Controller
         $alltransactions = Transaction::all();
         return view('admin.transactions',compact('alltransactions'));
     }
+    
+    public function filter_teller_loan(Request $request ){
+        $filter = $request->query('search');
+        $date = $request->query('date');
+        $amount = $request->query('amount');
+        $user = auth()->user()->id;
+        
+  
+        if(!empty($filter)){
+     
+          $loans =  Loan::latest()
+          ->where('id','like','%'.$filter.'%')
+          ->orwhere('account_concerned','like','%'.$filter.'%')
+          ->orwhere('date_limit','like','%'.$filter.'%')
+          ->orwhere('loan_granted_at','like','%'.$filter.'%')
+          ->orwhere('status','like','%'.$filter.'%')
+          ->get();
+      return view('admin.loans',compact('loans'));
+  
+      }
+      elseif (!empty($date)) {
+       
+         $loans = Loan::latest()->where('date_limit','like','%'.$date.'%')->orwhere('loan_granted_at','like','%'.$date.'%')->get();
+      return view('admin.loans',compact('loans'));
+  
+      
+          
+      }elseif (!empty($amount)){
+         $loans  = Loan::latest()->where('amount','=',$amount)->orwhere('monthly_payement','=',$amount)->get();
+      return view('admin.loans',compact('loans'));
+  
+      }
+      else{
+         
+          
+         $loans = Loan::latest();
+          
+      }
+      // $pending = Loan::all()->where("status","=","pending");
+      return view('teller.loans',compact('loans'));
+      }
     // filter alll transactions 
     public function filter_alltransactions(Request $request){
         $filter = $request->query('search');
@@ -223,9 +265,9 @@ class statsController extends Controller
             $transfer->save();
 
         }catch(\Throwable $e){
-            return redirect('/alltransactions')->with("message","transaction failed");
+            return back()->with("message","transaction failed");
         }
-        return redirect('/alltransactions')->with("message","transaction succesfull");
+        return back()->with("message","transaction succesfull");
     }
     public function new_user(Request $request){
         $user = new User;

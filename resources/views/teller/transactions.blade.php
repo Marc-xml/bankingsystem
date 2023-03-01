@@ -2,11 +2,17 @@
     <x-flash-message/>
       <p class="accounts" >All transcations</p>
       <hr size='7' class="main-line">
-    
+      <div style="float:right">
+        <button class="action" id="modal-btn">Transfer funds <span><i class="fa fa-paper-plane"></i></span></button>
+        </div>
+    <br>
+        <br>
+        <x-admin-modal>
+        </x-admin-modal>
   <br>
       <br>
-      <x-transfer-filter>
-      </x-transfer-filter>
+      <x-transfer-filter-teller>
+      </x-transfer-filter-teller>
       <div class="account-table">
           <table class="table">
             <thead>

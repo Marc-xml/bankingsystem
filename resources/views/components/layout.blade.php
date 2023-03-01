@@ -132,7 +132,7 @@
 
   <div class="message-box" style="background: #fff;z-index:50;height: 500px;">
    <div class="message-actions">
-           <span><i class="fa fa-trash"></i></span>
+           <a href="/delete/messages"><span><i class="fa fa-trash"></i></span></a>
            <span class="move-box">Cancel</span>
    </div>
 
@@ -152,6 +152,9 @@
          {{$message->reply}}
      </div>
   @endforeach
+  @unless (count($messages) !== 0)
+      <p style="text-align:center">{{"NO NEW MESSAGE"}}</p>
+  @endunless
  
 
  </div>

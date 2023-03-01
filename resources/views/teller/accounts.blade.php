@@ -3,8 +3,8 @@
         <p class="accounts" >All accounts</p>
         <hr size='7' class="main-line">
         <br>
-        <x-account-filter>
-        </x-account-filter>
+        <x-account-teller-filter>
+        </x-account-teller-filter>
         <div class="account-table">
             <table class="table">
               <thead>

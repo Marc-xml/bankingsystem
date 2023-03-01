@@ -1,7 +1,7 @@
 <div class="table-filter">
          
     {{-- <form action="/account/{{$id=$accounts->id}}" method="GET"> --}}
-    <form action="/filter-adminloans" method="GET">
+    <form action="/filter-accounts-teller" method="GET">
       <div class="filter-content">
         <span><i class="fa fa-search"></i>Search</span>
         <input type="text" class="filter-box" placeholder="search" name="search">
@@ -15,11 +15,7 @@
         <input type="date" class="filter-box" placeholder="search" name="date">
       </div>
   
-      <div class="filter-content filter-off">
-        <span><i class="fa fa-dollar"></i>By amount</span>
-        <input type="number" class="filter-box" placeholder="amount" name="amount">
-      </div>
-      
+    
   
         <div class="filter-result">
         <button class="filter-button">Search</button>

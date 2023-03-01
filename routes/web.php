@@ -42,14 +42,27 @@ Route::get('/confirm-transaction',function(){
 })->middleware('auth','verified');
 Route::get('/conclude-transaction',[transactionController::class,'conclude_transaction'])->middleware('auth','verified');
 Route::get('/verify-loans',[loanCotroller::class,'verify_loan'])->middleware('auth','verified');
+Route::get('/verify-wire',[wireController::class,'verify_wire']);
 Route::get('/confirm-loan',[loanCotroller::class,'confirm_loan'])->middleware('auth','verified');
+Route::get('/confirm-wire',[wireCotroller::class,'confirm_wire'])->middleware('auth','verified');
 Route::get('/email-user/{id}',[userController::class,'contact_user'])->middleware('auth','verified');
 Route::post('/send_email',[userController::class,'send_email'])->middleware('auth','verified');
+Route::post('/mail-all',[userController::class,'mail_all'])->middleware("auth","verified");
+Route::get('/broadcast',[userController::class,'show_broadcast'])->middleware("auth","verified");
 
 // ########################TELLER SECTION#######################
 Route::get('/teller/users',[tellerController::class,'all_users'])->middleware('auth','verified');
 Route::get('/teller/transactions',[tellerController::class,'all_transactions'])->middleware('auth','verified');
 Route::get('/teller/loans',[tellerController::class,'all_loans'])->middleware('auth','verified');
+Route::get('/filter-accounts-teller',[tellerController::class,'filter_accounts'])->middleware('auth','verified');
+Route::get('/filter-users-teller',[tellerController::class,'filter_users'])->middleware('auth','verified');
+Route::get('/filter-alltransactions-teller',[tellerController::class,'filter_alltransactions'])->middleware('auth','verified');
+Route::get("/filter-teller-loans",[statsController::class,'filter_teller_loan'])->middleware('auth',"verified");
+
+
+
+
+
 #####################Admin section###########################
 //Route to  home page
 Route::get('/home-page',function(){
@@ -174,6 +187,9 @@ Route::get('/delete-transfer/{id}',[wireController::class,'delete_transfer'])->m
 Route::post('/send-message',[messageController::class,'send_message'])->middleware('auth','verified');
 //loan calculator route
 Route::get('/loan-calculator',function(){
+    $messages = DB::table('messages')
+    ->where("sender","=",auth()->user()->id)->get();
+  session()->put('mss',$messages);
     return view('client.loancalc');
 })->middleware('auth','verified');
 //laon form submit
@@ -203,7 +219,8 @@ Route::get('/confirm',function(){
 Route::get('/checkbook',function(){
     $account = session()->get('acc');
     $messages = DB::table('messages')
-   ->where("sender","=",auth()->user()->id)->get();
+    ->where("sender","=",auth()->user()->id)->get();
+  session()->put('mss',$messages);
      $cheques = Cheque::Latest()->where('account_number','=',"$account")->get();
     return view('client.chechreq',compact('cheques'));
 })->middleware('auth','verified');
@@ -226,9 +243,14 @@ Route::post('/req-check',[cheqController::class,'new_cheq'])->middleware("auth",
 Route::get('/test',function(){
     return view('welcome');
 });
+//delete all messages
+Route::get('/delete/messages',[messageController::class,'delete_all']);
 //complain
 Route::get('/complain',function(){
     $user = auth()->user()->id;
+    $messages = DB::table('messages')
+    ->where("sender","=",auth()->user()->id)->get();
+  session()->put('mss',$messages);
     $complains = Complain::latest()->where("complainer","=",$user)->get();
     return view('client.complain',compact('complains'));
 });

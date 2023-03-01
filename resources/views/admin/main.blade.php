@@ -32,7 +32,7 @@
 
     <div class="stat-card">
         <span><i class="fa fa-triangle-exclamation"></i></span>
-        <span class="number">20</span>
+        <span class="number">{{session()->get("countComp")}}</span>
         <span class="index">new complains</span>
         <span ><i class="fa fa-arrow-down" id="flow1"></i></span>
     </div>
@@ -72,7 +72,7 @@
       ],
             datasets: [{
                 label: 'Number of transactions',
-                data:[200,700,500,405],
+                data:{{Js::from($thisyeartransaction)}},
                 backgroundColor: [
                     '',
                     '',
@@ -115,17 +115,18 @@
       const data = {
         labels: labels,
         datasets: [{
-          label: 'Debits ',
+          label: 'Domestic transfers ',
           backgroundColor: '#2D89EF',
           borderColor: '#2D89EF',
-          data:[300,500,200,344,700],
+          data:{{Js::from($domestic)}},
         
         },
         {
-        label: 'credits',
+        label: 'Interbank transfers',
           backgroundColor: 'lightgrey',
           borderColor: 'lightgrey',
-          data:[100,500,456,576],
+          data:{{Js::from($inter)}},
+
         
         }
       ]

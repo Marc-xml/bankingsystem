@@ -7,8 +7,8 @@
   <br>
       <br>
     
-      <x-adminloan-filter>
-      </x-adminloan-filter>
+      <x-teller-loan-filter>
+      </x-teller-loan-filter>
       <div class="account-table">
           <table class="table">
             <thead>

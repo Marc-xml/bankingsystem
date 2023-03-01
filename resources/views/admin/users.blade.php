@@ -4,6 +4,7 @@
     <hr size='7' class="main-line">
     <br>
     <button class="action" style="margin-bottom:20px;" id="modal-btn">Create new user <span><i class="fa fa-plus"></i></span></button>
+    <a href="/broadcast"><button class="action" style="margin-bottom:20px;" >Bulk Mailing <span><i class="fa fa-envelope"></i></span></button></a>
     <br>
     <x-user-modal>
     </x-user-modal>
@@ -20,6 +21,7 @@
               <th>Phone number </th>
               <th>Address</th>
               <th>status</th>
+              <th>Restricted</th>
               
               <th class="show">Date registered</th>
               <th class="show">Action</th>
@@ -46,6 +48,7 @@
      @else
      <td  class="show"><span class="super">{{"Super Admin"}}</span></td>
      @endif
+      <td  class="show">{{$user->restricted}}</td>
       <td  class="show">{{$user->created_at}}</td>
       <td  class="show">
         <span><a href="/user-details/{{$id = $user->id}}"><i class="fa fa-eye"></i></a></span>

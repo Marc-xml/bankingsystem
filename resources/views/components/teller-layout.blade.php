@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\bills.css') }}">
     <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\home.css') }}">
     <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\accounts.css') }}">
+    <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\loans.css') }}">
  
     <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\teller.css') }}">   
      <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\admmain.css') }}">
@@ -47,7 +48,7 @@
 
       {{-- navigation bar  --}}
       <div class="navigation">
-        <div class="{{ '/' == request()->path() ? 'active' : ''}}"><a href="/" ><span><i class="fa fa-book "></i><span class="stat" id="active-tab" >  {{session()->get('countAcc')}}</span></span></a></div>
+        <div class="{{ '/' == request()->path() ? 'active' : ''}}{{ 'filter-accounts-teller' == request()->path() ? 'active' : ''}}"><a href="/" ><span><i class="fa fa-book "></i><span class="stat" id="active-tab" >  {{session()->get('countAcc')}}</span></span></a></div>
         <div class="{{ 'teller/users' == request()->path() ? 'active-1' : ''}}"><a href="/teller/users" ><span><i class="fa fa-users"></i><span class="stat" >  {{session()->get('countUsers')}}</span></span></a></div>
         <div class="{{ 'teller/transactions' == request()->path() ? 'active-1' : ''}}"><a href="/teller/transactions" ><span><i class="fa fa-exchange"></i><span class="stat" >  {{session()->get('countTransactions')}}</span></a></div>
         <div class="{{ 'teller/loans' == request()->path() ? 'active-2' : ''}}"><a href="/teller/loans" ><span><i class="fa fa-dollar"></i><span class="stat" >  {{session()->get('countLoans    ')}}</span></span></a></div>
@@ -127,7 +128,9 @@
       setTimeout(function(){
         $('#notif').fadeToggle();
       },4000);
+      
       </script>
     @stack('scripts')
     </body>
     </html>
+    

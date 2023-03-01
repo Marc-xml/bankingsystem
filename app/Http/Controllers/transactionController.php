@@ -35,7 +35,9 @@ class transactionController extends Controller
 
     //    $transactionsids = $transactions->pluck('id')->toArray();
     //    $tranId = $transactionsids['0'];
-    
+    $messages = DB::table('messages')
+    ->where("sender","=",auth()->user()->id)->get();
+  session()->put('mss',$messages);
        session()->put('tranid',$transactions);
         return view('client.transfer',compact('accounts'),compact('transactions'));
     }

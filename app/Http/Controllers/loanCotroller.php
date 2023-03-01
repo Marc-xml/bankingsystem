@@ -10,6 +10,7 @@ use App\Mail\loanDenied;
 use App\Mail\verifyLoan;
 use App\Mail\laonGranted;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use function PHPUnit\Framework\isEmpty;
 use Illuminate\Console\Scheduling\Schedule;
@@ -22,7 +23,9 @@ class loanCotroller extends Controller
         $complete = Loan::all()->where("status","=","complete");
         session()->put('pending',$pending);
         session()->put('complete',$complete);
-       
+        $messages = DB::table('messages')
+        ->where("sender","=",auth()->user()->id)->get();
+      session()->put('mss',$messages);
         return view('client.loans',compact('loans'),compact('pending'));
         
     }

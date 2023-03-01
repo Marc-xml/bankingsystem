@@ -20,7 +20,7 @@
   
         <div class="filter-result">
         <button class="filter-button">Search</button>
-        <span type="reset"><a href="/">Reset</a></span>
+        <span type="reset"><a href={{url()->previous()}}>Reset</a></span>
        
         </div>
     </form>

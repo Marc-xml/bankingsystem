@@ -1,7 +1,7 @@
 <div class="table-filter">
          
     {{-- <form action="/account/{{$id=$accounts->id}}" method="GET"> --}}
-    <form action="/filter-adminloans" method="GET">
+    <form action="/filter-teller-loans" method="GET">
       <div class="filter-content">
         <span><i class="fa fa-search"></i>Search</span>
         <input type="text" class="filter-box" placeholder="search" name="search">

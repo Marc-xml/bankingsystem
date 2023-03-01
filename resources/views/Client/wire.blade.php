@@ -7,7 +7,7 @@
 
   <div class="bill-info">
     <p class="bold-info">Inter-bank transfer with invoice</p>
-    <x-flash-message />
+
    @php
        $account = session()->get('acc');
    @endphp
