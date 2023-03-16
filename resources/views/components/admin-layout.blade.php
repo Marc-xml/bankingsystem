@@ -108,10 +108,10 @@
                   <span class="nav-item"></span>
               </li>
               
-              <li>
+              {{-- <li>
                 <a href="/admin-loans"><i class="fa fa-dollar fac {{'admin-loans' == request()->path() ? 'active' : ''}}"></i></a>
                 <span class="nav-item"></span>
-            </li>
+            </li> --}}
 
               <li>
                   <a href="/home-section"><i class="fa fa-blog fac {{'wire' == request()->path() ? 'active' : ''}}"></i></a>
@@ -134,7 +134,7 @@
           <span><i class="fa fa-blog" ></i></span>
          </a>
         </div>
-  
+  <span style="font-size:1.2rem;"><a href={{url()->previous()}}><i class="fa fa-arrow-left"></i></a></span>
     {{$slot}}
    
    

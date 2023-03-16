@@ -33,10 +33,16 @@ public function send_message(Request $request){
   
 }
 public function show(Request $request){
-    $usertype = auth()->user()->usertype;
+    // $user= auth()->user()->id;
+    // $allAccounts = Account::all()->where("Owner_id","=",$user); 
+    // foreach($allAccounts as $accounts){
+    //     $fit = $accounts->first();
+    // }
+    // $request->session()->put("acc",$fit);
     if(auth()->user()->restricted == "yes"){
-        return back()->with("message","Your account has been suspended");
+        return redirect('/restricted')->with("message","Your account has been suspended");
     }
+    $usertype = auth()->user()->usertype;
     if($usertype=='1'){
         // admin section 
         // count accounts 
@@ -143,6 +149,8 @@ public function show(Request $request){
    ->whereYear('created_at', 2023)
    ->selectRaw('month(created_at) as month')
    ->selectRaw('count(*) as count')
+   ->where('sender_account',$id)
+   ->orwhere('receiver_account',$id)
    ->groupBy('month')
    ->orderBY('month')
    ->pluck('count','month')
@@ -228,6 +236,8 @@ public function choose(Request $request ,$id){
    ->whereYear('created_at', 2023)
    ->selectRaw('month(created_at) as month')
    ->selectRaw('count(*) as count')
+   ->where('sender_account',$id)
+   ->orwhere('receiver_account',$id)
    ->groupBy('month')
    ->orderBY('month')
    ->pluck('count','month')

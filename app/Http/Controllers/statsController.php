@@ -406,9 +406,18 @@ public function change_insight(Request $request,$id){
 
     public function restrict_access($id){
         $user = User::find($id);
+       if( $user->restricted == "yes" ){
+        $user->restricted = null;
+        $user->update();
+        return back()->with("message","User Enabled");
+        
+       }else{
         $user->restricted = "yes";
         $user->update();
-
         return back()->with("message","User restrcited");
+       }
+       
+
+       
     }
 }

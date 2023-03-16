@@ -5,6 +5,7 @@ use App\Models\News;
 use App\Mail\TestMail;
 use App\Models\Cheque;
 use App\Models\Insight;
+use App\Models\Message;
 use App\Models\Welcome;
 use App\Models\Complain;
 use Illuminate\Support\Facades\DB;
@@ -60,6 +61,7 @@ Route::get('/filter-alltransactions-teller',[tellerController::class,'filter_all
 Route::get("/filter-teller-loans",[statsController::class,'filter_teller_loan'])->middleware('auth',"verified");
 
 
+####Restricted section##########
 
 
 
@@ -170,9 +172,17 @@ Route::get('send-testmail',function(){
 //############### client zection ########################
 // profile route 
 Route::get('/profile',function(){
+
     return view('client.profile');
 })->middleware('auth','verified');
 //bills
+Route::get('/restricted',function(){
+    $id = auth()->user()->id;
+    $messages = Message::all()->where("sender","=",$id);
+    return view('restricted',compact("messages"));
+})->middleware('auth','verified');
+//bills
+
 //e-statement
 Route::get("/statement/month",[transactionController::class,'monthly_transact']);
 Route::get("/statement/precise",[transactionController::class,'precise_transact']);
@@ -225,6 +235,8 @@ Route::get('/checkbook',function(){
     return view('client.chechreq',compact('cheques'));
 })->middleware('auth','verified');
 Route::post('/req-check',[cheqController::class,'new_cheq'])->middleware("auth","verified");
+//delete chque
+Route::get('/delete-cheque/{id}',[cheqController::class,'delete_cheque'])->middleware("auth","verified");
 //choose account in accounts
  Route::get('/account/{id}',[accountController::class,'choose'])->middleware('auth','verified');
  //choose account in transactions
@@ -234,6 +246,8 @@ Route::post('/req-check',[cheqController::class,'new_cheq'])->middleware("auth",
  Route::put('/change-alias/{id}',[accountController::class,'change_alias'])->middleware('auth','verified');
  //filter in accounts
  Route::get('/filter/{id}',[accountController::class,'filtertrans'])->middleware('auth','verified');
+ //delete transaction
+ Route::get('pending-trans/{id}',[transactionController::class,'delete_pending'])->middleware("auth","verified");
  //filter in transactions
  Route::get('/filter-transfer/{id}',[transactionController::class,'filtertrans'])->middleware('auth','verified');
 

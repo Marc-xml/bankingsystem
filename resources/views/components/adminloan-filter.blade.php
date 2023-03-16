@@ -19,11 +19,15 @@
         <span><i class="fa fa-dollar"></i>By amount</span>
         <input type="number" class="filter-box" placeholder="amount" name="amount">
       </div>
+
+      <div  style="padding:30px;">
+        <span style="background:#045faa;border-radius:50%;padding:5px 8px;color:#fff"><i class="fa fa-gear"></i></span>
+      </div>
       
   
         <div class="filter-result">
         <button class="filter-button">Search</button>
-        <span type="reset"><a href="{{url()->previous()}}">Reset</a></span>
+        <span type="reset" style="padding:10px;"><a href="{{url()->previous()}}">Reset</a></span>
        
         </div>
     </form>

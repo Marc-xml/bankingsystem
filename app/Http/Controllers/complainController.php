@@ -40,9 +40,14 @@ class complainController extends Controller
         $complain->status = "solved";
         $complain->reply = $request->reply;
         session()->put("complain_reply",$request->reply);
-        Mail::to($complain->email)->send(new reply_complain);
-        $complain->update();
-        return back()->with("message","reply was sent");
+        try{
+            Mail::to($complain->email)->send(new reply_complain);
+        $complain->update(); 
+         return back()->with("message","reply was sent");
+        }catch(\Throwable $e){
+            return back()->with("message","Check your internet connection and try again");
+        }
+      
     }
     // delete complains 
     public function delete_complain($id){

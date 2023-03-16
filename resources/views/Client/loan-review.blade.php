@@ -3,8 +3,8 @@
     <link rel="stylesheet" href="{{ asset('invoice_2.0\View\css\accounts.css') }}">
     <p class="account">Review submitted loan</p>
     <hr class="main-line">
- <div class="review-info" >The loan review process can take upto 24hrs from when the loan request is initiated</div>
-    <div class="review-form">
+ <div class="review-info"  >The loan review process can take upto 24hrs from when the loan request is initiated</div>
+    <div class="review-form" style="margin-left:auto;margin-right:auto;">
         @foreach ($loans as $loan)
             
         @endforeach
@@ -14,7 +14,7 @@
         @endforeach
             
         @endif
-        <form action="/update-loan{{$id = $loan->id}}"  method="POST"  enctype="multipart/form-data">
+        <form action="/update-loan/{{$id = $loan->id}}"  method="POST"  enctype="multipart/form-data">
             @csrf
             @method('PUT')
            

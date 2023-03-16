@@ -9,7 +9,7 @@
     
       <x-adminloan-filter>
       </x-adminloan-filter>
-      <div class="account-table">
+      <div class="account-table" style="max-height: 1000px">
           <table class="table">
             <thead>
               <tr>
@@ -18,7 +18,7 @@
                 <th>date Limit</th>
                 <th>Monthly payement </th>
                 <th>Account concerned</th>
-                <th>status</th>
+                <th class="show">status</th>
                 <th  class="show">action</th>
              
   
@@ -35,12 +35,12 @@
                   <td data-label = "S.no">{{$loan->id}}</td>
                   <td data-label = "Name">{{$loan->amount}}</td>
                   <td data-label = "Age">{{$loan->date_limit}}</td>
-                  <td class="show">{{$loan->monthyl_payement}}</td>
-                  <td  class="show">{{$loan->account_concerned}}</td>
+                  <td >{{$loan->monthly_payement}}</td>
+                  <td  >{{$loan->account_concerned}}</td>
                   @if($loan->status == "pending")
-                  <td  class="show "><span class="pending">{{$loan->status}}</span></td>
+                  <td  class="show"><span class="pending">{{$loan->status}}</span></td>
                   @elseif($loan->status == "denied")
-                  <td  class="show "><span class="denied">{{$loan->status}}</span></td>
+                  <td  class="show"><span class="denied">{{$loan->status}}</span></td>
 
                   @else
                   <td  class="show "><span class="complete">{{$loan->status}}</span></td>

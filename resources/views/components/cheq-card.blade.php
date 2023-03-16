@@ -39,7 +39,9 @@
       <span>{{$cheque->account_number}}</span>
     </div>
 
-
+    <div class="actionbelow" style=";float:right;">
+      <span><a href="/delete-cheque/{{$id = $cheque->id}}"  style="color:#fff;background-color:rgba(255, 0, 0, 0.452);border-radius:4px;padding:6px;">Cancel</a></span>
+     </div>
    </div>
   
   </div>

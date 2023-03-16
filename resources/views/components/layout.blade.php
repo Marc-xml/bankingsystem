@@ -21,7 +21,7 @@
         <div class="loader"></div>
     </div>
     <div class="header" style="z-index:30;">
-      <span class="logo">INVOICE</span>
+      <span class="logo">INVOICE <span><i class="fa fa-feather"></i></span></span>
           <div class="icons">
            {{-- <span>{{Auth::user()->name}}</span> --}}
           <span style="color:grey"><a href="{{url('/user/profile')}}" style="color:grey"><i class="fa fa-user {{ 'user/profile' == request()->path() ? 'active' : ''}}"></i></a></span>
@@ -124,7 +124,7 @@
       <div class="main">
         <x-flash-message />
         <x-current-account />
-  
+      
     {{$slot}}
    
    

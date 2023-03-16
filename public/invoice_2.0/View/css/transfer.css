@@ -406,6 +406,15 @@ border-radius:10px;
     flex-direction:column;
     margin:7px;
  }
+ .pending{
+   color:rgb(128, 128, 128);
+    
+ }
+ .complete{
+  color: rgb(24, 180, 24);
+   
+
+ }
  .filterbox i{
     padding:6px;
  }

@@ -107,7 +107,7 @@
     
         <div class="filter-content filter-off">
           <span>Year</span>
-          <input type="number" class="filter-box" reuired placeholder="Enter year" name="year">
+          <input type="number" class="filter-box" required placeholder="Enter year" name="year">
         </div>
         
         

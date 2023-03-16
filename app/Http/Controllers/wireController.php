@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Wire;
 use App\Models\Message;
+use App\Mail\verifyWire;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class wireController extends Controller
 {
@@ -42,7 +44,7 @@ class wireController extends Controller
         $wires = Wire::where("account_concerned","=",$account)->where(function($query){
             $query->where("status","=","unverified");
         })->get();
-        if(count($wires) >=0){
+        if(count($wires) >0){
             return back()->with("message","Already have a pending transfer");
         }
             try

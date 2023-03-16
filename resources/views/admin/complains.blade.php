@@ -12,10 +12,10 @@
               <th> id</th>
               <th>complainer</th>
               <th>email</th>
-              <th>date</th>
-              <th>title </th>
-              <th>content </th>
-              <th>status </th>
+              <th class="show">date</th>
+              <th class="show">title </th>
+              <th class="show">content </th>
+              <th class="show">status </th>
               <th class="show">Action</th>
           
 

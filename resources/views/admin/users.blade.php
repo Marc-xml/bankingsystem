@@ -55,7 +55,11 @@
         <span><a href="/review-user/{{$id = $user->id}}"><i class="fa fa-pen"></i></a></span>
         <span><a href="/email-user/{{$id = $user->id}}"><i class="fa fa-envelope"></i></a></span>
         <span style="margin-left:10px"><a href="/delete-user/{{$id = $user->id}}"><i class="fa fa-trash"></i></a></span>
-        <span style="margin-left:10px; color:rgba(255, 0, 0, 0.329)"><a href="/restrict-user/{{$id = $user->id}}"><i class="fa fa-cancel"></i></a></span>
+      @if ($user->restricted == "yes")
+      <span style="margin-left:10px; color:grey !important"><a href="/restrict-user/{{$id = $user->id}}"><i class="fa fa-cancel" style="color:grey"></i></a></span>
+      @else
+      <span style="margin-left:10px; color:rgba(255, 0, 0, 0.329)"><a href="/restrict-user/{{$id = $user->id}}"><i class="fa fa-cancel"></i></a></span>
+      @endif
       </td>
       
       {{-- <td class="show"></td> --}}

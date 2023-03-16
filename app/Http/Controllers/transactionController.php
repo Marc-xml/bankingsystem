@@ -17,10 +17,12 @@ class transactionController extends Controller
     public function show(){
 
         $user =auth()->user()->id;
-        $id = 2 ;
-        // $request->session()->put('acc',$id);
         $accounts = Account::all()
         ->where('owner_id','=',"$user");
+        $accountIds = $accounts->pluck('id')->toArray();
+    $id = $accountIds[0];
+        // $request->session()->put('acc',$id);
+        
         $transactions = Transaction::latest()
          ->where('sender_account','=',"$id")
         ->orwhere('receiver_account','=',"$id")
@@ -57,6 +59,17 @@ class transactionController extends Controller
     //    $messages = DB::table('messages')->get();
         
         return view('client.transfer',compact('accounts'),compact('transactions'),$id);
+    }
+
+    public function delete_pending(Request $request,$id){
+        $transaction = Transaction::find($id);
+        try{
+            $transaction->delete();
+            return back()->with("message","Transaction deleted");
+        }catch(\Throwable $e){
+            return back()->with("message","Transaction not deleted");
+
+        }
     }
     public function filtertrans(Request $request,$id){
         $filter = $request->query('search');

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use function PHPUnit\Framework\isEmpty;
 use Illuminate\Console\Scheduling\Schedule;
+use PhpParser\Node\Stmt\TryCatch;
 
 class loanCotroller extends Controller
 {
@@ -71,30 +72,40 @@ class loanCotroller extends Controller
     }
     public function update_loan(Request $request,$id){
         $loan =  Loan::find($request->id);
-        $loan->name = $request->name;
-        $loan->address = $request->address;
-        $loan->phone = $request->phone;
-        $loan->dob = $request->dob;
-        $loan->account_concerned = $request->account;
-        $loan->identity_proof =$request->file('identity')->store('docs', 'public');
-        $loan->income_proof = $request->file('income')->store('docs', 'public');
-        $loan->address_proof = $request->file('addressproof')->store('docs', 'public');
-        $loan->purpose = $request->purpose;
-        $loan->amount = $request->loan_amount;
-        $loan->monthly_payement = $request->permonth;
-        $loan->date_limit = $request->time;
-        $loan->status = "pending";
-        // $loan->loan_granted_at = date("y-m-d");
-
-        try{
-            $loan->save();
-    
-            }catch(\throwable $e){
-                return redirect('/loans')->with("message","Account stated does not exist");
-            }
+        $user = auth()->user()->name;
+        $applier = $request->name;
+     
+            $loan = new Loan;
+            $loan->name = $request->name;
+            $loan->address = $request->address;
+            $loan->phone = $request->phone;
+            $loan->dob = $request->dob;
+            $loan->account_concerned = $request->account;
+            $loan->identity_proof =$request->file('identity')->store('docs', 'public');
+            $loan->income_proof = $request->file('income')->store('docs', 'public');
+            $loan->address_proof = $request->file('addressproof')->store('docs', 'public');
+            $loan->purpose = $request->purpose;
+            $loan->email = auth()->user()->email;
+            $loan->amount = $request->loan_amount;
+            $loan->monthly_payement = $request->permonth;
+            $loan->date_limit = $request->time;
+            $loan->status = "pending";
+            // $loan->loan_granted_at = date("y-m-d");
+            // if($request->account != session()->get("acc")){
+            //     return back()->with("message","Enter your current active account");
+            // }
+      session()->put('loan_account',$request->account);
+                try{
+                    $loan->update();
+            return redirect('/verify-loans')->with("message","Loan form submitted Please check your emails for the verification code");
+            
+                }catch(\Throwable $e){
+                    return back()->with("message","Check your internet connection and try again");
+                }
+            
       
-        return redirect('/loans')->with("message","Loan info Sucessfully updated");
-    }
+    
+}
     public function delete_loan($id){
         $loan = Loan::find($id);
         $loan->delete();

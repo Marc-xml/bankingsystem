@@ -32,17 +32,24 @@ class cheqController extends Controller
 
             return back()->with("message","Enter your correct account number");
         }
-        
-            try{
-                $cheq->save();
-        return view('client.chechreq',compact('cheques'))->with('message','Checbook request submitted');
-
-            }catch(\Throwable $e){
-                return back()->with('message','An error occured please try again');
-            }
-
+       try{
+        $cheq->save();
+        return back()->with('message',"Checkbook request submitted");
+       }catch(\Throwable $e){
+        return back()->with("message","An error occured please try again");
+       }
         
   
         // return view('client.chechreq',compact('cheques'))->with('message','Checbook request submitted succesfully');
+    }
+    public function delete_cheque($id){
+        $cheque = Cheque::find($id);
+        try{
+            $cheque->delete();
+            return back()->with("message","Checkbook deleted");
+        }catch(\throwable $e){
+            return back()->with("message","An error occured try again");
+
+        }
     }
 }

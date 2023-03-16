@@ -48,7 +48,7 @@
           
       </div>
       <div class="text_field" >
-        <input type="text" required name="amount">
+        <input type="number" required name="amount">
         <label for="">Amount</label>
         
     </div>
@@ -81,7 +81,9 @@
     @endif
     @endforeach
     @unless (count($transfers) !== 0)
-    {{"NO trasnsaction initiated yet"}}
+    <p class="no-item">
+    NO TRANSACTION INITIATED YET
+    </p>
 @endunless
 <p class="accounts" >Pending transfers</p>
    <hr size='7' class="main-line">
@@ -99,15 +101,15 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Transaction id</th>
+          <th class="show">Transaction id</th>
           <th>Beneficiary</th>
           <th>Account number</th>
           <th>Bank name</th>
-          <th>BIC code</th>
-          <th>Clearing code</th>
+          <th class="show">BIC code</th>
+          <th class="show">Clearing code</th>
           <th>Amount</th>
-          <th>status</th>
-          <th>crediting account</th>
+          <th class="show">status</th>
+          <th class="show">crediting account</th>
         </tr>
       </thead>
       <tbody>
@@ -115,19 +117,19 @@
        
          @foreach ($transfers as $transfer)
          <tr>
-             <td>{{$transfer->id}}</td>
+             <td class="show">{{$transfer->id}}</td>
              <td>{{$transfer->beneficiary}}</td>
              <td>{{$transfer->account_number}}</td>
              <td>{{$transfer->bank_name}}</td>
-             <td>{{$transfer->bic_code}}</td>
-             <td>{{$transfer->clearing_code}}</td>
+             <td class="show"> {{$transfer->bic_code}}</td>
+             <td class="show">{{$transfer->clearing_code}}</td>
              <td>{{$transfer->amount}}</td>
-             <td>{{$transfer->status}}</td>
-             <td>{{$transfer->account_concerned}}</td>
+             <td class="show">{{$transfer->status}}</td>
+             <td class="show"> {{$transfer->account_concerned}}</td>
             </tr>
          @endforeach
          @unless (count($transfers) !== 0)
-             {{"No recent transfers"}}
+             <P class="no-item">NO ITEM</P>
          @endunless
         
 

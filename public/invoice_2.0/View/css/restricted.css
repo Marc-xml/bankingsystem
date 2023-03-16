@@ -1,0 +1,23 @@
+main{
+    /* background-color: #ffffff; */
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    transform:translateY(200%);
+    color:rgb(128, 128, 128);
+
+}
+.title{
+    font-weight: 600;
+    color:rgb(0, 89, 255);
+    font-size:50px;
+}
+.fa-warning{
+    color:rgb(235, 4, 4);
+    font-size: 5rem;
+}
+.res{
+    display:flex;
+    text-decoration: underline;
+    justify-content: space-around;
+    align-items: center;
+}

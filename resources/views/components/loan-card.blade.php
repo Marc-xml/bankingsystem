@@ -1,4 +1,4 @@
-<div class="loan-box" {{$attributes->merge(['id' => 'jake'])}}>
+<div class="loan-box" {{$attributes->merge(['id' => 'jake'])}} style="z-index:5">
     <div class="laon-title">
       <span><i class="fa fa-suitcase"></i>Credit immobilier</span>
     </div>

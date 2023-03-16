@@ -5,7 +5,7 @@
         <p class="account">Chechbook request</p>
         <hr class="main-line">
 
-        <div class="review-form" style="margin-left:auto;margin-right:auto">
+        <div class="review-form" style="margin-left:auto;margin-right:auto;">
      
             <form action="/req-check"  method="POST"  enctype="multipart/form-data">
                 @csrf
@@ -48,7 +48,7 @@
                 <label for="">Street address line 1</label>
               </div>
               <div class="text_field">
-                <input type="text"  name="add2"   />
+                <input type="text"  name="add2" required  />
                 <label for="">Street address line 2</label>
               </div>
                </div>
@@ -93,7 +93,7 @@
         <x-cheq-card :cheque="$cheque"/>
         @endforeach
         @unless (count($cheques) != 0)
-            {{"No request"}}
+            <p class="no-item">NO REQUEST FOUND</p>
         @endunless
       </div>
 </x-layout>

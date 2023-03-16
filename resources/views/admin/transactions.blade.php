@@ -12,7 +12,7 @@
     </x-admin-modal>
     <x-transfer-filter>
     </x-transfer-filter>
-    <div class="account-table">
+    <div class="account-table" style="min-height: 1100px">
         <table class="table">
           <thead>
             <tr>

@@ -153,16 +153,16 @@
         <x-admin-filter>
         </x-admin-filter>
 
-        <div class="account-table">
+        <div class="account-table" style="min-height:1100px">
             <table class="table">
               <thead>
                 <tr>
                   <th>transaction id</th>
                   <th>Amount</th>
                   <th>date</th>
-                  <th>sender </th>
-                  <th>receiver</th>
-                  <th>status</th>
+                  <th class="show">sender </th>
+                  <th class="show">receiver </th>
+                  <th class="show">status</th>
 
                   <th  class="show">action</th>
              

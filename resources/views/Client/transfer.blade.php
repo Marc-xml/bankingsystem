@@ -120,7 +120,7 @@
                 <tr>
                   <th>Transaction id</th>
                   <th>Amount</th>
-                  <th>Date</th>
+                  <th>Date(y-m-d)</th>
                   <th>Description</th>
                   <th class="show">Status</th>
                
@@ -142,9 +142,13 @@
         <td data-label = "Name" style="color:green">+{{$transaction->amount}}</td>
 
       @endif
-          <td data-label = "Age">{{$transaction->date}}</td>
+          <td data-label = "Age">{{$transaction->created_at->format("y-m-d")}}</td>
           <td data-label = "Country">{{$transaction->description}}</td>
-          <td data-label = "tel" class="show">{{$transaction->status}}</td>
+       @if($transaction->status !== "pending")
+        <td data-label = "tel" class="show complete">{{$transaction->status}}</td>
+       @else
+        <td data-label = "tel" class="show pending"><span ><a href="/pending-trans/{{$id = $transaction->id}}" style="color:rgba(255, 0, 0, 0.692);padding-right:6px;cursor:pointer"><i class="fa fa-trash"></i></a></span>{{$transaction->status}}</td>
+       @endif
         
         
         </tr>
