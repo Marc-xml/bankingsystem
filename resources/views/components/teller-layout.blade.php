@@ -47,11 +47,11 @@
       </label>
 
       {{-- navigation bar  --}}
-      <div class="navigation">
-        <div class="{{ '/' == request()->path() ? 'active' : ''}}{{ 'filter-accounts-teller' == request()->path() ? 'active' : ''}}"><a href="/" ><span><i class="fa fa-book "></i><span class="stat" id="active-tab" >  {{session()->get('countAcc')}}</span></span></a></div>
-        <div class="{{ 'teller/users' == request()->path() ? 'active-1' : ''}}"><a href="/teller/users" ><span><i class="fa fa-users"></i><span class="stat" >  {{session()->get('countUsers')}}</span></span></a></div>
-        <div class="{{ 'teller/transactions' == request()->path() ? 'active-1' : ''}}"><a href="/teller/transactions" ><span><i class="fa fa-exchange"></i><span class="stat" >  {{session()->get('countTransactions')}}</span></a></div>
-        <div class="{{ 'teller/loans' == request()->path() ? 'active-2' : ''}}"><a href="/teller/loans" ><span><i class="fa fa-dollar"></i><span class="stat" >  {{session()->get('countLoans    ')}}</span></span></a></div>
+      <div class="navigation" >
+        <div class="{{ '/' == request()->path() ? 'active' : ''}}{{ 'filter-accounts-teller' == request()->path() ? 'active' : ''}}"><a href="/" ><span><i class="fa fa-book "> {{session()->get('countAcc')}}</i><span class="stat" id="active-tab" >  </span></span></a></div>
+        <div class="{{ 'teller/users' == request()->path() ? 'active-1' : ''}}"><a href="/teller/users" ><span><i class="fa fa-users"> {{session()->get('countUsers')}}</i><span class="stat" >  </span></span></a></div>
+        <div class="{{ 'teller/transactions' == request()->path() ? 'active-1' : ''}}"><a href="/teller/transactions" ><span><i class="fa fa-exchange"> {{session()->get('countTransactions')}}</i><span class="stat" >  </span></a></div>
+        <div class="{{ 'teller/loans' == request()->path() ? 'active-2' : ''}}"><a href="/teller/loans" ><span><i class="fa fa-dollar"> {{session()->get('countLoan')}}</i><span class="stat" > </span></span></a></div>
       </div>
   
       <div class="main">
@@ -61,7 +61,7 @@
     {{$slot}}
    
    
-  <span class="message-trigger"><i class="fa fa-message"></i></span>
+  {{-- <span class="message-trigger"><i class="fa fa-message"></i></span>
 
   <div class="message-box" style="background: #fff;z-index:50;height: 500px;">
    <div class="message-actions">
@@ -71,22 +71,22 @@
 
    @php
        $messages = session()->get('mss');
-   @endphp
+   @endphp --}}
 
      {{-- <div style="height:20rem;overflow;scroll;"> --}}
- <div style="height:400px;overflow:scroll">
+ {{-- <div style="height:400px;overflow:scroll">
 @isset($messages)
 @foreach ($messages as $message)
 <div class="message" style="box-shadow:2px 2px 2px 2px #2d87ef2d;z-index:50">
-    {{$message->content}}
+    {{$message->content}} --}}
    {{-- <span style="font-size:10px;">sender:{{auth()->user()->name}} at {{$message->created_at->Carbon::format('H:i:s')}}</span> --}}
-   </div>
+   {{-- </div>
    
    <div class="message-1" style="box-shadow:2px 2px 2px 2px #2d87ef2d;padding:10px;">
        {{$message->reply}}
    </div>
 @endforeach 
-@endisset
+@endisset --}}
     
 
 
@@ -94,7 +94,7 @@
     
 
 
-
+{{-- 
  <hr>
   <div class="below">
   
@@ -102,12 +102,12 @@
    <form action="/send-message" method="post">
     @csrf
         <input type="text" class="message-input" name="content">
-       <span type="submit"><input type="submit" value="send"><i class="fa fa-paper-plane" ></i></span>
+       <span type="submit"><input type="submit" value="send"><i class="fa fa-paper-plane" ></i></span> --}}
         {{-- <span> type="submit"</span> --}}
-   </form>
+   {{-- </form>
  
   </div> 
-      </div>  
+      </div>   --}}
       <script src="{{ asset('invoice_2.0\View\assets\jquery\jquery-3.6.0.min.js') }}"></script>
       <script src="{{ asset('invoice_2.0\View\assets\swiper.js') }}"></script>
       <script src="{{ asset('invoice_2.0\View\assets\script.js') }}"></script>
@@ -130,6 +130,10 @@
       },4000);
       
       </script>
+            <script>
+              $('.print').click(function(){window.print()});
+          
+          </script>
     @stack('scripts')
     </body>
     </html>

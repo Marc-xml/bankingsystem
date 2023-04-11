@@ -6,7 +6,7 @@
     the complletion of the initiated transaction.If you did not receive a code yet click on the button below to send another code
    </p>
    <button class="confirm">
-    RESEND CODE
+    <a href="/confirm-transaction">RESEND CODE</a>
    </button>
   <form action="/conclude-transaction" >
     @csrf

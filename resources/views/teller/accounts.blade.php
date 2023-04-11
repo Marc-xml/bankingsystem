@@ -33,7 +33,7 @@
          <tr>
           <td data-label = "S.no">{{$account->id}}</td>
           <td data-label = "Name">{{$account->alias}}</td>
-          <td data-label = "Age">{{$account->type}}</td>
+          <td data-label = "Age">{{$account->account_type}}</td>
           <td class="show">{{$account->balance}}</td>
           <td  class="show">{{$account->overdraft}}</td>
           <td  class="show">{{$account->upcoming_balance}}</td>

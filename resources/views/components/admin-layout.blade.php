@@ -31,12 +31,13 @@
         <div class="loader"></div>
     </div>
     <div class="header">
-      <span class="logo" style="font-size:15px">INVOICE <span style="color:grey">ADMIN</span></span>
+      <span class="logo" style="font-size:15px"><i class="fa fa-feather"></i>INVOICE <span style="color:grey">ADMIN</span></span>
     
           <div class="icons">
          
           <span style="color:grey"><a href="{{url('/user/profile')}}" style="color:grey"><i class="fa fa-user {{ 'user/profile' == request()->path() ? 'active' : ''}}"></i></a></span>
-          <span><a href="/admin/messages"><i class="fa fa-message"></i></a></span>
+          {{-- <span><a href="/admin/messages"><i class="fa fa-message"></i></a></span> --}}
+         
           {{-- <span><i class="fa fa-globe"></i></span> --}}
           <span><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a></span>
           </div>
@@ -134,7 +135,8 @@
           <span><i class="fa fa-blog" ></i></span>
          </a>
         </div>
-  <span style="font-size:1.2rem;"><a href={{url()->previous()}}><i class="fa fa-arrow-left"></i></a></span>
+  {{-- <span style="font-size:1.2rem;"><a href={{url()->previous()}}><i class="fa fa-arrow-left"></i></a></span> --}}
+  <span style="float:right"><i class="fa fa-calendar"></i>  {{ date('Y-m-d H:i');}}</span>
     {{$slot}}
    
    
@@ -161,6 +163,10 @@
         $('#notif').fadeToggle();
       },4000);
       </script>
+            <script>
+              $('.print').click(function(){window.print()});
+          
+          </script>
        @stack('scripts')
     </body>
     </html>

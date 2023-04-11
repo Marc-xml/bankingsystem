@@ -98,19 +98,23 @@ class wireController extends Controller
     public function confirm_wire(Request $request){
         $otp = session()->get('otp');
         if($otp == $request->otp){
-            $account = session()->get('account');
+            $account = session()->get('acc');
             $wires = Wire::where("account_concerned","=",$account)->where(function($query){
                 $query->where("status","=","unverified");
             })->get();
-            
+          
+            $wireIds = $wires->pluck('id')->toArray();
+       
+            $wireId = $wireIds[0];
+            $wires = Wire::find($wireId);
             $wires->status = "verified";
-                try{
+                // try{
             $wires->save();
 
-                }catch(\Throwable $e){
-                    return back()->with("message","an error occured");
-                }
-                return redirect('/loans')->with("message","Loan verification complete");
+                // }catch(\Throwable $e){
+                //     return back()->with("message","an error occured");
+                // }
+                return redirect('/wire')->with("message","Transfer verification complete");
         }else{
             return back()->with("message","Incorrect otp code");
         }

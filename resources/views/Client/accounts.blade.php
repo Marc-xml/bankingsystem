@@ -61,6 +61,7 @@
            // graph section 
 
 const ctx = document.getElementById('myChart').getContext('2d');
+// const cty = document.getElementById('myChart1').getContext('2d');
 const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -110,6 +111,54 @@ const myChart = new Chart(ctx, {
 });
 
     //  second graph 
+//     const myChart1 = new Chart(cty, {
+//     type: 'bar',
+//     data: {
+//         labels:[
+//     'Jan',
+//     'Feb',
+//     'March',
+//     'April',
+//     'May',
+//     'June',
+//     'July',
+//     'Aug',
+//     'Sep',
+//     'Oct',
+//     'Nov',
+//     'Dec'
+//   ],
+//         datasets: [{
+//             label: 'Number of transactions',
+//             data:{{Js::from($debits)}},
+//             backgroundColor: [
+//                 '',
+//                 '',
+//                 '',
+//                 '',
+//                 '',
+//                 ''
+//             ],
+//             borderColor: [
+//                 '#2D89EF',
+//                 '#2D89EF',
+//                 '#2D89EF',
+//                 '#2D89EF',
+//                '#2D89EF',
+//                 '#2D89EF'
+//             ],
+//             borderWidth: 0.5
+//         }]
+//     },
+//     options: {
+//         scales: {
+//             y: {
+//                 beginAtZero: true
+//             }
+//         }
+//     }
+// });
+
     
 const labels = [
   'Jan',
@@ -148,7 +197,7 @@ const labels = [
   const config = {
     type: 'bar',
     data: data,
-    options: {indexAxis: 'y'}
+    // options: {indexAxis: 'y'}
   };
 
 

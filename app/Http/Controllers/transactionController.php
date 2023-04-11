@@ -143,10 +143,10 @@ session()->put('otp',$otp);
         //now check if balance is enough
         $id = session()->get('acc');
         // $pending = Transaction::all()->where('status','=','pending');
-        $transactions = Transaction::all()->where('sender_account','=',$id)
+        $transactions = Transaction::where('sender_account','=',$id)
         ->where(function($query){
             $query->where("status","=","pending");
-        });
+        })->get();
         $account = Account::find($id);
         session()->put('account',$account);
         if($account->balance < $request->amount){
@@ -159,19 +159,22 @@ session()->put('otp',$otp);
         if($request->amount<1000){
             return back()->with("message","Amount transfered  must be atleast 1000XAF");
         }
+        // dd(count($transactions));
         // check if there is a pending transaction
-        if(count($transactions) >= 1){
-            return back()->with("message","There is already a pending account, either complete it or cancel it in the recent transaction table ");
+        if(count($transactions) >0){
+            return back()->with("message","There is already a pending account, cancel it in the recent transaction table ");
         }
-      
-            try{
+      else{
+        try{
             $transfer->save();
             Mail::to(auth()->user()->email)->send(new verifyTransaction());
 
         }catch(Throwable $e){
             return redirect('/transactions')->with("message","transaction failed,check your internet connection");
         }
-        return redirect('/confirm-transaction')->with("message","transaction initiated");
+        return redirect('/confirm-transaction')->with("message","transaction initiated");  
+      }
+          
     }
     public function conclude_transaction(Request $request){
         $otp = session()->get('otp');

@@ -61,21 +61,28 @@ public function show(Request $request){
    $countComplains = count(Complain::all());
    session()->put("countComp",$countComplains);
     // get all transactions 
+
     $adminTransactions = Transaction::all();
     $thisyeartransaction = Transaction::query()
     ->whereYear('created_at', 2023)
-    ->selectRaw('month(created_at) as month')
-    ->selectRaw('count(*) as count')
-    ->groupBy('month')
-    ->orderBY('month')
-    ->pluck('count','month')
-    ->values()
-    ->toArray();
+   ->selectRaw('month(created_at) as month')
+   ->selectRaw('count(*) as count')
+   ->where('sender_account',!null)
+   ->orwhere('receiver_account',!null)
+   ->groupBy('month')
+   ->orderBY('month')
+   ->pluck('count','month')
+   ->values()
+   ->toArray();
+
+    
 
        $domestic = Transaction::query()
        ->whereYear('created_at', 2023)
        ->selectRaw('month(created_at) as month')
        ->selectRaw('sum(amount) as amount')
+       ->where('sender_account',!null)
+       ->orwhere('receiver_account',!null)
        ->groupBy('month')
        ->orderBY('month')
        ->pluck('amount','month')
@@ -86,6 +93,8 @@ public function show(Request $request){
    ->whereYear('created_at', 2023)
        ->selectRaw('month(created_at) as month')
        ->selectRaw('sum(amount) as amount')
+        ->where('account_concerned',1)
+       ->orwhere('account_number',!343)
        ->groupBy('month')
        ->orderBY('month')
        ->pluck('amount','month')
@@ -102,16 +111,17 @@ public function show(Request $request){
     else if($usertype == 2){
         //count accounts
         $countAccount = count(Account::all());
-        session()->put("countAcc",$countAccount);
+        $request->session()->put("countAcc",$countAccount);
     //    count users 
         $countUsers = count(User::all());
-        session()->put("countUsers",$countUsers);
+        $request->session()->put("countUsers",$countUsers);
         // count loans 
-        $countLoan = count(Loan::all());
-        session()->put("countLoan",$countLoan);
+        $countLoan = count(Loan::all()->where("status","=","complete"));
+        $request->session()->put("countLoan",$countLoan);
            //   count transactions 
     $countTransactions = count(Transaction::all());
-    session()->put("countTransactions",$countTransactions);
+  
+    $request->session()->put("countTransactions",$countTransactions);
     //count complains
     $countComplains = count(Complain::all());
     session()->put("countComp",$countComplains);
@@ -156,11 +166,13 @@ public function show(Request $request){
    ->pluck('count','month')
    ->values()
    ->toArray();
+//    dd($thisyeartransaction);
    $debits = Transaction::query()
    ->whereYear('created_at',2023)
    ->selectRaw('month(created_at) as month')
    ->selectRaw('sum(amount) as amount')
    ->where('sender_account',$id)
+   ->orwhere('sender_account',$id)
    ->groupBy('month')
    ->orderBy('month')
    ->pluck('amount','month')
@@ -172,6 +184,7 @@ public function show(Request $request){
    ->selectRaw('month(created_at) as month')
    ->selectRaw('sum(amount) as amount')
    ->where('receiver_account',$id)
+   ->orwhere('receiver_account',$id)
    ->groupBy('month')
    ->orderBy('month')
    ->pluck('amount','month')

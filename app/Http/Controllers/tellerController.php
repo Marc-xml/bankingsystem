@@ -17,6 +17,18 @@ class tellerController extends Controller
         $messages = DB::table('messages')
         ->where("sender","=",auth()->user()->id)->get();
       session()->put('mss',$messages);
+       //count accounts
+       $countAccount = count(Account::all());
+       session()->put("countAcc",$countAccount);
+   //    count users 
+       $countUsers = count(User::all());
+       session()->put("countUsers",$countUsers);
+       // count loans 
+       $countLoan = count(Loan::all());
+       session()->put("countLoan",$countLoan);
+          //   count transactions 
+   $countTransactions = count(Transaction::all());
+   session()->put("countTransactions",$countTransactions);
         return view("teller.users",compact("users"));
         
     }
@@ -25,6 +37,19 @@ class tellerController extends Controller
         $messages = DB::table('messages')
         ->where("sender","=",auth()->user()->id)->get();
       session()->put('mss',$messages);
+       //count accounts
+       $countAccount = count(Account::all());
+       session()->put("countAcc",$countAccount);
+   //    count users 
+       $countUsers = count(User::all());
+       session()->put("countUsers",$countUsers);
+       // count loans 
+    //    dd(session()->get("countUsers"));
+       $countLoan = count(Loan::all());
+       session()->put("countLoan",$countLoan);
+          //   count transactions 
+   $countTransactions = count(Transaction::all());
+   session()->put("countTransactions",$countTransactions);
         return view("teller.transactions",compact("transactions"));
     }
     public function all_loans(){
@@ -43,8 +68,8 @@ class tellerController extends Controller
         if(!empty($filter)){
         
             $accounts =  Account::latest()
-            ->where('id','like','%'.$filter.'%')
-            ->orwhere('alias','like','%'.$filter.'%')
+            ->where('id','=',$filter)
+            // ->orwhere('alias','like','%'.$filter.'%')
             ->get();
         }
         elseif (!empty($date)){

@@ -26,7 +26,7 @@
            {{-- <span>{{Auth::user()->name}}</span> --}}
           <span style="color:grey"><a href="{{url('/user/profile')}}" style="color:grey"><i class="fa fa-user {{ 'user/profile' == request()->path() ? 'active' : ''}}"></i></a></span>
           {{-- <span><i class="fa fa-bell"></i></span> --}}
-          <span><i class="fa fa-globe"></i></span>
+          {{-- <span><i class="fa fa-globe"></i></span> --}}
           <span><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a></span>
           </div>
       </div>
@@ -195,6 +195,10 @@
       setTimeout(function(){
         $('#notif').fadeToggle();
       },4000);
+      </script>
+      <script>
+          $('.print').click(function(){window.print()});
+      
       </script>
     @stack('scripts')
     </body>

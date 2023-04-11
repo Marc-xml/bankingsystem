@@ -6,12 +6,9 @@
 
 
   <div class="bill-info">
-    <p class="bold-info">Inter-bank transfer with invoice</p>
+    <p class="bold-info">Inter-bank  and international transfer with invoice</p>
 
-   @php
-       $account = session()->get('acc');
-   @endphp
-   {{$account}}
+   
     <p class="grey-name">Send money to a customer of another bank in just few steps</p>
   </div>
 <div>

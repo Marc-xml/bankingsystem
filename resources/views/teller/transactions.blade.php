@@ -1,5 +1,5 @@
 <x-teller-layout>
-    <x-flash-message/>
+    
       <p class="accounts" >All transcations</p>
       <hr size='7' class="main-line">
       <div style="float:right">

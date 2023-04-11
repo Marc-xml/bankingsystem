@@ -43,6 +43,12 @@
             <label for="phone" value="{{ __('phone') }}">Phone</label>
             
         </div>
+        {{-- account  --}}
+        {{-- <div class="text_field">
+            <input type="number" id="account" name="acount" :value="old('account')" required autofocus autocomplete="acount" >
+            <label for="account" value="{{ __('account') }}">Account number</label>
+            
+        </div> --}}
         <div class="text_field">
             <input id="address" type="text" name="address" :value="old('address')" required autofocus autocomplete="address" >
             <label for="address" value="{{ __('address') }}">address</label>

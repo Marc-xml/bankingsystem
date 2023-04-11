@@ -63,17 +63,29 @@
         type: 'bar',
         data: {
             labels:[
-        'January',
-        'February',
+        'Jan',
+        'Feb',
         'March',
         'April',
         'May',
         'June',
+        'July',
+        'Aug',
+        'Sept',
+        'oct',
+        'Nov',
+        'dec'
       ],
             datasets: [{
                 label: 'Number of transactions',
                 data:{{Js::from($thisyeartransaction)}},
                 backgroundColor: [
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
                     '',
                     '',
                     '',
@@ -86,6 +98,12 @@
                     '#2D89EF',
                     '#2D89EF',
                     '#2D89EF',
+                   '#2D89EF',
+                   '#2D89EF',
+                   '#2D89EF',
+                   '#2D89EF',
+                   '#2D89EF',
+                   '#2D89EF',
                    '#2D89EF',
                     '#2D89EF'
                 ],
@@ -104,12 +122,18 @@
         //  second graph 
         
     const labels = [
-        'January',
-        'February',
+      'Jan',
+        'Feb',
         'March',
         'April',
         'May',
         'June',
+        'July',
+        'Aug',
+        'Sept',
+        'oct',
+        'Nov',
+        'dec'
       ];
     
       const data = {

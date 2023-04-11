@@ -181,5 +181,18 @@
       </tbody>
    
     </table>
+    <button class="print" style=" padding:2px;
+    border:none;
+    display:flex;
+    justify-content:center;
+    align-item:center;
+    margin:20px;
+    cursor:pointer;
+    background: #2D89EF;
+    color:#fff;
+    padding:9px;
+    /* height:3rem; */
+    border-radius: 5px;
+    width:5rem;">Print</button>
     </div>
 </x-layout>
