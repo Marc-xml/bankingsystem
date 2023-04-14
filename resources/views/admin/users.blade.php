@@ -52,6 +52,8 @@
       <td  class="show">{{$user->created_at}}</td>
       <td  class="show">
         <span><a href="/user-details/{{$id = $user->id}}"><i class="fa fa-eye"></i></a></span>
+          <span style="padding-right:5px"><a href="/email-user/{{$id = $user->id}}"><i class="fa fa-envelope"></i></a></span>
+    
         <span><a href="/review-user/{{$id = $user->id}}"><i class="fa fa-pen"></i></a></span>
         <span><a href="/email-user/{{$id = $user->id}}"><i class="fa fa-envelope"></i></a></span>
         <span style="margin-left:10px"><a href="/delete-user/{{$id = $user->id}}"><i class="fa fa-trash"></i></a></span>
