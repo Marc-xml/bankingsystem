@@ -43,7 +43,7 @@ public function show(Request $request){
         return redirect('/restricted')->with("message","Your account has been suspended");
     }
     $usertype = auth()->user()->usertype;
-    if($usertype=='1'){
+    if($usertype=='1' || $usertype=='3'){
         // admin section 
         // count accounts 
       $countAccount = count(Account::all());
@@ -159,8 +159,8 @@ public function show(Request $request){
    ->whereYear('created_at', 2023)
    ->selectRaw('month(created_at) as month')
    ->selectRaw('count(*) as count')
-   ->where('sender_account',$id)
-   ->orwhere('receiver_account',$id)
+   ->where('sender_account',session()->get("acc"))
+   ->orwhere('receiver_account',session()->get("acc"))
    ->groupBy('month')
    ->orderBY('month')
    ->pluck('count','month')
@@ -171,8 +171,8 @@ public function show(Request $request){
    ->whereYear('created_at',2023)
    ->selectRaw('month(created_at) as month')
    ->selectRaw('sum(amount) as amount')
-   ->where('sender_account',$id)
-   ->orwhere('sender_account',$id)
+   ->where('sender_account',session()->get("acc"))
+   ->orwhere('sender_account',session()->get("acc"))
    ->groupBy('month')
    ->orderBy('month')
    ->pluck('amount','month')
@@ -183,8 +183,8 @@ public function show(Request $request){
    ->whereYear('created_at',2023)
    ->selectRaw('month(created_at) as month')
    ->selectRaw('sum(amount) as amount')
-   ->where('receiver_account',$id)
-   ->orwhere('receiver_account',$id)
+   ->where('receiver_account',session()->get("acc"))
+   ->orwhere('receiver_account',session()->get("acc"))
    ->groupBy('month')
    ->orderBy('month')
    ->pluck('amount','month')
@@ -262,7 +262,8 @@ public function choose(Request $request ,$id){
    ->whereYear('created_at',2023)
    ->selectRaw('month(created_at) as month')
    ->selectRaw('sum(amount) as amount')
-   ->where('sender_account',$id)
+   ->where('sender_account',session()->get("acc"))
+   ->orwhere('sender_account',session()->get("acc"))
    ->groupBy('month')
    ->orderBy('month')
    ->pluck('amount','month')
@@ -274,7 +275,8 @@ public function choose(Request $request ,$id){
    ->whereYear('created_at',2023)
    ->selectRaw('month(created_at) as month')
    ->selectRaw('sum(amount) as amount')
-   ->where('receiver_account',$id)
+   ->where('receiver_account',session()->get("acc"))
+   ->orwhere('receiver_account',session()->get("acc"))
    ->groupBy('month')
    ->orderBy('month')
    ->pluck('amount','month')
@@ -304,6 +306,7 @@ public function filtertrans(Request $request,$id){
             ->orwhere('sender_account','like','%'.$filter.'%')
             ->orwhere('receiver_account','like','%'.$filter.'%')
             ->orwhere('amount','like','%'.$filter.'%')
+            ->orwhere('description','like','%'.$filter.'%')
             ->orwhere('created_at','like','%'.$filter.'%')
             ->orwhere('status','like','%'.$filter.'%')
             ->get();
@@ -363,7 +366,48 @@ public function filter_admintrans(Request $request){
  
     }
  
-    return view('admin.main',compact('adminTransactions'));
+    $adminTransactions = Transaction::all();
+    $thisyeartransaction = Transaction::query()
+    ->whereYear('created_at', 2023)
+   ->selectRaw('month(created_at) as month')
+   ->selectRaw('count(*) as count')
+   ->where('sender_account',!null)
+   ->orwhere('receiver_account',!null)
+   ->groupBy('month')
+   ->orderBY('month')
+   ->pluck('count','month')
+   ->values()
+   ->toArray();
+
+    
+
+       $domestic = Transaction::query()
+       ->whereYear('created_at', 2023)
+       ->selectRaw('month(created_at) as month')
+       ->selectRaw('sum(amount) as amount')
+       ->where('sender_account',!null)
+       ->orwhere('receiver_account',!null)
+       ->groupBy('month')
+       ->orderBY('month')
+       ->pluck('amount','month')
+       ->values()
+       ->toArray();
+
+   $inter = Wire::query()
+   ->whereYear('created_at', 2023)
+       ->selectRaw('month(created_at) as month')
+       ->selectRaw('sum(amount) as amount')
+        ->where('account_concerned',1)
+       ->orwhere('account_number',!343)
+       ->groupBy('month')
+       ->orderBY('month')
+       ->pluck('amount','month')
+       ->values()
+       ->toArray();
+//    dd(compact('credits'));
+       
+    $request->session()->put('thisyeartransaction',$thisyeartransaction);
+    return view('admin.main',compact('adminTransactions'),compact('thisyeartransaction','domestic','inter'));
     
 }
 public function logout(Request $request) {

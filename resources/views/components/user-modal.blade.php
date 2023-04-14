@@ -24,8 +24,13 @@
     <div class="text_field">
         <select name="usertype" id="">
             <option value="0">Client user</option>
+            @if (auth()->user()->usertype == "3")
             <option value="1">Admin user</option>
             <option value="2">New Teller</option>
+            <option value="3">Super Admin</option>
+            @else
+            <option value="0">Client user</option>
+            @endif
         </select>
     </div>
 

@@ -39,10 +39,11 @@ class userController extends Controller
     session()->put('contact_message',$message);
     try{
         Mail::to($email)->send(new contact_user());
+        return back()->with("message","message sent");
     }catch(\Throwable $e){
         return back()->with("message","messag not sent");
     }
-    return back()->with("message","message sent");
+   
 
  }
  public function show_broadcast(){

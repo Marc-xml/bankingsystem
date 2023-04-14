@@ -54,8 +54,9 @@ class transactionController extends Controller
         ->where('sender_account','=',"$id")
         ->orwhere('receiver_account','=',"$id")
        ->get();
-       
-        
+       $messages = DB::table('messages')
+       ->where("sender","=",auth()->user()->id)->get();
+       $request->session()->put('mss',$messages);
     //    $messages = DB::table('messages')->get();
         
         return view('client.transfer',compact('accounts'),compact('transactions'),$id);
@@ -86,7 +87,7 @@ class transactionController extends Controller
             ->where('id','like','%'.$filter.'%')
             ->orwhere('sender_account','like','%'.$filter.'%')
             ->orwhere('receiver_account','like','%'.$filter.'%')
-            ->orwhere('amount','like','%'.$filter.'%')
+            ->orwhere('description','like','%'.$filter.'%')
             ->orwhere('created_at','like','%'.$filter.'%')
             ->orwhere('status','like','%'.$filter.'%')
             ->get();
@@ -151,6 +152,9 @@ session()->put('otp',$otp);
         session()->put('account',$account);
         if($account->balance < $request->amount){
             return back()->with("message","Account balance is not sufficient");
+        } 
+        if($account->balance >500000){
+            return back()->with("message","No Transactions above 500,000xaf");
         } 
         // no sending to your current account
         if($request->receiver == $id){

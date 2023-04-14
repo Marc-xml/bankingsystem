@@ -41,7 +41,7 @@ class messageController extends Controller
         $messages = Message::all()->where("status","=","unanswered");
         
         
-        return view("admin.messages",compact("messages"));
+        return view("teller.messages",compact("messages"));
     }
     public function filter_messages(Request $request){
         $filter = $request->query('search');

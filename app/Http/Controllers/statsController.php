@@ -21,7 +21,15 @@ class statsController extends Controller
     }
     // to show all users 
     public function show_users(){
-        $users = User::all();
+        if(auth()->user()->usertype == 3){
+            $users = User::all();
+        }else if(auth()->user()->usertype == 1){
+            $users = User::where("usertype","=","0")
+            ->orwhere("usertype","=","2")->get();
+
+        }else{
+            $users = User::all()->where("usertype","=","0");
+        }
         return view("admin.users",compact('users'));
 
     }

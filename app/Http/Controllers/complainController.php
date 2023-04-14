@@ -26,7 +26,7 @@ class complainController extends Controller
     }
     // all complains 
     public function all_complains(){
-        $complains = Complain::all();
+        $complains = Complain::all()->where("status","=","unsolved");
         
         return view('admin.complains',compact("complains"));
     }
@@ -42,7 +42,7 @@ class complainController extends Controller
         session()->put("complain_reply",$request->reply);
         try{
             Mail::to($complain->email)->send(new reply_complain);
-        $complain->update(); 
+            $complain->update(); 
          return back()->with("message","reply was sent");
         }catch(\Throwable $e){
             return back()->with("message","Check your internet connection and try again");

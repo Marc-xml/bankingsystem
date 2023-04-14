@@ -17,7 +17,7 @@
     <a name="home"></a>
 
         {{-- top navbar  --}}
-        <nav class="top-nav">
+        <nav class="top-nav" style="z-index:50">
             <div class="nav-items">
                 <div style="margin-right:auto;color:#fff;padding:10px;font-size:15px;font-weight:700;">INVOICE <i class="fa fa-feather"></i></div>
 

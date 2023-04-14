@@ -40,5 +40,15 @@
 
       
     </div>
+    <script src="{{ asset('invoice_2.0\View\assets\jquery\jquery-3.6.0.min.js') }}"></script>
+    <script >
+        setTimeout(function(){
+      $('.loader_bg').fadeToggle();
+     }, 1500);
+      setTimeout(function(){
+        $('#notif').fadeToggle();
+      },4000);
+      
+      </script>
 </body>
 </html>

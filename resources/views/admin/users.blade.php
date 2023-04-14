@@ -45,8 +45,11 @@
       <td  class="show"><span class="pending">{{"Client"}}</span></td>
      @elseif($user->usertype == '1')
       <td  class="show"><span class="complete">{{"Admin"}}</span></td>
+    
+     @elseif($user->usertype == '3')
+      <td  class="show"><span class="complete">{{"Super Admin"}}</span></td>
      @else
-     <td  class="show"><span class="super">{{"Super Admin"}}</span></td>
+     <td  class="show"><span class="super">{{"Teller"}}</span></td>
      @endif
       <td  class="show">{{$user->restricted}}</td>
       <td  class="show">{{$user->created_at}}</td>
@@ -55,13 +58,13 @@
           <span style="padding-right:5px"><a href="/email-user/{{$id = $user->id}}"><i class="fa fa-envelope"></i></a></span>
     
         <span><a href="/review-user/{{$id = $user->id}}"><i class="fa fa-pen"></i></a></span>
-        <span><a href="/email-user/{{$id = $user->id}}"><i class="fa fa-envelope"></i></a></span>
-        <span style="margin-left:10px"><a href="/delete-user/{{$id = $user->id}}"><i class="fa fa-trash"></i></a></span>
-      @if ($user->restricted == "yes")
-      <span style="margin-left:10px; color:grey !important"><a href="/restrict-user/{{$id = $user->id}}"><i class="fa fa-cancel" style="color:grey"></i></a></span>
-      @else
-      <span style="margin-left:10px; color:rgba(255, 0, 0, 0.329)"><a href="/restrict-user/{{$id = $user->id}}"><i class="fa fa-cancel"></i></a></span>
-      @endif
+        @if ($user->restricted == "yes")
+        <span style="margin-left:10px; color:grey !important"><a href="/restrict-user/{{$id = $user->id}}"><i class="fa fa-cancel" style="color:grey"></i></a></span>
+        @else
+        <span style="margin-left:5px; color:rgba(255, 0, 0, 0.329)"><a href="/restrict-user/{{$id = $user->id}}"><i class="fa fa-cancel"></i></a></span>
+        @endif
+   
+       
       </td>
       
       {{-- <td class="show"></td> --}}
